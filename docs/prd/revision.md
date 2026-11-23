@@ -43,8 +43,31 @@
 
 ## Para presentar
 
-_(Se completa en el Paso 4.)_
+_(Propuesta; el equipo confirma o cambia la selección.)_
+
+1. **Cuándo empieza «En ejecución» (fila 1, IA).** El borrador decía «alguien marcó el primer paso» y no mencionaba que P-01 dice «Mientras se abre se pone en ejecución». Era un problema porque, de esa regla, depende cuándo se bloquean la edición y el borrado (P-05). Ahora R11 elige el primer paso, anota la contradicción como [SUPUESTO S-22] y se pregunta al cliente.
+2. **Qué pasa con una tarea vencida (filas 3 y 4, IA).** El borrador decía «puede ser reasignada» sin decir qué significa, ni si el estudiante todavía puede terminarla. Una vencida podía quedar trabada para siempre. Ahora R25 define reasignar y R26 dice que no se completa hasta reasignarla ([SUPUESTO S-08, S-30]), con pregunta al cliente.
+3. **«En edición» como sexto estado (fila 2, IA).** El borrador lo listaba como un estado más, junto a «En ejecución». Una tarea podía estar «en edición» y «pendiente» a la vez, así que el tablero no sabría dónde ponerla. Ahora R12 lo trata como un bloqueo temporal ([SUPUESTO S-23]), y se pregunta al cliente si debe verse como estado.
 
 ## Preguntas para el cliente
 
-_(Se completa en el Paso 4.)_
+En orden de prioridad, para el Avance 3 (2 de diciembre):
+
+1. ¿Una tarea entra en «en ejecución» al abrirla o al marcar el primer paso? (P-01 frente a P-09; S-22)
+2. Cuando una tarea vence, ¿el estudiante todavía puede terminarla o espera a que el administrador la reasigne? Al reasignar, ¿se le pone una nueva hora y se conserva lo ya marcado? (P-14; S-08, S-30)
+3. «No debe poderse salir de una tarea hasta salirse»: ¿el estudiante no puede dejar una tarea empezada para empezar otra, o lo que quieren es que el avance no se pierda al salir? (P-10; S-26)
+4. ¿«En edición» debe verse como un estado en el tablero, o basta con impedir que dos personas editen a la vez? (P-09; S-23)
+5. ¿Qué pasa con las tareas de un estudiante que se elimina? ¿Se puede eliminar si tiene una tarea en ejecución? (P-01; S-18)
+6. ¿Puede un estudiante desmarcar un paso que marcó por error? Si alguien completa una tarea por error, ¿el administrador puede reabrirla? (P-11; S-27, S-06)
+7. La notificación de «por vencer»: ¿debe llegar al celular aunque la herramienta esté cerrada? ¿A quién le llega? (P-12; S-15)
+8. Una tarea urgente «se les asigna a todos»: ¿a todos los estudiantes o solo a los disponibles ese día? ¿Quién la marca como urgente? (N-15, N-16; S-05)
+9. «Todas las tareas van a estar abiertas»: ¿cada estudiante ve todas las tareas o solo las suyas? ¿Los pasos se pueden marcar en cualquier orden? (N-03; S-10, S-20)
+10. El tablero: ¿necesita el porcentaje de pasos de cada tarea? ¿Dónde van las tareas pendientes? ¿Cuándo se ordena de la más reciente a la más antigua? (P-13, N-07, N-21; S-13, S-32, S-33)
+11. «Un apartado debajo de todo que no complete»: ¿qué debe ir en ese apartado? (P-06; S-34)
+12. Sin internet, ¿basta con el aviso o el estudiante debe poder seguir marcando pasos? (N-23; S-02)
+13. Las credenciales por correo o WhatsApp, ¿las envía la herramienta o el administrador? ¿Se entra con el correo estudiantil? Si alguien olvida su contraseña, ¿se la pide al administrador? (P-03, P-04; S-14, S-16, S-17)
+14. ¿Hay un solo super administrador? ¿Un administrador puede cambiarle la contraseña? (N-12, N-13; S-03, S-04)
+15. «Saber mientras quien la tiene abierta»: ¿quieren ver quién la inició o quién la tiene abierta en ese momento? ¿Necesitan ver quién marcó cada paso? (P-01, P-08; S-28, S-29)
+16. ¿Se puede asignar una tarea a alguien que no está disponible ese día? ¿Qué es «cuánto tiempo le queda de vida» a un estudiante? (N-18, N-20; S-35, S-36)
+17. ¿Debemos usar el brandboard «Señal Neón» de Interact2Hack como identidad visual? (P-16, sin respuesta)
+18. ¿Cómo sabrán que la herramienta funcionó, y qué es imprescindible para el 2 de diciembre? (S-11, S-12)

@@ -3,7 +3,7 @@
 **Equipo:** Joshua Lozada y Raymond Portilla · **Fecha:** 23 de noviembre de 2026
 **Fuentes:** docs/fuentes/descripcion-proyecto.md y docs/cliente/preguntas.md
 
-> Las filas E1–E5 son la revisión **del equipo, sin IA** (Paso 2 de la guía): las completan Joshua y Raymond. Las filas 1–24 son del revisor con IA (Paso 3a). Cada cita se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» cita el borrador (commit «docs(prd): borrador generado con IA»).
+> Las filas E1–E5 son la revisión **del equipo, sin IA** (Paso 2 de la guía): las completan Joshua y Raymond. Las filas 1–24 son del revisor con IA (Paso 3a). Las filas 25–33 son una segunda revisión con IA, hecha después de que el equipo resolviera los supuestos (23-nov, D-S-xx) y aplicada en el commit «docs(prd): supuestos resueltos por el equipo». Cada cita se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» cita el borrador (commit «docs(prd): borrador generado con IA»).
 >
 > Tipos: 1 Supuesto escrito como hecho · 2 Regla vaga o sin cifra · 3 Alcance inflado · 4 Contradicción resuelta en silencio · 5 Pregunta abierta desaparecida · 6 Perfil o permiso incompleto · 7 Detalle técnico · 8 Regla sin trazabilidad.
 
@@ -40,34 +40,34 @@
 | 22 | 4. Alcance | «S1. Marcar una tarea como urgente…» … «S3. Disponibilidad…» como Should | 3 | baja | IA | N-15 a N-20 piden urgencias, panel, disponibilidad e historial | Rechazado | Ya están en Should, no en Must: el 2 de diciembre no depende de ellos. Se aclaró qué significa cada prioridad para el 2 de diciembre. |
 | 23 | 4. Alcance | «completar la tarea con un gesto deliberado (N-22)» | 7 | baja | IA | N-22: «slider deslizable de izquierda a derecha» | Rechazado | Es un comportamiento que pidió el cliente, no una tecnología. Su forma visual se define en el DESIGN.md. |
 | 24 | 3. Objetivos | «En el tablero ve primero lo vencido» | 1 | baja | IA | N-21 pone «vencidas» primero | Rechazado | Sí tiene fuente (N-21); la señal de éxito sigue como [SUPUESTO S-11]. |
+| 25 | 4. Alcance | «Todo es Must» (D-S-12) | 3 | alta | IA | La guía pide que el alcance quepa en el avance funcional del 2 de diciembre | Aceptado (riesgo anotado) | Se respeta la decisión del equipo, con un aviso de riesgo en la sección 4 y en 8.3 (punto 1). |
+| 26 | 6. R26 | «Un administrador puede reabrir una tarea completada» | 4 | media | IA | La versión revisada decía que una completada es final (P-05, P-06); D-S-06 permite reabrirla | Aceptado | R26 define qué pasa al reabrir → [SUPUESTO S-44]; contradicción anotada en 8.3 (punto 2). |
+| 27 | 6. R24 | «Si un responsable está dentro de la tarea cuando vence, puede terminarla» | 4 | alta | IA | P-14: «Pasa a un estado de vencida y el admin puede reasignar» | Aceptado | Se sigue D-S-08; «estar dentro» y la marca «fuera de hora» quedan como [SUPUESTO S-43, S-38]; se pregunta al cliente. |
+| 28 | 6. R14 | «aunque tengan la herramienta cerrada» | 3 | alta | IA | P-12 solo dice «una noti» | Aceptado (riesgo anotado) | Se mantiene D-S-15; anotado en 8.3 (punto 4). |
+| 29 | 6. R31 | «Pendientes, Vencidas, Por vencer…» | 4 | media | IA | N-21 empieza por «vencidas» y no incluye «pendientes» | Aceptado | Es el orden por defecto (D-S-32); el panel de filtros permite cambiarlo (D-S-33); se confirma con el cliente. |
+| 30 | 6. R27 vs R28 | «se asigna a todos los estudiantes» / «No se le puede asignar una tarea si no está disponible» | 4 | media | IA | D-S-05 frente a D-S-35 | Aceptado | Las urgentes son la excepción (R28); se confirma con el cliente. |
+| 31 | 6. R17 | «no puede empezar otra» | 2 | media | IA | D-S-26 no define «tarea abierta» ni cuándo termina la restricción | Aceptado | Se definieron → [SUPUESTO S-41]; queda abierto si las urgentes son una excepción. |
+| 32 | 2. Perfiles | «Es solo uno y lo hard codeo» | 7 | baja | IA | D-S-03 | Aceptado | El PRD dice «un único super administrador fijo, que no se crea ni se borra desde la herramienta». |
+| 33 | 6. R6 | «Pasan a sin asignar» | 2 | media | IA | D-S-18 no dice qué pasa si a la tarea le quedan otros responsables, ni si estaba en ejecución | Aceptado | R6, R11 (Sin asignar puede tener pasos marcados) y R21 → [SUPUESTO S-37, S-42]. |
 
 ## Para presentar
 
 _(Propuesta; el equipo confirma o cambia la selección.)_
 
-1. **Cuándo empieza «En ejecución» (fila 1, IA).** El borrador decía «alguien marcó el primer paso» y no mencionaba que P-01 dice «Mientras se abre se pone en ejecución». Era un problema porque, de esa regla, depende cuándo se bloquean la edición y el borrado (P-05). Ahora R11 elige el primer paso, anota la contradicción como [SUPUESTO S-22] y se pregunta al cliente.
-2. **Qué pasa con una tarea vencida (filas 3 y 4, IA).** El borrador decía «puede ser reasignada» sin decir qué significa, ni si el estudiante todavía puede terminarla. Una vencida podía quedar trabada para siempre. Ahora R25 define reasignar y R26 dice que no se completa hasta reasignarla ([SUPUESTO S-08, S-30]), con pregunta al cliente.
-3. **«En edición» como sexto estado (fila 2, IA).** El borrador lo listaba como un estado más, junto a «En ejecución». Una tarea podía estar «en edición» y «pendiente» a la vez, así que el tablero no sabría dónde ponerla. Ahora R12 lo trata como un bloqueo temporal ([SUPUESTO S-23]), y se pregunta al cliente si debe verse como estado.
+1. **Cuándo empieza «En ejecución» (fila 1, encontrado por la IA).** El borrador decía «alguien marcó el primer paso», sin mencionar que P-01 dice «Mientras se abre se pone en ejecución». Era un problema porque de esa regla depende cuándo se bloquean la edición y el borrado (P-05). **Cómo quedó:** el equipo decidió «Al marcar el primer paso» (D-S-22). La contradicción con P-01 sigue anotada en R11.
+2. **Qué pasa con una tarea vencida (filas 3, 4 y 27, encontrado por la IA).** El borrador decía «puede ser reasignada», sin decir qué significa ni si el estudiante todavía puede terminarla. **Cómo quedó:** reasignar exige una nueva hora y conserva los pasos (D-S-30, R25). El responsable que está dentro de la tarea puede terminarla (D-S-08, R24), lo que choca con P-14, así que se confirma con el cliente.
+3. **«En edición» como sexto estado (fila 2, encontrado por la IA).** El borrador lo listaba como un estado más, y una tarea podía estar «en edición» y «pendiente» a la vez. **Cómo quedó:** el equipo confirmó que es una marca sobre la tarjeta, y nadie más entra a la tarea mientras se edita (D-S-23, R13).
 
 ## Preguntas para el cliente
 
-En orden de prioridad, para el Avance 3 (2 de diciembre):
+Para el Avance 3 (2 de diciembre). Son las que siguen necesitando al cliente. Las demás las resolvió el equipo (D-S-xx, sección 8.1 del PRD).
 
-1. ¿Una tarea entra en «en ejecución» al abrirla o al marcar el primer paso? (P-01 frente a P-09; S-22)
-2. Cuando una tarea vence, ¿el estudiante todavía puede terminarla o espera a que el administrador la reasigne? Al reasignar, ¿se le pone una nueva hora y se conserva lo ya marcado? (P-14; S-08, S-30)
-3. «No debe poderse salir de una tarea hasta salirse»: ¿el estudiante no puede dejar una tarea empezada para empezar otra, o lo que quieren es que el avance no se pierda al salir? (P-10; S-26)
-4. ¿«En edición» debe verse como un estado en el tablero, o basta con impedir que dos personas editen a la vez? (P-09; S-23)
-5. ¿Qué pasa con las tareas de un estudiante que se elimina? ¿Se puede eliminar si tiene una tarea en ejecución? (P-01; S-18)
-6. ¿Puede un estudiante desmarcar un paso que marcó por error? Si alguien completa una tarea por error, ¿el administrador puede reabrirla? (P-11; S-27, S-06)
-7. La notificación de «por vencer»: ¿debe llegar al celular aunque la herramienta esté cerrada? ¿A quién le llega? (P-12; S-15)
-8. Una tarea urgente «se les asigna a todos»: ¿a todos los estudiantes o solo a los disponibles ese día? ¿Quién la marca como urgente? (N-15, N-16; S-05)
-9. «Todas las tareas van a estar abiertas»: ¿cada estudiante ve todas las tareas o solo las suyas? ¿Los pasos se pueden marcar en cualquier orden? (N-03; S-10, S-20)
-10. El tablero: ¿necesita el porcentaje de pasos de cada tarea? ¿Dónde van las tareas pendientes? ¿Cuándo se ordena de la más reciente a la más antigua? (P-13, N-07, N-21; S-13, S-32, S-33)
-11. «Un apartado debajo de todo que no complete»: ¿qué debe ir en ese apartado? (P-06; S-34)
-12. Sin internet, ¿basta con el aviso o el estudiante debe poder seguir marcando pasos? (N-23; S-02)
-13. Las credenciales por correo o WhatsApp, ¿las envía la herramienta o el administrador? ¿Se entra con el correo estudiantil? Si alguien olvida su contraseña, ¿se la pide al administrador? (P-03, P-04; S-14, S-16, S-17)
-14. ¿Hay un solo super administrador? ¿Un administrador puede cambiarle la contraseña? (N-12, N-13; S-03, S-04)
-15. «Saber mientras quien la tiene abierta»: ¿quieren ver quién la inició o quién la tiene abierta en ese momento? ¿Necesitan ver quién marcó cada paso? (P-01, P-08; S-28, S-29)
-16. ¿Se puede asignar una tarea a alguien que no está disponible ese día? ¿Qué es «cuánto tiempo le queda de vida» a un estudiante? (N-18, N-20; S-35, S-36)
-17. ¿Debemos usar el brandboard «Señal Neón» de Interact2Hack como identidad visual? (P-16, sin respuesta)
-18. ¿Cómo sabrán que la herramienta funcionó, y qué es imprescindible para el 2 de diciembre? (S-11, S-12)
+1. Si una tarea vence mientras el estudiante está dentro, ¿puede terminarla? Ustedes dijeron «Pasa a un estado de vencida y el admin puede reasignar» (P-14 frente a D-S-08).
+2. ¿Es imprescindible para el 2 de diciembre que la notificación de «por vencer» llegue con la herramienta cerrada, o basta con un aviso dentro de la herramienta? (P-12 frente a D-S-15)
+3. En el tablero, ¿van primero las pendientes o las vencidas? (N-21 frente a D-S-32)
+4. Si alguien completa una tarea por error, ¿está bien que el administrador pueda reabrirla? (D-S-06)
+5. Una tarea urgente, ¿se asigna también a los estudiantes que no están disponibles ese día? ¿Quién la marca como urgente? ¿Alguien con una tarea abierta puede empezar una urgente? (N-15, N-16; D-S-05, D-S-26, D-S-35)
+6. Si un estudiante marcó un paso por error, ¿puede desmarcarlo? (P-11; el equipo decidió que sí, D-S-27)
+7. ¿Está bien que se entre con cualquier correo, no solo el estudiantil, y que las credenciales lleguen solo por correo, no por WhatsApp? (P-02, P-03 frente a D-S-17, D-S-14)
+8. ¿Debemos seguir el brandboard «Señal Neón» de Interact2Hack? (P-16; el equipo decidió que sí, D-P16)
+9. ¿Cuántas tareas, estudiantes y días de evento esperan?

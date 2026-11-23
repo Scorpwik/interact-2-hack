@@ -2,7 +2,7 @@
 
 **USFQ · Desarrollo Web 2** · Cliente: Interact2Hack
 **Integrante 1:** Joshua Lozada · **Integrante 2:** Raymond Portilla
-**Sesión con el cliente:** 11 de noviembre de 2026 · **Actualizado:** 23 de noviembre de 2026
+**Sesión con el cliente:** 11 de noviembre de 2026 · **Actualizado:** 23 de noviembre de 2026 (respuestas del cliente y, en la sección 6, decisiones del equipo)
 
 > La columna «Respuesta del cliente» se copió **literalmente**, con las palabras y la ortografía con las que se anotó en la sesión. No se corrigió ni se interpretó. La interpretación del equipo va en la columna «Estado del supuesto» y, en el PRD, como [SUPUESTO].
 > Estados: **confirmado** (el cliente dijo lo mismo que el supuesto), **descartado** (el cliente dijo otra cosa) o **pendiente** (no respondió o la respuesta no alcanza para decidir).
@@ -30,7 +30,7 @@ La herramienta sirve para que los organizadores del Interact2Hack repartan y con
 | P-13 | Tablero | ¿El tablero debe mostrar el avance de cada estudiante o solo el de cada tarea? | Cambia lo que muestra el panel del admin | Por tarea, con el porcentaje de pasos completados | Media | si | **pendiente**: el «si» no elige entre las dos opciones. Las notas N-05 y N-17 piden las dos vistas (tarjetas por tarea y cuántas tareas tiene cada estudiante). El porcentaje de pasos no lo mencionó. |
 | P-14 | Vencimientos | Si una tarea vence sin completarse, ¿el estudiante todavía puede terminarla? | Define qué pasa con las tareas atrasadas | Sí, pero queda marcada como «completada tarde» | Alta | Pasa a un estado de vencida y el admin puede reasignar | **descartado**: pasa a vencida y el admin puede reasignarla. No dice si el estudiante todavía puede terminarla. |
 | P-15 | Contexto | ¿El staff la va a usar más desde el celular o desde la computadora durante el evento? | Define si el diseño parte del celular | Principalmente desde el celular | Alta | Celular y también portal pc | **confirmado** en parte: celular, y también computadora. |
-| P-16 | Marca y alcance | ¿Hay logo o colores oficiales del Interact2Hack que debamos usar? | Es el insumo del brand board del avance 2 | Proponemos nuestra propia identidad visual | Media | _(sin respuesta)_ | **pendiente**: entre los materiales hay un «Brandboard extendido · Señal Neón v1.0» de Interact2Hack. Hay que confirmar con el cliente si es la identidad que se debe usar. |
+| P-16 | Marca y alcance | ¿Hay logo o colores oficiales del Interact2Hack que debamos usar? | Es el insumo del brand board del avance 2 | Proponemos nuestra propia identidad visual | Media | _(sin respuesta)_ | **pendiente con el cliente**: el equipo decidió seguir el «Brandboard extendido · Señal Neón v1.0» de Interact2Hack (D-P16, sección 6). |
 
 ## 3. Las 3 preguntas clave
 
@@ -127,8 +127,55 @@ para completar pongo un slider deslizable de izquierda a derecha para completar
 ver si no tiene internet que le asome un aviso.
 ```
 
-## 5. Resumen del estado de los supuestos
+## 5. Resumen del estado de los supuestos del Avance 1
 
-- **Confirmados (total o parcial):** P-06 (la completada no se borra), P-07 (por N-02), P-15 (celular y también computadora).
-- **Descartados:** P-02, P-03, P-05, P-08, P-09, P-12, P-14.
-- **Pendientes:** P-01 (la respuesta no contesta la pregunta), P-04 (no cubre el olvido), P-10 (respuesta poco clara), P-11 (sin respuesta), P-13 (el «si» no elige), P-16 (sin respuesta).
+- **Confirmados por el cliente (total o parcial):** P-06 (la completada no se borra), P-07 (por N-02), P-15 (celular y también computadora).
+- **Descartados por el cliente:** P-02, P-03, P-05, P-08, P-09, P-12, P-14.
+- **Pendientes con el cliente, pero resueltos por decisión del equipo el 23-nov** (sección 6):
+  - P-01 → D-S-18 (y D-S-22 sobre cuándo empieza la ejecución)
+  - P-04 → D-S-16
+  - P-10 → D-S-26
+  - P-11 → D-S-27
+  - P-13 → D-S-13
+  - P-16 → D-P16
+
+## 6. Decisiones del equipo posteriores a la sesión (confirmado por el equipo, 23-nov)
+
+> **No son palabras del cliente.** Son las respuestas del equipo (Joshua Lozada y Raymond Portilla) a los supuestos de la sección 8 del PRD. Se copian literalmente y en el PRD se citan como **D-S-xx**. Los supuestos S-09, S-21 y S-31 no tienen respuesta y siguen como supuestos.
+
+| Id | Supuesto o pregunta del PRD | Respuesta del equipo (literal) |
+| --- | --- | --- |
+| D-S-01 | Uso por dispositivo | Todos pueden usar los 2 dispositivos |
+| D-S-02 | Sin internet | No debe poder marcr (sin internet no se marcan pasos) |
+| D-S-03 | ¿Un solo super administrador? | Es solo uno y lo hard codeo |
+| D-S-04 | ¿Un administrador cambia la contraseña del super administrador? | no |
+| D-S-05 | ¿Quién marca una urgente? ¿A todos o solo a los disponibles? | A todos |
+| D-S-06 | ¿El administrador puede reabrir una completada por error? | si |
+| D-S-07 | ¿El administrador puede ejecutar tareas? | si |
+| D-S-08 | Vencida: ¿el estudiante puede terminarla? | Si esta dentro de la tarea poder terminarla |
+| D-S-10 | ¿Qué tareas ve el estudiante? | Ósea a el le sale las asisganaciones que se le asignaron a el y las urgente, las que no le pertenecen no debe poder ver |
+| D-S-11 | ¿Cómo sabrán que funcionó? | Con mensajes de retroalimentación de confirmación o de error estilo pop up |
+| D-S-12 | ¿Qué es imprescindible para el 2 de diciembre? | todo |
+| D-S-13 | ¿Porcentaje de pasos en el tablero? | si |
+| D-S-14 | ¿Quién envía las credenciales? | La herramienta a través de correo una vez que se crea el usuario |
+| D-S-15 | ¿Notificación con la herramienta cerrada? ¿A quién? | Si, a estudiantes y admin |
+| D-S-16 | Contraseña olvidada | Si pero también puede recuperarla a través de se su correo |
+| D-S-17 | ¿Con qué correo se entra? | Con el correo que cree el admin no necesariamente estudiantil |
+| D-S-18 | Estudiante eliminado | Pasan a sin asignar no se borra la tarea |
+| D-S-19 | Datos obligatorios | La descripción es opcional el nombre obligatorio. Pero las subtareas obligatorio igualmente |
+| D-S-20 | ¿Los pasos van en orden? | No, se puede completar como quiera |
+| D-S-22 | ¿Cuándo empieza la ejecución? | Al marcar el primer paso |
+| D-S-23 | ¿«En edición» es un estado? | No, simplemente se debe marcar un apartado sobre la tarjeta de esa tarea, diciendo que esta en edición y no le debe permitir a nadie mas ingresar para evitar bugs, solo al que la esta editando |
+| D-S-24 | ¿Observaciones obligatorias para completar? | si |
+| D-S-25 | ¿Se puede eliminar una vencida? | si |
+| D-S-26 | ¿Se puede salir de una tarea? | Se conserva al salir pero no puede iniciar otra tarea hasta que termine la que tiene abierta y ese mensaje debería asomarle a él |
+| D-S-27 | ¿Desmarcar un paso por error? | si |
+| D-S-28 | ¿Quién marcó cada paso? | Si, con nombre de quien marco y hora |
+| D-S-29 | ¿Quién la inició o quién la tiene abierta? | Si, y que los estudiantes asignados también vean a sus compañeros porque se les puede asignar a varios a una tarea |
+| D-S-30 | Reasignar | Si al asignar se le solicita la nueva hora al admin |
+| D-S-32 | ¿Dónde van las pendientes en el tablero? | Van primeras en orden jerárquico para mejor visualización |
+| D-S-33 | ¿Cuándo se usa cada orden? | Depende del uso, mejor que haya un panel de filtro donde el admin pueda ordenar a su gusto como quiere ver el orden de las tareas |
+| D-S-34 | ¿Qué es «un apartado debajo de todo»? | Me refería al apartado donde se acumulan y visualizan todas las tareas completadas |
+| D-S-35 | ¿Asignar a alguien no disponible? | no |
+| D-S-36 | ¿Qué es «tiempo de vida»? | Cuánto tiempo le queda para que se vaya a su casa, o sea las horas disponibles que tiene |
+| D-P16 | Brandboard «Señal Neón» (P-16) | Sí, ese es el panel de colores, tipografía y muestras de animaciones que debemos seguir. |

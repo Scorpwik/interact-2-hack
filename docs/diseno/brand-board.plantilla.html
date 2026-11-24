@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand board · Señal de Turno · Staff Interact2Hack</title>
+<!-- Generado por docs/diseno/generar-brand-board.py desde DESIGN.md. No editar a mano: si algo no coincide, manda DESIGN.md. -->
+<style>
+/*FUENTES*/
+/* ===== Tokens: copiados tal cual del DESIGN.md, sección 4 ===== */
+/*TOKENS*/
+/* ===== Estilos del brand board (solo usan tokens) ===== */
+*{box-sizing:border-box;margin:0;border-radius:var(--radio)}
+html{background:var(--color-fondo)}
+body{color:var(--color-texto);font:400 var(--fs-cuerpo)/1.5 var(--fuente-texto);max-width:1200px;margin:0 auto;padding:var(--esp-7) var(--esp-4)}
+a{color:var(--color-accion)}
+:focus-visible{outline:var(--borde-foco) solid var(--color-foco);outline-offset:var(--separacion-foco)}
+.kicker{font:600 var(--fs-kicker)/1.2 var(--fuente-texto);letter-spacing:.2em;text-transform:uppercase;color:var(--color-accion)}
+h1{font:900 var(--fs-h1)/.92 var(--fuente-display);text-transform:uppercase;margin:var(--esp-3) 0}
+h2{font:900 var(--fs-h2)/.95 var(--fuente-display);text-transform:uppercase;margin:var(--esp-2) 0 var(--esp-4)}
+h3{font:600 var(--fs-titulo-tarea)/1.3 var(--fuente-texto)}
+.suave{color:var(--color-texto-suave)}
+.meta{font-size:var(--fs-meta);line-height:1.4;color:var(--color-texto-suave)}
+section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
+.grid{display:grid;gap:var(--esp-5)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.etq{font:600 var(--fs-insignia)/1 var(--fuente-texto);color:var(--color-texto-suave);margin-bottom:var(--esp-2);display:block}
+.panel{border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-5)}
+/* Paleta */
+.muestra{border:var(--borde-componente) solid var(--color-borde)}
+.muestra .c{height:96px}
+.muestra .d{padding:var(--esp-3);font-size:var(--fs-meta)}
+.muestra b{display:block;font-size:var(--fs-cuerpo)}
+/* Tipografía */
+.tipo-fila{display:grid;grid-template-columns:220px 1fr;gap:var(--esp-4);align-items:baseline;padding:var(--esp-3) 0;border-bottom:1px solid var(--color-borde)}
+.disp{font-family:var(--fuente-display);font-weight:900;text-transform:uppercase}
+/* Insignias */
+.ins{display:inline-flex;align-items:center;gap:var(--esp-2);height:28px;padding:0 var(--esp-2);border:var(--borde-componente) solid var(--color-borde-control);font:600 var(--fs-insignia)/1 var(--fuente-texto);white-space:nowrap}
+.ins svg{width:16px;height:16px;flex:none}
+.ins.sin-asignar{color:var(--estado-sin-asignar);border-style:dashed;border-color:var(--estado-sin-asignar)}
+.ins.pendiente{color:var(--estado-pendiente)}
+.ins.en-ejecucion{color:var(--estado-en-ejecucion)}
+.ins.vencida{color:var(--estado-vencida);border-color:var(--estado-vencida)}
+.ins.completada{color:var(--estado-completada);border-color:var(--estado-completada)}
+.ins.por-vencer{color:var(--marca-por-vencer);border-color:var(--marca-por-vencer)}
+.ins.urgente{color:var(--marca-urgente-texto);background:var(--marca-urgente-fondo);border-color:var(--marca-urgente-fondo)}
+.ins.en-edicion{color:var(--marca-en-edicion);border-color:var(--color-borde)}
+.ins.fuera-de-hora{color:var(--marca-fuera-de-hora);border-color:var(--marca-fuera-de-hora)}
+.punto{width:8px;height:8px;border-radius:var(--radio-circulo);background:var(--estado-en-ejecucion-punto);flex:none}
+.fila-ins{display:flex;flex-wrap:wrap;gap:var(--esp-2);align-items:center}
+/* Tarjeta de tarea */
+.tarjeta{display:block;width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer;background:var(--color-superficie);border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-4);min-height:var(--tactil-min);transition:border-color var(--mov-ui) var(--curva)}
+.tarjeta:hover{border-color:var(--color-borde-control)}
+.tarjeta .cab{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--esp-3);margin-bottom:var(--esp-3)}
+.tiempo{text-align:right;white-space:nowrap}
+.tiempo .p{display:block;font:400 var(--fs-meta)/1 var(--fuente-texto);color:var(--color-texto-suave)}
+.tiempo .n{font:900 var(--fs-temporizador)/1 var(--fuente-display);text-transform:uppercase}
+.tiempo.t-aviso .n,.tiempo.t-aviso .p{color:var(--marca-por-vencer)}
+.tiempo.t-error .n,.tiempo.t-error .p{color:var(--estado-vencida)}
+.tiempo.listo .n{font-size:var(--fs-h2);color:var(--color-texto-suave)}
+.tarjeta h3{margin-bottom:var(--esp-1)}
+.tarjeta.completada h3{color:var(--color-texto-suave)}
+.progreso{margin-top:var(--esp-3)}
+.barra{height:6px;background:var(--progreso-pista)}
+.barra i{display:block;height:100%;background:var(--progreso)}
+.pie{display:flex;justify-content:space-between;align-items:center;margin-top:var(--esp-3);gap:var(--esp-3)}
+.avatares{display:flex;gap:var(--esp-1)}
+.av{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font:600 11px/1 var(--fuente-texto);border:var(--borde-componente) solid var(--color-borde-control)}
+.tarjeta.bloqueada{cursor:not-allowed;color:var(--color-texto-suave)}
+.tarjeta.bloqueada .tiempo .n{color:var(--color-texto-suave)}
+/* Tarjeta señal */
+.senal{background:var(--color-accion);color:var(--color-texto-sobre-accion);padding:var(--esp-5)}
+.senal.barrer{animation:barrido var(--mov-barrido) var(--curva-barrido) 1 both}
+.senal .kicker{color:var(--color-texto-sobre-accion)}
+.senal .cifra{font:900 var(--fs-cifra)/.9 var(--fuente-display);text-transform:uppercase;margin:var(--esp-2) 0}
+.senal h3{font-size:18px}
+@keyframes barrido{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+/* Checklist */
+.check{list-style:none;padding:0;background:var(--color-superficie);border:var(--borde-componente) solid var(--color-borde)}
+.paso{display:flex;gap:var(--esp-3);align-items:flex-start;min-height:var(--alto-paso);padding:var(--esp-3) var(--esp-4);border-bottom:1px solid var(--color-borde);cursor:pointer}
+.paso:last-child{border-bottom:0}
+.caja{width:24px;height:24px;flex:none;border:var(--borde-componente) solid var(--color-borde-control);display:inline-flex;align-items:center;justify-content:center}
+.paso.on .caja{background:var(--color-activo);border-color:var(--color-activo);color:var(--color-texto-sobre-accion)}
+.caja svg{width:16px;height:16px}
+.paso.bloq{cursor:not-allowed;color:var(--color-texto-suave)}
+.paso.bloq .caja{border-color:var(--color-texto-deshabilitado);color:var(--color-texto-deshabilitado)}
+.paso .tx{display:block}
+/* Formulario */
+.campo{margin-bottom:var(--esp-4)}
+.campo label,.campo .lab{display:block;font:600 var(--fs-insignia)/1.3 var(--fuente-texto);margin-bottom:var(--esp-2)}
+.campo input,.campo textarea,.campo select{width:100%;min-height:var(--tactil-min);background:var(--color-superficie);color:var(--color-texto);border:var(--borde-componente) solid var(--color-borde-control);font:400 var(--fs-cuerpo)/1.4 var(--fuente-texto);padding:var(--esp-3)}
+.campo input::placeholder,.campo textarea::placeholder{color:var(--color-texto-suave)}
+.campo.error input{border-color:var(--color-error)}
+.campo .msg{display:flex;gap:var(--esp-2);align-items:center;font-size:var(--fs-meta);margin-top:var(--esp-2);color:var(--color-texto-suave)}
+.campo.error .msg{color:var(--color-error)}
+.campo .msg svg{width:16px;height:16px}
+.campo input:disabled{color:var(--color-texto-deshabilitado);cursor:not-allowed}
+.opcion{display:flex;justify-content:space-between;align-items:center;min-height:var(--tactil-min);padding:0 var(--esp-3);border:var(--borde-componente) solid var(--color-borde-control);margin-bottom:var(--esp-2)}
+.opcion.no{color:var(--color-texto-deshabilitado);border-color:var(--color-borde);cursor:not-allowed}
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--esp-2);min-height:var(--tactil-min);padding:0 var(--esp-5);font:600 var(--fs-boton)/1 var(--fuente-texto);border:var(--borde-componente) solid transparent;cursor:pointer;transition:background-color var(--mov-ui) var(--curva),color var(--mov-ui) var(--curva)}
+.btn.primario{background:var(--color-accion);color:var(--color-texto-sobre-accion)}
+.btn.primario:hover,.btn.primario.hover{background:var(--color-accion-hover)}
+.btn.secundario{background:transparent;color:var(--color-accion);border-color:var(--color-accion)}
+.btn.secundario:hover,.btn.secundario.hover{background:var(--color-accion);color:var(--color-texto-sobre-accion)}
+.btn.peligro{background:transparent;color:var(--color-error);border-color:var(--color-error)}
+.btn.peligro:hover{background:var(--color-error);color:var(--color-texto-sobre-accion)}
+.btn.foco{outline:var(--borde-foco) solid var(--color-foco);outline-offset:var(--separacion-foco)}
+.btn:disabled{background:var(--color-borde);color:var(--color-texto-deshabilitado);border-color:transparent;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:var(--esp-3);align-items:center}
+/* Deslizador */
+.desliza{position:relative;height:var(--alto-paso);border:var(--borde-componente) solid var(--color-borde-control);display:flex;align-items:center;background:var(--color-superficie)}
+.desliza .pulgar{width:var(--tactil-min);height:var(--tactil-min);margin:2px;background:var(--color-accion);color:var(--color-texto-sobre-accion);display:flex;align-items:center;justify-content:center;flex:none}
+.desliza .txt{flex:1;text-align:center;font:600 var(--fs-boton)/1.2 var(--fuente-texto);padding:0 var(--esp-3)}
+.desliza.bloq .pulgar{background:var(--color-borde);color:var(--color-texto-deshabilitado)}
+.desliza.bloq .txt{color:var(--color-texto-suave)}
+.desliza.medio .relleno{position:absolute;left:0;top:0;bottom:0;width:62%;background:var(--color-accion)}
+.desliza.medio .pulgar{position:absolute;left:calc(62% - var(--tactil-min) - 4px);background:var(--color-texto-sobre-accion);color:var(--color-accion);border:var(--borde-componente) solid var(--color-accion)}
+.desliza.hecho{background:var(--color-accion);border-color:var(--color-accion);color:var(--color-texto-sobre-accion)}
+.desliza svg{width:20px;height:20px}
+/* Avisos */
+.aviso{display:flex;gap:var(--esp-3);align-items:flex-start;background:var(--color-superficie);border:var(--borde-componente) solid var(--color-borde);border-left-width:4px;padding:var(--esp-3) var(--esp-4)}
+.aviso svg{width:20px;height:20px;flex:none;margin-top:2px}
+.aviso.ok{border-left-color:var(--color-exito)} .aviso.ok svg{color:var(--color-exito)}
+.aviso.err{border-left-color:var(--color-error)} .aviso.err svg{color:var(--color-error)}
+.aviso.amb{border-left-color:var(--color-aviso)} .aviso.amb svg{color:var(--color-aviso)}
+.aviso .acc{margin-left:auto;color:var(--color-accion);font:600 var(--fs-insignia)/1.4 var(--fuente-texto);white-space:nowrap;background:none;border:0;min-height:32px;cursor:pointer}
+.banda{display:flex;gap:var(--esp-3);align-items:center;background:var(--color-superficie);border-bottom:4px solid var(--color-aviso);padding:var(--esp-3) var(--esp-4);font-size:var(--fs-meta)}
+.banda svg{width:20px;height:20px;color:var(--color-aviso);flex:none}
+/* Indicador del tablero */
+.totales{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:var(--esp-3)}
+.total{border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-3);background:var(--color-superficie)}
+.total .n{font:900 40px/1 var(--fuente-display);display:block;margin-bottom:var(--esp-2)}
+.cumpl{display:grid;grid-template-columns:auto 1fr;gap:var(--esp-5);align-items:center;margin-top:var(--esp-5)}
+.anillo{width:120px;height:120px;border-radius:var(--radio-circulo);background:conic-gradient(var(--i2h-lima) 0 62%,var(--progreso-pista) 62% 100%);display:flex;align-items:center;justify-content:center}
+.anillo span{width:96px;height:96px;border-radius:var(--radio-circulo);background:var(--color-fondo);display:flex;align-items:center;justify-content:center;font:900 40px/1 var(--fuente-display);color:var(--i2h-lima)}
+.filtros{display:flex;flex-wrap:wrap;gap:var(--esp-2);margin:var(--esp-4) 0}
+.filtro{min-height:var(--tactil-min);padding:0 var(--esp-4);background:transparent;color:var(--color-texto);border:var(--borde-componente) solid var(--color-borde-control);font:600 var(--fs-insignia)/1 var(--fuente-texto);cursor:pointer}
+.filtro.on{color:var(--color-accion);border-color:var(--color-accion)}
+.grupo{display:flex;align-items:baseline;gap:var(--esp-3);margin:var(--esp-5) 0 var(--esp-3)}
+.grupo h3{font:900 var(--fs-h2)/.95 var(--fuente-display);text-transform:uppercase}
+/* Filas de personas */
+.persona{display:grid;grid-template-columns:1fr auto;gap:var(--esp-2) var(--esp-4);align-items:center;padding:var(--esp-3) var(--esp-4);border-bottom:1px solid var(--color-borde);min-height:var(--tactil-min)}
+.perfil{font:600 var(--fs-insignia)/1 var(--fuente-texto);border:var(--borde-componente) solid var(--color-borde-control);padding:var(--esp-1) var(--esp-2)}
+.perfil.super{color:var(--color-accion);border-color:var(--color-accion)}
+/* Dispositivos */
+.cel{max-width:390px;border:var(--borde-componente) solid var(--color-borde);background:var(--color-fondo)}
+.cel .cont{padding:var(--esp-4)}
+.tabbar{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--color-borde)}
+.tab{min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--esp-1);font:600 12px/1 var(--fuente-texto);color:var(--color-texto-suave)}
+.tab svg{width:24px;height:24px}
+.tab.on{color:var(--color-texto)}
+.tab .pt{width:6px;height:6px;border-radius:var(--radio-circulo);background:transparent}
+.tab.on .pt{background:var(--color-activo)}
+.topbar{display:flex;gap:var(--esp-2);border-bottom:1px solid var(--color-borde);margin-bottom:var(--esp-4)}
+.topbar>span{min-height:var(--tactil-min);display:inline-flex;align-items:center;gap:var(--esp-2);padding:0 var(--esp-3);font:600 var(--fs-insignia)/1 var(--fuente-texto);color:var(--color-texto-suave)}
+.topbar>span.on{color:var(--color-texto)}
+.topbar .pt{width:6px;height:6px;flex:none;padding:0;min-height:0;border-radius:var(--radio-circulo);background:var(--color-activo)}
+.esc{border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-5)}
+.esc .tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--esp-4)}
+table{border-collapse:collapse;width:100%;font-size:var(--fs-meta)}
+th,td{text-align:left;padding:var(--esp-2) var(--esp-3);border-bottom:1px solid var(--color-borde);vertical-align:top}
+th{color:var(--color-texto-suave);font-weight:600}
+td.num,td:first-child{white-space:nowrap}
+.escala{display:flex;align-items:flex-end;gap:var(--esp-3);flex-wrap:wrap}
+.escala div{background:var(--color-accion)}
+.mov{display:flex;gap:var(--esp-5);flex-wrap:wrap;align-items:center}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (max-width:640px){.tipo-fila{grid-template-columns:1fr}.cumpl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="i-circulo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+  <symbol id="i-pregunta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6"/><path d="M16 14.5a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2"/><path d="M18 21.5h.01"/></g></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 17h.01"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-reloj-arena" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 5 10 5 10 9s-10 4-10 9"/><path d="M17 3c0 5-10 5-10 9s10 4 10 9"/></g></symbol>
+  <symbol id="i-rayo" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-candado" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g></symbol>
+  <symbol id="i-reloj-alerta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="12" r="8"/><path d="M11 8v4l2 2"/><path d="M21 7v5"/><path d="M21 16h.01"/></g></symbol>
+  <symbol id="i-sin-red" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 12.5a10 10 0 0 1 5-2.6M14 10a10 10 0 0 1 5 2.5"/><path d="M2 8.8A15 15 0 0 1 7 6M12 5a15 15 0 0 1 10 3.8"/><path d="M12 20h.01"/></g></symbol>
+  <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></g></symbol>
+  <symbol id="i-persona" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></g></symbol>
+ </defs>
+</svg>
+
+<header>
+ <p class="kicker">Interact2Hack · Staff · Brand board · generado desde DESIGN.md <!--VERSION--></p>
+ <h1>Señal de Turno</h1>
+ <p class="suave" style="max-width:760px">Sistema de diseño de la herramienta de organización de staff del Interact2Hack. Sigue Señal Neón v1.0 (decisión del equipo D-P16). <b>Si algo de esta página no coincide con DESIGN.md, manda DESIGN.md.</b> Las tareas, horas y nombres son datos de ejemplo.</p>
+</header>
+
+<section class="bloque" aria-labelledby="h-brief">
+ <h2 id="h-brief">Brief</h2>
+ <div class="grid g3">
+  <div class="panel"><span class="etq">Personalidad (palabras del equipo)</span><p class="disp" style="font-size:var(--fs-h2);line-height:1">Fácil de usar · Carga rápida · Útil sin excesos</p></div>
+  <div class="panel"><span class="etq">Referente (propuesta a confirmar)</span><p>La pantalla de salidas de un aeropuerto: hora, estado y lugar de un vistazo. Secundario: la app móvil de Señal Neón.</p></div>
+  <div class="panel"><span class="etq">Quién y dónde</span><p>Administradores en un escritorio y estudiantes en el celular, en medio de un hackathon, con la conexión del evento que puede fallar.</p></div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-color">
+ <h2 id="h-color">Color</h2>
+ <p class="suave" style="margin-bottom:var(--esp-4)">Cinco colores de Señal Neón con roles fijos, más dos funcionales del equipo [SUPUESTO] para las alertas.</p>
+ <div class="grid g4">
+  <div class="muestra"><div class="c" style="background:var(--i2h-negro);border-bottom:1px solid var(--color-borde)"></div><div class="d"><b>Negro</b>#050307 · fondo</div></div>
+  <div class="muestra"><div class="c" style="background:var(--i2h-tinta);border-bottom:1px solid var(--color-borde)"></div><div class="d"><b>Tinta</b>#0B0612 · superficie y texto sobre morado</div></div>
+  <div class="muestra"><div class="c" style="background:var(--i2h-morado)"></div><div class="d"><b>Morado neón</b>#A46CFB · acción, completada · tinta encima 5,83:1</div></div>
+  <div class="muestra"><div class="c" style="background:var(--i2h-lima)"></div><div class="d"><b>Lima</b>#5CF000 · ahora: en ejecución, paso marcado, foco · 13,61:1</div></div>
+  <div class="muestra"><div class="c" style="background:var(--i2h-morado-profundo)"></div><div class="d"><b>Morado profundo</b>#5B2BB5 · solo fondo de «Urgente» · blanco encima 8,54:1</div></div>
+  <div class="muestra"><div class="c" style="background:var(--i2h-blanco)"></div><div class="d"><b>Blanco</b>#FFFFFF · texto 20,54:1 · 64 % suave 8,27:1 · 45 % borde de control 4,43:1</div></div>
+  <div class="muestra"><div class="c" style="background:var(--sdt-ambar)"></div><div class="d"><b>Ámbar [SUPUESTO]</b>#FFB020 · por vencer · 10,95:1</div></div>
+  <div class="muestra"><div class="c" style="background:var(--sdt-rojo)"></div><div class="d"><b>Rojo [SUPUESTO]</b>#FF5C5C · vencida, fuera de hora, error · 6,61:1</div></div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-estados">
+ <h2 id="h-estados">Estados de una tarea y marcas</h2>
+ <p class="suave" style="margin-bottom:var(--esp-4)"><!--N_ESTADOS--> estados (PRD R11): una tarea está siempre en uno, y solo uno. <!--N_MARCAS--> marcas (PRD R12) que se suman al estado. Todos llevan color, ícono y texto.</p>
+ <span class="etq">Estados</span>
+ <div class="fila-ins" style="margin-bottom:var(--esp-5)">
+  <span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span>
+  <span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span>
+  <span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span>
+  <span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span>
+  <span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span>
+ </div>
+ <span class="etq">Marcas</span>
+ <div class="fila-ins">
+  <span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer · faltan 42 min</span>
+  <span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span>
+  <span class="ins en-edicion"><svg aria-hidden="true"><use href="#i-candado"/></svg>En edición · Sofía Paredes</span>
+  <span class="ins fuera-de-hora"><svg aria-hidden="true"><use href="#i-reloj-alerta"/></svg>Fuera de hora</span>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-tipo">
+ <h2 id="h-tipo">Tipografía</h2>
+ <p class="suave" style="margin-bottom:var(--esp-4)">Big Shoulders Display (900) solo en cifras y títulos de 24 px o más. Sora (400 y 600) en todo lo demás.</p>
+ <div class="tipo-fila"><span class="meta">Cifra · Big Shoulders 900 · 64/0,9</span><span class="disp" style="font-size:var(--fs-cifra);line-height:.9">42 min</span></div>
+ <div class="tipo-fila"><span class="meta">H1 · Big Shoulders 900 · 40/0,92</span><span class="disp" style="font-size:var(--fs-h1);line-height:.92">Mis tareas</span></div>
+ <div class="tipo-fila"><span class="meta">H2 · Big Shoulders 900 · 28/0,95</span><span class="disp" style="font-size:var(--fs-h2);line-height:.95">Por vencer</span></div>
+ <div class="tipo-fila"><span class="meta">Título de tarea · Sora 600 · 17/1,3</span><h3>Preparar Sala 3 para mentorías</h3></div>
+ <div class="tipo-fila"><span class="meta">Cuerpo · Sora 400 · 16/1,5</span><p>Encender el proyector y probar la entrada HDMI con una laptop.</p></div>
+ <div class="tipo-fila"><span class="meta">Botón · Sora 600 · 15</span><p style="font:600 var(--fs-boton)/1 var(--fuente-texto)">Continuar tarea</p></div>
+ <div class="tipo-fila"><span class="meta">Meta · Sora 400 · 13/1,4</span><p class="meta">Ana Torres · 09:31 · Sala 3 · Edificio Galileo</p></div>
+ <div class="tipo-fila"><span class="meta">Kicker · Sora 600 · 12 · +0,2 em</span><p class="kicker">Vence primero</p></div>
+ <div class="tipo-fila"><span class="meta">Legibilidad</span><p>Il1 · O0 · rn m · 09:00 · 10:00</p></div>
+</section>
+
+<section class="bloque" aria-labelledby="h-esp">
+ <h2 id="h-esp">Espacio, forma y movimiento</h2>
+ <div class="grid g2">
+  <div>
+   <span class="etq">Escala (base 4)</span>
+   <div class="escala">
+    <div style="width:4px;height:4px"></div><div style="width:8px;height:8px"></div><div style="width:12px;height:12px"></div><div style="width:16px;height:16px"></div><div style="width:24px;height:24px"></div><div style="width:32px;height:32px"></div><div style="width:48px;height:48px"></div><div style="width:64px;height:64px"></div>
+   </div>
+   <p class="meta" style="margin-top:var(--esp-3)">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 120 px. Radio 0 en todo (círculo solo en el punto de estado y el indicador). Área táctil mínima 48 px; fila de checklist 56 px.</p>
+  </div>
+  <div>
+   <span class="etq">Movimiento</span>
+   <div class="mov">
+    <button class="btn secundario" type="button">Hover 200 ms</button>
+    <button class="btn secundario" type="button" onclick="var e=document.getElementById('demo-barrido');e.classList.remove('barrer');void e.offsetWidth;e.classList.add('barrer')">Ver barrido</button>
+    <div class="senal" id="demo-barrido" style="padding:var(--esp-3) var(--esp-4)"><span class="kicker">Barrido 900 ms · una vez</span></div>
+   </div>
+   <p class="meta" style="margin-top:var(--esp-3)">Interfaz: 200 ms con cubic-bezier(0.16, 1, 0.3, 1). Barrido solo en la tarjeta señal. Barra y temporizador, lineales. Sin entradas en listas. Con «reducir movimiento», nada se anima.</p>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-tarjetas">
+ <h2 id="h-tarjetas">Tarjeta de tarea y tarjeta señal</h2>
+ <p class="suave" style="margin-bottom:var(--esp-4)">Ahora: sábado 20, 09:18 (ejemplo). La misma tarjeta se usa en el celular (una columna) y en el tablero de escritorio (cuadrícula).</p>
+ <div class="grid g3">
+  <div>
+   <span class="etq">Tarjeta señal · una por vista</span>
+   <div class="senal">
+    <p class="kicker">Vence primero · faltan</p>
+    <p class="cifra">42 min</p>
+    <h3>Preparar Sala 3 para mentorías</h3>
+    <p style="font-size:var(--fs-meta)">Sala 3 · Edificio Galileo · 3 de 5 pasos</p>
+   </div>
+  </div>
+  <div>
+   <span class="etq">Por vencer · en ejecución · checklist a medio completar</span>
+   <button class="tarjeta" type="button">
+    <div class="cab"><div class="fila-ins"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div>
+     <div class="tiempo t-aviso"><span class="p">Faltan</span><span class="n">42 min</span></div></div>
+    <h3>Preparar Sala 3 para mentorías</h3><p class="meta">Sala 3 · Edificio Galileo · vence 10:00</p>
+    <div class="progreso"><div class="barra"><i style="width:60%"></i></div><p class="meta" style="margin-top:var(--esp-1)">3 de 5 pasos · 60 %</p></div>
+    <div class="pie"><div class="avatares" aria-label="Responsables: Ana Torres, Luis Mena"><span class="av">AT</span><span class="av">LM</span></div><span class="meta">Inició Ana Torres · 09:31</span></div>
+   </button>
+  </div>
+  <div>
+   <span class="etq">Pendiente</span>
+   <button class="tarjeta" type="button">
+    <div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span>
+     <div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div>
+    <h3>Armar mesas de check-in</h3><p class="meta">Hall principal · vence 12:00</p>
+    <div class="progreso"><div class="barra"><i style="width:0%"></i></div><p class="meta" style="margin-top:var(--esp-1)">0 de 4 pasos · 0 %</p></div>
+    <div class="pie"><div class="avatares" aria-label="Responsables: Mateo Cruz"><span class="av">MC</span></div></div>
+   </button>
+  </div>
+  <div>
+   <span class="etq">Completada</span>
+   <button class="tarjeta completada" type="button">
+    <div class="cab"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span>
+     <div class="tiempo listo"><span class="p">Completada</span><span class="n">09:12</span></div></div>
+    <h3>Revisar el proyector del teatro</h3><p class="meta">Teatro Calderón de la Barca · completó Ana Torres</p>
+    <div class="progreso"><div class="barra"><i style="width:100%"></i></div><p class="meta" style="margin-top:var(--esp-1)">4 de 4 pasos · 100 %</p></div>
+   </button>
+  </div>
+  <div>
+   <span class="etq">Vencida</span>
+   <button class="tarjeta" type="button">
+    <div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span>
+     <div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div>
+    <h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · venció 09:00</p>
+    <div class="progreso"><div class="barra"><i style="width:50%"></i></div><p class="meta" style="margin-top:var(--esp-1)">1 de 2 pasos · 50 %</p></div>
+   </button>
+  </div>
+  <div>
+   <span class="etq">Sin asignar + Urgente</span>
+   <button class="tarjeta" type="button">
+    <div class="cab"><div class="fila-ins"><span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span></div>
+     <div class="tiempo"><span class="p">Faltan</span><span class="n">1 h 12 min</span></div></div>
+    <h3>Llevar extensiones eléctricas a la Sala 3</h3><p class="meta">Sala 3 · Edificio Galileo · vence 10:30</p>
+   </button>
+  </div>
+  <div>
+   <span class="etq">Bloqueada · En edición</span>
+   <div class="tarjeta bloqueada" aria-disabled="true">
+    <div class="cab"><div class="fila-ins"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins en-edicion"><svg aria-hidden="true"><use href="#i-candado"/></svg>En edición · Sofía Paredes</span></div>
+     <div class="tiempo"><span class="p">Faltan</span><span class="n">4 h</span></div></div>
+    <h3>Ordenar la mesa de premiación</h3><p class="meta">Teatro Calderón de la Barca · no se puede abrir mientras se edita</p>
+   </div>
+  </div>
+  <div>
+   <span class="etq">Completada fuera de hora</span>
+   <button class="tarjeta completada" type="button">
+    <div class="cab"><div class="fila-ins"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><span class="ins fuera-de-hora"><svg aria-hidden="true"><use href="#i-reloj-alerta"/></svg>Fuera de hora</span></div>
+     <div class="tiempo listo"><span class="p">Completada</span><span class="n">08:47</span></div></div>
+    <h3>Pegar la señalética de baños</h3><p class="meta">Edificio Galileo · venció 08:30 · completó Luis Mena</p>
+   </button>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-check">
+ <h2 id="h-check">Ítem de checklist</h2>
+ <div class="grid g2">
+  <div>
+   <span class="etq">Checklist a medio completar · 3 de 5</span>
+   <ul class="check">
+    <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Abrir la sala con la llave de seguridad</span><span class="meta">Ana Torres · 09:31</span></span></li>
+    <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Encender el proyector y probar HDMI</span><span class="meta">Luis Mena · 09:34</span></span></li>
+    <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Ubicar 6 mesas y 24 sillas</span><span class="meta">Ana Torres · 09:40</span></span></li>
+    <li class="paso" role="checkbox" aria-checked="false" tabindex="0"><span class="caja"></span><span class="tx">Colocar los letreros del reto 02</span></li>
+    <li class="paso" role="checkbox" aria-checked="false" tabindex="0"><span class="caja"></span><span class="tx">Probar el wifi de la sala</span></li>
+   </ul>
+  </div>
+  <div>
+   <span class="etq">Sin conexión · los pasos se bloquean</span>
+   <div class="banda" role="status"><svg aria-hidden="true"><use href="#i-sin-red"/></svg><span>Sin conexión. No puedes marcar pasos hasta que vuelva internet.</span></div>
+   <ul class="check">
+    <li class="paso bloq" role="checkbox" aria-checked="false" aria-disabled="true"><span class="caja"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span><span class="tx">Colocar los letreros del reto 02</span><span class="meta">Sin conexión</span></span></li>
+    <li class="paso bloq" role="checkbox" aria-checked="false" aria-disabled="true"><span class="caja"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span><span class="tx">Probar el wifi de la sala</span><span class="meta">Sin conexión</span></span></li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-form">
+ <h2 id="h-form">Formulario</h2>
+ <div class="grid g2">
+  <div class="panel">
+   <span class="etq">Nueva tarea · administrador</span>
+   <div class="campo"><label for="f1">Nombre (obligatorio)</label><input id="f1" value="Llevar extensiones eléctricas a la Sala 3"></div>
+   <div class="campo"><label for="f2">Descripción (opcional)</label><input id="f2" placeholder="Ej.: pedirlas en la bodega del Hall"></div>
+   <div class="campo error"><label for="f3">Fecha y hora de vencimiento (obligatorio)</label><input id="f3" placeholder="Sáb 20 · hh:mm" aria-invalid="true" aria-describedby="e3"><p class="msg" id="e3"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Pon la hora de vencimiento.</p></div>
+   <div class="campo"><label for="f4">Lugar o aula (obligatorio)</label><input id="f4" value="Sala 3 · Edificio Galileo"></div>
+   <div class="campo"><label for="f5">Campo deshabilitado</label><input id="f5" value="Creada por el super administrador" disabled></div>
+  </div>
+  <div class="panel">
+   <div class="campo"><span class="lab">Responsables · disponibilidad del sáb 20</span>
+    <div class="opcion"><span>Ana Torres</span><span class="meta">08:00–14:00</span></div>
+    <div class="opcion"><span>Luis Mena</span><span class="meta">09:00–18:00</span></div>
+    <div class="opcion no" aria-disabled="true"><span>Mateo Cruz</span><span class="meta" style="color:inherit">No disponible sáb 20</span></div>
+   </div>
+   <div class="campo"><label for="f6">Observaciones (obligatorio para completar)</label><textarea id="f6" rows="3" placeholder="Ej.: faltó un letrero; se pidió a logística."></textarea><p class="msg">La ven tus compañeros y los administradores.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-btn">
+ <h2 id="h-btn">Botón y deslizar para completar</h2>
+ <div class="grid g2">
+  <div>
+   <span class="etq">Primario · reposo / hover / foco / deshabilitado</span>
+   <div class="btns" style="margin-bottom:var(--esp-4)"><button class="btn primario" type="button">Continuar tarea</button><button class="btn primario hover" type="button">Continuar tarea</button><button class="btn primario foco" type="button">Continuar tarea</button><button class="btn primario" type="button" disabled>Guardar tarea</button></div>
+   <span class="etq">Secundario y peligro</span>
+   <div class="btns"><button class="btn secundario" type="button">Reasignar</button><button class="btn secundario hover" type="button">Reabrir</button><button class="btn peligro" type="button">Eliminar tarea</button></div>
+  </div>
+  <div>
+   <span class="etq">Bloqueado · dice qué falta</span>
+   <div class="desliza bloq" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span class="txt">Faltan 2 pasos y la observación</span></div>
+   <span class="etq">Listo</span>
+   <div class="desliza" role="button" tabindex="0" aria-label="Completar tarea" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-flecha"/></svg></span><span class="txt">Desliza para completar →</span></div>
+   <span class="etq">Arrastrando</span>
+   <div class="desliza medio" style="margin-bottom:var(--esp-3)"><span class="relleno"></span><span class="pulgar"><svg aria-hidden="true"><use href="#i-flecha"/></svg></span><span class="txt" style="margin-left:65%;text-align:left">Suelta para completar</span></div>
+   <span class="etq">Completado</span>
+   <div class="desliza hecho"><span class="txt"><svg aria-hidden="true" style="vertical-align:-4px"><use href="#i-check"/></svg> Completada</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-aviso">
+ <h2 id="h-aviso">Aviso</h2>
+ <div class="grid g2">
+  <div class="aviso ok" role="status"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Paso guardado. 3 de 5 pasos.</span></div>
+  <div class="aviso err" role="alert"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span>No se pudo guardar el paso.</span><button class="acc" type="button">Reintentar</button></div>
+  <div class="aviso amb" role="status"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg><span>«Preparar Sala 3 para mentorías» vence en 60 min.</span><button class="acc" type="button">Ver tarea</button></div>
+  <div class="aviso amb" role="status"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span>Termina «Preparar Sala 3» antes de empezar otra tarea.</span><button class="acc" type="button">Ir a esa tarea</button></div>
+  <div class="aviso" role="status"><svg aria-hidden="true"><use href="#i-candado"/></svg><span class="suave">No se puede editar: la tarea está en ejecución.</span></div>
+  <div class="banda" role="status"><svg aria-hidden="true"><use href="#i-sin-red"/></svg><span>Sin conexión. No puedes marcar pasos hasta que vuelva internet.</span></div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-tablero">
+ <h2 id="h-tablero">Indicador del tablero de cumplimiento</h2>
+ <div class="totales">
+  <div class="total"><span class="n">4</span><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span></div>
+  <div class="total"><span class="n">2</span><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div>
+  <div class="total"><span class="n">3</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div>
+  <div class="total"><span class="n">4</span><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span></div>
+  <div class="total"><span class="n">1</span><span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span></div>
+  <div class="total"><span class="n">18</span><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div>
+ </div>
+ <div class="cumpl">
+  <div class="anillo" role="img" aria-label="Cumplimiento 62 por ciento"><span>62%</span></div>
+  <div><p class="kicker">Cumplimiento del día</p><p style="margin:var(--esp-2) 0">18 de 29 tareas completadas</p><div class="barra"><i style="width:62%"></i></div><p class="meta" style="margin-top:var(--esp-2)">«Por vencer» se cuenta aparte: son tareas pendientes o en ejecución a 60 min o menos.</p></div>
+ </div>
+ <div class="filtros" role="group" aria-label="Filtros y orden">
+  <button class="filtro on" type="button" aria-pressed="true">✓ Por vencer</button>
+  <button class="filtro" type="button" aria-pressed="false">Orden: más cerca de vencer</button>
+  <button class="filtro" type="button" aria-pressed="false">Orden: más reciente</button>
+  <button class="filtro" type="button" aria-pressed="false">Por estado</button>
+  <button class="filtro" type="button" aria-pressed="false">Por lugar</button>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-personas">
+ <h2 id="h-personas">Panel de estudiantes y usuarios</h2>
+ <div class="grid g2">
+  <div class="panel" style="padding:0">
+   <div class="persona"><div><h3>Ana Torres</h3><p class="meta">Sáb 20 · 08:00–14:00 · le quedan 4 h 42 min</p></div><span class="ins pendiente">3 tareas</span></div>
+   <div class="persona"><div><h3>Luis Mena</h3><p class="meta">Sáb 20 · 09:00–18:00 · le quedan 8 h 42 min</p></div><span class="ins pendiente">2 tareas</span></div>
+   <div class="persona"><div><h3>Sofía Paredes</h3><p class="meta">Sáb 20 · 09:00–13:00 · le quedan 3 h 42 min</p></div><span class="ins por-vencer">Sin tareas</span></div>
+  </div>
+  <div class="panel" style="padding:0">
+   <div class="persona"><div><h3>Super administrador</h3><p class="meta">Fijo · no se puede eliminar</p></div><span class="perfil super">Super admin</span></div>
+   <div class="persona"><div><h3>Mateo Cruz</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p></div><span class="perfil">Admin</span></div>
+   <div class="persona"><div><h3>Ana Torres</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p></div><span class="perfil">Estudiante</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-disp">
+ <h2 id="h-disp">En el celular y en el escritorio</h2>
+ <div class="grid g2" style="align-items:start">
+  <div class="cel">
+   <div class="cont">
+    <p class="kicker">Sáb 20 · 09:18</p><h2 style="margin:var(--esp-2) 0 var(--esp-4)">Mis tareas</h2>
+    <div class="senal" style="margin-bottom:var(--esp-4)"><p class="kicker">Vence primero · faltan</p><p class="cifra">42 min</p><h3>Preparar Sala 3 para mentorías</h3><p style="font-size:var(--fs-meta)">Sala 3 · Edificio Galileo · 3 de 5 pasos</p></div>
+    <div class="grid" style="gap:var(--esp-3)">
+     <button class="tarjeta" type="button"><div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div><h3>Armar mesas de check-in</h3><p class="meta">Hall principal</p></button>
+     <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span></div><div class="tiempo"><span class="p">Faltan</span><span class="n">1 h 12 min</span></div></div><h3>Llevar extensiones eléctricas a la Sala 3</h3><p class="meta">Sala 3 · Edificio Galileo</p></button>
+    </div>
+    <p class="kicker" style="margin:var(--esp-5) 0 var(--esp-2);color:var(--color-texto-suave)">Completadas</p>
+    <button class="tarjeta completada" type="button"><div class="cab"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><div class="tiempo listo"><span class="p">Completada</span><span class="n">09:12</span></div></div><h3>Revisar el proyector del teatro</h3></button>
+   </div>
+   <nav class="tabbar" aria-label="Navegación del estudiante [SUPUESTO]"><span class="tab on" aria-current="page"><svg aria-hidden="true"><use href="#i-lista"/></svg>Mis tareas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-check"/></svg>Completadas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-persona"/></svg>Perfil<span class="pt"></span></span></nav>
+  </div>
+  <div class="esc">
+   <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><span class="on" aria-current="page"><span class="pt"></span>Tablero</span><span>Tareas</span><span>Estudiantes</span><span>Usuarios</span></nav>
+   <p class="kicker">Tablero · administrador · 1280 px</p>
+   <div class="grupo"><h3>Pendientes</h3><span class="meta">4</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div><h3>Armar mesas de check-in</h3><p class="meta">Hall principal · 0 de 4</p></button>
+   </div>
+   <div class="grupo"><h3 style="color:var(--estado-vencida)">Vencidas</h3><span class="meta">2</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div><h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · 1 de 2</p></button>
+   </div>
+   <div class="grupo"><h3 style="color:var(--marca-por-vencer)">Por vencer</h3><span class="meta">3</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div><div class="tiempo t-aviso"><span class="p">Faltan</span><span class="n">42 min</span></div></div><h3>Preparar Sala 3 para mentorías</h3><div class="progreso"><div class="barra"><i style="width:60%"></i></div><p class="meta" style="margin-top:var(--esp-1)">3 de 5 pasos · 60 %</p></div></button>
+   </div>
+   <p class="meta" style="margin-top:var(--esp-4)">Siguen En ejecución, Sin asignar y Terminadas (PRD R31).</p>
+  </div>
+ </div>
+</section>
+
+<section class="bloque" aria-labelledby="h-a11y">
+ <h2 id="h-a11y">Contraste calculado</h2>
+ <p class="suave" style="margin-bottom:var(--esp-4)">Copiado de DESIGN.md, sección 6.1. Fórmula WCAG; las transparencias se mezclan con su fondo real. Texto ≥ 4,5:1; bordes de control ≥ 3:1. Foco: anillo lima de 2 px. Áreas táctiles ≥ 48 px.</p>
+ <div style="overflow-x:auto"><table>
+  <thead><tr><th>Id</th><th>Uso</th><th>Primer plano</th><th>Fondo</th><th>Contraste</th><th>Resultado</th></tr></thead>
+  <tbody>
+<!--CONTRASTE-->
+  </tbody>
+ </table></div>
+</section>
+
+<footer class="meta" style="border-top:1px solid var(--color-borde);padding-top:var(--esp-5)">Señal de Turno <!--VERSION--> · Staff Interact2Hack · Joshua Lozada y Raymond Portilla · Fuentes Big Shoulders Display y Sora (SIL OFL 1.1) · Identidad: Interact2Hack Señal Neón v1.0 (USFQ Medios Interactivos y NESTLab).</footer>
+</body>
+</html>

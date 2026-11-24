@@ -235,7 +235,7 @@ Cada componente cubre lo que necesita un perfil del PRD:
   - **hover** (escritorio): el borde pasa a blanco 45 %.
   - **foco**: anillo lima de 2 px, separado 2 px.
   - **presionada**: el fondo se aclara a blanco 4 % sobre la superficie.
-  - **bloqueada «En edición»**: contenido en blanco 64 %, candado y «En edición · Ana Torres»; no se abre para nadie más que quien edita (R13).
+  - **bloqueada «En edición»**: contenido en blanco 64 %, candado y «En edición · Mateo Cruz»; no se abre para nadie más que quien edita (R13).
 - **Variantes por estado:** las 5 de 4.2. **Completada:** el título pasa a blanco 64 % y se muestran quién completó y la hora. **Vencida:** el temporizador va en rojo.
 - **Tamaño:** ancho completo en el celular; mínimo 320 px en la cuadrícula de escritorio. Toda la tarjeta es el área táctil (mínimo 48 px de alto).
 

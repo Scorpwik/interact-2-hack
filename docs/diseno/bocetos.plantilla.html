@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bocetos de pantallas · Señal de Turno · Staff Interact2Hack</title>
+<!-- Generado por docs/diseno/generar-bocetos.py desde DESIGN.md y el brand board. No editar a mano: si algo no coincide, manda DESIGN.md. -->
+<style>
+/*FUENTES*/
+/* ===== Tokens: copiados tal cual del DESIGN.md, sección 4 ===== */
+/*TOKENS*/
+/* ===== Componentes: los mismos estilos del brand board ===== */
+/*COMPONENTES*/
+/* ===== Solo para los bocetos (usan tokens) ===== */
+.indice{display:flex;flex-wrap:wrap;gap:var(--esp-2);margin-top:var(--esp-5)}
+.indice a{display:inline-flex;align-items:center;min-height:var(--tactil-min);padding:0 var(--esp-4);border:var(--borde-componente) solid var(--color-borde-control);color:var(--color-texto);text-decoration:none;font:600 var(--fs-insignia)/1 var(--fuente-texto)}
+.indice a:hover{border-color:var(--color-accion);color:var(--color-accion)}
+.telefonos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),390px));gap:var(--esp-6) var(--esp-5);justify-content:center}
+.pantalla-tit{display:block;margin-bottom:var(--esp-2);font:600 var(--fs-insignia)/1.3 var(--fuente-texto);color:var(--color-texto-suave)}
+.cel{position:relative;width:100%}
+.cel .usuario{display:flex;justify-content:space-between;align-items:center;padding:var(--esp-2) var(--esp-4);border-bottom:1px solid var(--color-borde)}
+.cel .cont{min-height:640px}
+.volver{display:inline-flex;align-items:center;gap:var(--esp-2);min-height:var(--tactil-min);color:var(--color-accion);font:600 var(--fs-insignia)/1 var(--fuente-texto)}
+.volver svg{width:18px;height:18px;transform:scaleX(-1)}
+.det-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--esp-3);margin:var(--esp-2) 0 var(--esp-3)}
+.det-tit{font:600 20px/1.3 var(--fuente-texto);margin:var(--esp-3) 0 var(--esp-1)}
+.companero{display:flex;justify-content:space-between;align-items:center;min-height:var(--tactil-min);border-bottom:1px solid var(--color-borde);font-size:var(--fs-meta)}
+.companero a{color:var(--color-accion);font-weight:600;min-height:var(--tactil-min);display:inline-flex;align-items:center}
+.sub{font:600 var(--fs-kicker)/1.2 var(--fuente-texto);letter-spacing:.2em;text-transform:uppercase;color:var(--color-texto-suave);margin:var(--esp-5) 0 var(--esp-2)}
+.capa-aviso{margin-bottom:var(--esp-3)}
+.capa-aviso:empty{display:none}
+.oculto{display:none!important}
+.esc+.esc{margin-top:var(--esp-6)}
+.esc .cab-esc{display:flex;justify-content:space-between;align-items:center;gap:var(--esp-3);flex-wrap:wrap}
+.topbar{flex-wrap:wrap}
+.quien{margin-left:auto;font-size:var(--fs-meta);color:var(--color-texto-suave);display:inline-flex;align-items:center;min-height:var(--tactil-min)}
+.dos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--esp-5);align-items:start}
+.fila-tarea{display:grid;grid-template-columns:1fr auto;gap:var(--esp-2) var(--esp-4);align-items:center;padding:var(--esp-3) var(--esp-4);border-bottom:1px solid var(--color-borde);min-height:64px}
+.fila-tarea:last-child{border-bottom:0}
+.fila-tarea .acciones{display:flex;gap:var(--esp-2);flex-wrap:wrap;justify-content:flex-end}
+.btn.chico{min-height:var(--tactil-min);padding:0 var(--esp-3)}
+.fila-tarea.activa{background:var(--color-superficie);outline:var(--borde-componente) solid var(--color-accion);outline-offset:-2px}
+.bloqueo{display:inline-flex;align-items:center;gap:var(--esp-2);font-size:var(--fs-meta);color:var(--color-texto-suave)}
+.bloqueo svg{width:16px;height:16px}
+.opcion{cursor:pointer;background:transparent;color:var(--color-texto);width:100%;font:400 var(--fs-cuerpo)/1.3 var(--fuente-texto);text-align:left;gap:var(--esp-3)}
+.opcion .izq{display:inline-flex;align-items:center;gap:var(--esp-3)}
+.opcion.sel{border-color:var(--color-accion)}
+.opcion.sel .caja{background:var(--color-activo);border-color:var(--color-activo);color:var(--color-texto-sobre-accion)}
+.opcion.no .caja{border-color:var(--color-texto-deshabilitado)}
+.opcion .caja svg{display:none}.opcion.sel .caja svg{display:block}
+.casilla{display:flex;align-items:center;gap:var(--esp-3);min-height:var(--tactil-min);cursor:pointer;font:600 var(--fs-insignia)/1.3 var(--fuente-texto)}
+.casilla input{width:24px;height:24px;accent-color:var(--i2h-lima);margin:0}
+.pasos-form{list-style:none;padding:0;margin:0 0 var(--esp-2)}
+.pasos-form li{display:flex;gap:var(--esp-2);margin-bottom:var(--esp-2)}
+.pasos-form input{flex:1}
+.pasos-form .btn{min-width:var(--tactil-min);padding:0}
+.nota{font-size:var(--fs-meta);color:var(--color-texto-suave);margin-top:var(--esp-2)}
+.marca-ej{display:inline-block;font:600 var(--fs-kicker)/1 var(--fuente-texto);letter-spacing:.2em;text-transform:uppercase;color:var(--color-aviso);border:var(--borde-componente) solid var(--color-aviso);padding:var(--esp-1) var(--esp-2)}
+.desliza{touch-action:none;user-select:none}
+.desliza .pulgar{position:relative;z-index:1;cursor:grab}
+.desliza .relleno{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--color-accion)}
+.desliza .txt{position:relative;z-index:1}
+.desliza.listo{cursor:pointer}
+.cel .acc-fija{margin-top:var(--esp-4)}
+.paso:not(.on):not(.bloq) .caja svg{display:none}
+</style>
+</head>
+<body>
+<!--ICONOS-->
+
+<header>
+ <p class="kicker">Interact2Hack · Staff · Bocetos de pantallas · según DESIGN.md <!--VERSION--></p>
+ <h1>Señal de Turno · bocetos</h1>
+ <p class="suave" style="max-width:780px">Maquetas estáticas de las pantallas clave, con la dirección B «Tablero de salidas». Usan los mismos tokens, componentes y datos que el brand board. <b>Si algo no coincide, manda DESIGN.md.</b></p>
+ <p style="margin-top:var(--esp-3)"><span class="marca-ej">Datos de ejemplo</span> <span class="meta">Personas, horas, teléfonos y pasos son inventados para ilustrar; no son datos del cliente. Los lugares salen de las muestras del brandboard Señal Neón. Ahora: sáb 20, 09:18.</span></p>
+ <nav class="indice" aria-label="Pantallas"><a href="#estudiante">Estudiante · celular</a><a href="#tablero">Admin · tablero</a><a href="#tareas">Admin · tareas y asignación</a><a href="#super">Super admin · usuarios</a></nav>
+</header>
+
+<!-- ============ ESTUDIANTE ============ -->
+<section class="bloque" id="estudiante" aria-labelledby="h-est">
+ <h2 id="h-est">Estudiante en el celular</h2>
+ <p class="suave" style="margin-bottom:var(--esp-5)">Luis Mena, estudiante (390 px). Toca los pasos del detalle, escribe una observación y desliza para completar. Prueba «Simular sin conexión» y toca la tarea urgente para ver el aviso de R17.</p>
+ <div class="telefonos">
+
+  <!-- 1 · Mis tareas -->
+  <div>
+   <span class="pantalla-tit">1 · Mis tareas</span>
+   <div class="cel">
+    <div class="usuario"><span class="meta">Luis Mena · estudiante</span><span class="meta">Sáb 20 · 09:18</span></div>
+    <div class="cont">
+     <h2 style="margin:var(--esp-2) 0 var(--esp-4)">Mis tareas</h2>
+     <div class="capa-aviso" id="aviso-lista" aria-live="polite"></div>
+     <a href="#detalle" style="display:block;text-decoration:none" aria-label="Abrir Preparar Sala 3 para mentorías"><div class="senal barrer" style="margin-bottom:var(--esp-4)"><p class="kicker">Vence primero · faltan</p><p class="cifra">42 min</p><h3>Preparar Sala 3 para mentorías</h3><p style="font-size:var(--fs-meta)">En ejecución · Sala 3 · Edificio Galileo · <span class="js-avance-txt">3 de 5 pasos</span></p></div></a>
+     <div class="grid" style="gap:var(--esp-3)">
+      <button class="tarjeta" type="button"><div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div><h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · venció 09:00 · espera reasignación</p></button>
+      <button class="tarjeta" type="button" id="card-urgente"><div class="cab"><div class="fila-ins"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span></div><div class="tiempo"><span class="p">Faltan</span><span class="n">1 h 12 min</span></div></div><h3>Llevar extensiones eléctricas a la Sala 3</h3><p class="meta">Sala 3 · Edificio Galileo · vence 10:30</p><div class="progreso"><div class="barra"><i style="width:0%"></i></div><p class="meta" style="margin-top:var(--esp-1)">0 de 3 pasos · 0 %</p></div></button>
+     </div>
+     <p class="sub">Completadas · 2</p>
+     <a href="#completadas" class="volver" style="transform:none">Ver completadas →</a>
+    </div>
+    <nav class="tabbar" aria-label="Navegación del estudiante [SUPUESTO]"><span class="tab on" aria-current="page"><svg aria-hidden="true"><use href="#i-lista"/></svg>Mis tareas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-check"/></svg>Completadas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-persona"/></svg>Perfil<span class="pt"></span></span></nav>
+   </div>
+  </div>
+
+  <!-- 2 · Detalle -->
+  <div id="detalle">
+   <span class="pantalla-tit">2 · Detalle de tarea · checklist y completar</span>
+   <div class="cel" id="cel-detalle">
+    <div class="banda oculto" id="banda" role="status"><svg aria-hidden="true"><use href="#i-sin-red"/></svg><span>Sin conexión. No puedes marcar pasos hasta que vuelva internet.</span></div>
+    <div class="usuario"><span class="volver"><svg aria-hidden="true"><use href="#i-flecha"/></svg>Mis tareas</span><label class="casilla meta" style="font-weight:400"><input type="checkbox" id="sim-offline"> Simular sin conexión</label></div>
+    <div class="cont">
+     <div class="det-cab"><div class="fila-ins"><span class="ins en-ejecucion" id="ins-estado"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div>
+      <div class="tiempo t-aviso" id="tiempo-det"><span class="p">Faltan</span><span class="n">42 min</span></div></div>
+     <h3 class="det-tit">Preparar Sala 3 para mentorías</h3>
+     <p class="meta">Sala 3 · Edificio Galileo · vence 10:00 · inició Ana Torres 09:31</p>
+     <div class="progreso"><div class="barra"><i id="barra-det" style="width:60%"></i></div><p class="meta" style="margin-top:var(--esp-1)" id="avance-det">3 de 5 pasos · 60 %</p></div>
+     <p class="sub">Compañeros</p>
+     <div class="companero"><span>Ana Torres</span><a href="tel:0990000000">099 000 0000</a></div>
+     <p class="sub">Checklist</p>
+     <ul class="check" id="checklist">
+      <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Abrir la sala con la llave de seguridad</span><span class="meta autor">Ana Torres · 09:31</span></span></li>
+      <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Encender el proyector y probar HDMI</span><span class="meta autor">Luis Mena · 09:34</span></span></li>
+      <li class="paso on" role="checkbox" aria-checked="true" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Ubicar 6 mesas y 24 sillas</span><span class="meta autor">Ana Torres · 09:40</span></span></li>
+      <li class="paso" role="checkbox" aria-checked="false" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Colocar los letreros del reto 02</span><span class="meta autor"></span></span></li>
+      <li class="paso" role="checkbox" aria-checked="false" tabindex="0"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Probar el wifi de la sala</span><span class="meta autor"></span></span></li>
+     </ul>
+     <div class="campo" style="margin-top:var(--esp-4)"><label for="obs">Observaciones (obligatorio para completar)</label><textarea id="obs" rows="3" placeholder="Ej.: faltó un letrero; se pidió a logística."></textarea><p class="msg">La ven tus compañeros y los administradores.</p></div>
+     <div class="capa-aviso" id="aviso-det" aria-live="polite"></div>
+     <div class="desliza bloq" id="desliza" role="button" tabindex="0" aria-disabled="true" aria-label="Completar tarea"><span class="relleno"></span><span class="pulgar"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span class="txt">Faltan 2 pasos y la observación</span></div>
+    </div>
+   </div>
+  </div>
+
+  <!-- 3 · Completadas -->
+  <div id="completadas">
+   <span class="pantalla-tit">3 · Completadas</span>
+   <div class="cel">
+    <div class="usuario"><span class="meta">Luis Mena · estudiante</span><span class="meta">Sáb 20 · 09:18</span></div>
+    <div class="cont">
+     <h2 style="margin:var(--esp-2) 0 var(--esp-4)">Completadas</h2>
+     <div class="grid" style="gap:var(--esp-3)">
+      <button class="tarjeta completada" type="button"><div class="cab"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><div class="tiempo listo"><span class="p">Completada</span><span class="n">09:12</span></div></div><h3>Revisar el proyector del teatro</h3><p class="meta">Teatro Calderón de la Barca · completó Ana Torres</p><div class="progreso"><div class="barra"><i style="width:100%"></i></div><p class="meta" style="margin-top:var(--esp-1)">4 de 4 pasos · 100 %</p></div></button>
+      <button class="tarjeta completada" type="button"><div class="cab"><div class="fila-ins"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><span class="ins fuera-de-hora"><svg aria-hidden="true"><use href="#i-reloj-alerta"/></svg>Fuera de hora</span></div><div class="tiempo listo"><span class="p">Completada</span><span class="n">08:47</span></div></div><h3>Pegar la señalética de baños</h3><p class="meta">Edificio Galileo · venció 08:30 · completó Luis Mena</p></button>
+     </div>
+     <p class="nota">Las completadas se acumulan aquí (R34). Los pasos se ven en solo lectura.</p>
+    </div>
+    <nav class="tabbar" aria-label="Navegación del estudiante [SUPUESTO]"><span class="tab"><svg aria-hidden="true"><use href="#i-lista"/></svg>Mis tareas<span class="pt"></span></span><span class="tab on" aria-current="page"><svg aria-hidden="true"><use href="#i-check"/></svg>Completadas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-persona"/></svg>Perfil<span class="pt"></span></span></nav>
+   </div>
+  </div>
+
+  <!-- 4 · Sin conexión -->
+  <div>
+   <span class="pantalla-tit">4 · Sin conexión (R19)</span>
+   <div class="cel">
+    <div class="banda" role="status"><svg aria-hidden="true"><use href="#i-sin-red"/></svg><span>Sin conexión. No puedes marcar pasos hasta que vuelva internet.</span></div>
+    <div class="usuario"><span class="volver"><svg aria-hidden="true"><use href="#i-flecha"/></svg>Mis tareas</span><span class="meta">Última actualización 09:18</span></div>
+    <div class="cont">
+     <div class="det-cab"><div class="fila-ins"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div><div class="tiempo t-aviso"><span class="p">Faltan</span><span class="n">42 min</span></div></div>
+     <h3 class="det-tit">Preparar Sala 3 para mentorías</h3>
+     <p class="meta">Sala 3 · Edificio Galileo · 3 de 5 pasos</p>
+     <p class="sub">Checklist</p>
+     <ul class="check">
+      <li class="paso on bloq" role="checkbox" aria-checked="true" aria-disabled="true"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="tx">Ubicar 6 mesas y 24 sillas</span><span class="meta">Ana Torres · 09:40</span></span></li>
+      <li class="paso bloq" role="checkbox" aria-checked="false" aria-disabled="true"><span class="caja"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span><span class="tx">Colocar los letreros del reto 02</span><span class="meta">Sin conexión</span></span></li>
+      <li class="paso bloq" role="checkbox" aria-checked="false" aria-disabled="true"><span class="caja"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span><span class="tx">Probar el wifi de la sala</span><span class="meta">Sin conexión</span></span></li>
+     </ul>
+     <div class="acc-fija"><div class="desliza bloq"><span class="pulgar"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span class="txt">Sin conexión</span></div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ADMIN · TABLERO ============ -->
+<section class="bloque" id="tablero" aria-labelledby="h-tab">
+ <h2 id="h-tab">Administrador en el escritorio</h2>
+ <p class="suave" style="margin-bottom:var(--esp-5)">El tablero es la página principal del administrador (R30). Prueba el filtro «Por vencer».</p>
+ <div class="esc">
+  <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><span class="on" aria-current="page"><span class="pt"></span>Tablero</span><span>Tareas</span><span>Estudiantes</span><span>Usuarios</span><span class="quien">Super administrador</span></nav>
+  <div class="cab-esc"><h2 style="margin:0">Tablero · sáb 20</h2><span class="meta">Actualizado 09:18</span></div>
+  <div class="totales" style="margin-top:var(--esp-4)">
+   <div class="total"><span class="n">4</span><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span></div>
+   <div class="total"><span class="n">2</span><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div>
+   <div class="total"><span class="n">3</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div>
+   <div class="total"><span class="n">4</span><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span></div>
+   <div class="total"><span class="n">1</span><span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span></div>
+   <div class="total"><span class="n">18</span><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div>
+  </div>
+  <div class="cumpl">
+   <div class="anillo" role="img" aria-label="Cumplimiento 62 por ciento"><span>62%</span></div>
+   <div><p class="kicker">Cumplimiento del día</p><p style="margin:var(--esp-2) 0">18 de 29 tareas completadas</p><div class="barra"><i style="width:62%"></i></div><p class="meta" style="margin-top:var(--esp-2)">«Por vencer» se cuenta aparte: son tareas pendientes o en ejecución a 60 min o menos.</p></div>
+  </div>
+  <div class="filtros" role="group" aria-label="Filtros y orden">
+   <button class="filtro" type="button" aria-pressed="false" id="f-por-vencer">Por vencer</button>
+   <button class="filtro js-orden on" type="button" aria-pressed="true">✓ Orden: más cerca de vencer</button>
+   <button class="filtro js-orden" type="button" aria-pressed="false">Orden: más reciente</button>
+   <button class="filtro js-orden" type="button" aria-pressed="false">Por estado</button>
+   <button class="filtro js-orden" type="button" aria-pressed="false">Por lugar</button>
+  </div>
+  <div class="js-grupo" data-grupo="pendientes">
+   <div class="grupo"><h3>Pendientes</h3><span class="meta">4 · se muestran 2</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span></div><div class="tiempo"><span class="p">Faltan</span><span class="n">1 h 12 min</span></div></div><h3>Llevar extensiones eléctricas a la Sala 3</h3><p class="meta">Sala 3 · Edificio Galileo · vence 10:30</p><div class="progreso"><div class="barra"><i style="width:0%"></i></div><p class="meta" style="margin-top:var(--esp-1)">0 de 3 pasos · 0 %</p></div><div class="pie"><span class="meta">Todos los estudiantes (urgente, R27)</span></div></button>
+    <button class="tarjeta" type="button"><div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div><h3>Armar mesas de check-in</h3><p class="meta">Hall principal · vence 12:00</p><div class="progreso"><div class="barra"><i style="width:0%"></i></div><p class="meta" style="margin-top:var(--esp-1)">0 de 4 pasos · 0 %</p></div><div class="pie"><div class="avatares" aria-label="Responsables: Mateo Cruz"><span class="av">MC</span></div></div></button>
+   </div>
+  </div>
+  <div class="js-grupo" data-grupo="vencidas">
+   <div class="grupo"><h3 style="color:var(--estado-vencida)">Vencidas</h3><span class="meta">2 · se muestra 1</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div><h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · venció 09:00</p><div class="progreso"><div class="barra"><i style="width:0%"></i></div><p class="meta" style="margin-top:var(--esp-1)">0 de 2 pasos · 0 %</p></div><div class="pie"><div class="avatares" aria-label="Responsables: Luis Mena"><span class="av">LM</span></div><span class="meta">Reasignar</span></div></button>
+   </div>
+  </div>
+  <div class="js-grupo" data-grupo="por-vencer">
+   <div class="grupo"><h3 style="color:var(--marca-por-vencer)">Por vencer</h3><span class="meta">3 · se muestra 1</span></div>
+   <div class="tarjetas">
+    <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div><div class="tiempo t-aviso"><span class="p">Faltan</span><span class="n">42 min</span></div></div><h3>Preparar Sala 3 para mentorías</h3><p class="meta">Sala 3 · Edificio Galileo · vence 10:00</p><div class="progreso"><div class="barra"><i style="width:60%"></i></div><p class="meta" style="margin-top:var(--esp-1)">3 de 5 pasos · 60 %</p></div><div class="pie"><div class="avatares" aria-label="Responsables: Ana Torres, Luis Mena"><span class="av">AT</span><span class="av">LM</span></div><span class="meta">Inició Ana Torres · 09:31</span></div></button>
+   </div>
+  </div>
+  <div class="js-grupo" data-grupo="sin-asignar">
+   <div class="grupo"><h3>Sin asignar</h3><span class="meta">1</span></div>
+   <div class="tarjetas">
+    <div class="tarjeta bloqueada" aria-disabled="true"><div class="cab"><div class="fila-ins"><span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span><span class="ins en-edicion"><svg aria-hidden="true"><use href="#i-candado"/></svg>En edición · Mateo Cruz</span></div><div class="tiempo"><span class="p">Faltan</span><span class="n">4 h</span></div></div><h3>Ordenar la mesa de premiación</h3><p class="meta">Teatro Calderón de la Barca · no se puede abrir mientras se edita (R13)</p></div>
+   </div>
+  </div>
+  <p class="meta js-grupo" data-grupo="resto" style="margin-top:var(--esp-4)">Siguen En ejecución y Terminadas, en el orden de R31.</p>
+ </div>
+</section>
+
+<!-- ============ ADMIN · TAREAS ============ -->
+<section class="bloque" id="tareas" aria-labelledby="h-tar">
+ <h2 id="h-tar">Tareas, edición y asignación</h2>
+ <p class="suave" style="margin-bottom:var(--esp-5)">Mateo Cruz (administrador) edita «Ordenar la mesa de premiación»: mientras tanto, los demás la ven «En edición». Elige responsables, marca «urgente» y guarda.</p>
+ <div class="esc">
+  <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><span><span class="pt" style="background:transparent"></span>Tablero</span><span class="on" aria-current="page"><span class="pt"></span>Tareas</span><span>Estudiantes</span><span>Usuarios</span><span class="quien">Mateo Cruz · administrador</span></nav>
+  <div class="dos">
+   <div>
+    <div class="cab-esc" style="margin-bottom:var(--esp-3)"><h3 style="font:900 var(--fs-h2)/.95 var(--fuente-display);text-transform:uppercase">Tareas · sáb 20</h3><button class="btn secundario chico" type="button">Nueva tarea</button></div>
+    <div class="panel" style="padding:0">
+     <div class="fila-tarea"><div><h3>Llevar extensiones eléctricas a la Sala 3</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span><span class="meta">vence 10:30</span></div></div><div class="acciones"><button class="btn secundario chico" type="button">Editar</button><button class="btn peligro chico" type="button">Eliminar</button></div></div>
+     <div class="fila-tarea"><div><h3>Armar mesas de check-in</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="meta">vence 12:00</span></div></div><div class="acciones"><button class="btn secundario chico" type="button">Editar</button><button class="btn peligro chico" type="button">Eliminar</button></div></div>
+     <div class="fila-tarea"><div><h3>Preparar Sala 3 para mentorías</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="meta">vence 10:00</span></div></div><div class="acciones"><span class="bloqueo"><svg aria-hidden="true"><use href="#i-candado"/></svg>No se puede editar: está en ejecución</span></div></div>
+     <div class="fila-tarea"><div><h3>Reponer agua en la mesa de mentores</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><span class="meta">venció 09:00</span></div></div><div class="acciones"><button class="btn secundario chico" type="button">Reasignar</button><button class="btn peligro chico" type="button">Eliminar</button></div></div>
+     <div class="fila-tarea activa"><div><h3>Ordenar la mesa de premiación</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins sin-asignar" id="lista-estado"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span><span class="ins en-edicion"><svg aria-hidden="true"><use href="#i-candado"/></svg>En edición · tú</span></div></div><div class="acciones"><span class="meta">Editando →</span></div></div>
+     <div class="fila-tarea"><div><h3>Revisar el proyector del teatro</h3><div class="fila-ins" style="margin-top:var(--esp-1)"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><span class="meta">09:12 · Ana Torres</span></div></div><div class="acciones"><button class="btn secundario chico" type="button">Reabrir</button></div></div>
+    </div>
+    <p class="nota">Qué se puede editar o eliminar sigue R21 y R22; Reabrir y Eliminar piden confirmación.</p>
+   </div>
+   <form class="panel" id="form-tarea" novalidate>
+    <p class="kicker">Editar tarea</p>
+    <h3 style="margin:var(--esp-2) 0 var(--esp-4)">Ordenar la mesa de premiación</h3>
+    <div class="campo"><label for="t-nombre">Nombre (obligatorio)</label><input id="t-nombre" value="Ordenar la mesa de premiación"></div>
+    <div class="campo"><label for="t-desc">Descripción (opcional)</label><input id="t-desc" placeholder="Ej.: indicaciones para el equipo"></div>
+    <div class="campo" id="c-vence"><label for="t-vence">Fecha y hora de vencimiento (obligatorio)</label><input id="t-vence" value="Sáb 20 · 13:18" aria-describedby="e-vence"><p class="msg oculto" id="e-vence"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Pon la hora de vencimiento.</p></div>
+    <div class="campo"><label for="t-lugar">Lugar o aula (obligatorio)</label><input id="t-lugar" value="Teatro Calderón de la Barca"></div>
+    <div class="campo"><span class="lab">Pasos del checklist (al menos uno)</span>
+     <ul class="pasos-form" id="pasos-form">
+      <li><input aria-label="Paso 1" value="Ubicar la mesa frente al escenario"><button class="btn peligro" type="button" aria-label="Quitar paso 1">×</button></li>
+      <li><input aria-label="Paso 2" value="Dejar las sillas del jurado"><button class="btn peligro" type="button" aria-label="Quitar paso 2">×</button></li>
+     </ul>
+     <button class="btn secundario chico" type="button" id="agregar-paso">+ Agregar paso</button>
+    </div>
+    <div class="campo"><span class="lab">Responsables · disponibilidad del sáb 20</span>
+     <div id="responsables">
+      <button class="opcion" type="button" aria-pressed="false"><span class="izq"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Ana Torres</span><span class="meta">08:00–14:00</span></button>
+      <button class="opcion" type="button" aria-pressed="false"><span class="izq"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Luis Mena</span><span class="meta">09:00–18:00</span></button>
+      <button class="opcion no" type="button" aria-pressed="false" aria-disabled="true" data-hora="1"><span class="izq"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Sofía Paredes</span><span class="meta js-disp" style="color:inherit">09:00–13:00 · no disponible a las 13:18</span></button>
+      <button class="opcion no" type="button" aria-pressed="false" aria-disabled="true" data-no="1"><span class="izq"><span class="caja"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Mateo Cruz</span><span class="meta" style="color:inherit">No disponible sáb 20</span></button>
+     </div>
+     <p class="nota" id="nota-resp">Sin responsables, la tarea queda «Sin asignar» (R7).</p>
+    </div>
+    <label class="casilla"><input type="checkbox" id="t-urgente"> Marcar como urgente</label>
+    <p class="nota" style="margin:0 0 var(--esp-4)">Urgente: se asigna a todos los estudiantes, estén o no disponibles (R27, R28).</p>
+    <div class="capa-aviso" id="aviso-form" aria-live="polite"></div>
+    <div class="btns"><button class="btn primario" type="submit">Guardar tarea</button><button class="btn secundario" type="button">Cancelar</button></div>
+   </form>
+  </div>
+ </div>
+</section>
+
+<!-- ============ SUPER ADMIN ============ -->
+<section class="bloque" id="super" aria-labelledby="h-sup">
+ <h2 id="h-sup">Super administrador · usuarios y estudiantes</h2>
+ <p class="suave" style="margin-bottom:var(--esp-5)">Existe un único super administrador fijo, que no se crea ni se borra desde la herramienta, y nadie más puede cambiar su contraseña (R3).</p>
+ <div class="esc">
+  <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><span>Tablero</span><span>Tareas</span><span>Estudiantes</span><span class="on" aria-current="page"><span class="pt"></span>Usuarios</span><span class="quien">Super administrador</span></nav>
+  <div class="dos">
+   <div>
+    <div class="cab-esc" style="margin-bottom:var(--esp-3)"><h3 style="font:900 var(--fs-h2)/.95 var(--fuente-display);text-transform:uppercase">Usuarios</h3><button class="btn primario" type="button">Crear usuario</button></div>
+    <div class="panel" style="padding:0">
+     <div class="persona"><div><h3>Super administrador <span class="meta">(tú)</span></h3><p class="meta">Fijo · no se puede eliminar · solo tú cambias tu contraseña</p></div><span class="perfil super">Super admin</span></div>
+     <div class="persona"><div><h3>Mateo Cruz</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p><div class="btns" style="margin-top:var(--esp-2)"><button class="btn secundario chico" type="button">Cambiar contraseña</button><button class="btn peligro chico" type="button">Eliminar</button></div></div><span class="perfil">Admin</span></div>
+     <div class="persona"><div><h3>Ana Torres</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p></div><span class="perfil">Estudiante</span></div>
+     <div class="persona"><div><h3>Luis Mena</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p></div><span class="perfil">Estudiante</span></div>
+     <div class="persona"><div><h3>Sofía Paredes</h3><p class="meta">correo@ejemplo.ec · 099 000 0000</p></div><span class="perfil">Estudiante</span></div>
+    </div>
+    <p class="nota">Al crear un usuario, la herramienta le envía sus credenciales por correo (R4).</p>
+   </div>
+   <div>
+    <div class="cab-esc" style="margin-bottom:var(--esp-3)"><h3 style="font:900 var(--fs-h2)/.95 var(--fuente-display);text-transform:uppercase">Panel de estudiantes</h3></div>
+    <div class="panel" style="padding:0">
+     <div class="persona"><div><h3>Ana Torres</h3><p class="meta">Sáb 20 · 08:00–14:00 · le quedan 4 h 42 min</p></div><span class="ins pendiente">3 tareas</span></div>
+     <div class="persona"><div><h3>Luis Mena</h3><p class="meta">Sáb 20 · 09:00–18:00 · le quedan 8 h 42 min</p></div><span class="ins pendiente">2 tareas</span></div>
+     <div class="persona"><div><h3>Sofía Paredes</h3><p class="meta">Sáb 20 · 09:00–13:00 · le quedan 3 h 42 min</p></div><span class="ins pendiente">1 tarea</span></div>
+    </div>
+    <p class="nota">Al tocar una fila se abre el historial de completadas del estudiante (R36). Quien no tiene tareas aparece con «Sin tareas» en ámbar (ver brand board); aquí todos tienen al menos la urgente (R27).</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<footer class="meta" style="border-top:1px solid var(--color-borde);padding-top:var(--esp-5)">Señal de Turno <!--VERSION--> · bocetos · Staff Interact2Hack · Joshua Lozada y Raymond Portilla · Datos de ejemplo · Fuentes Big Shoulders Display y Sora (SIL OFL 1.1) · Identidad: Interact2Hack Señal Neón v1.0.</footer>
+
+<script>
+(function(){
+  var ICO = {check:'<svg aria-hidden="true"><use href="#i-check"/></svg>', alerta:'<svg aria-hidden="true"><use href="#i-alerta"/></svg>',
+             candado:'<svg aria-hidden="true"><use href="#i-candado"/></svg>', flecha:'<svg aria-hidden="true"><use href="#i-flecha"/></svg>',
+             arena:'<svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>'};
+  function aviso(id, tipo, html){
+    var c = document.getElementById(id); if(!c) return;
+    var ico = tipo==='ok'?ICO.check:(tipo==='err'?ICO.alerta:ICO.arena);
+    c.innerHTML = '<div class="aviso '+tipo+'" role="'+(tipo==='err'?'alert':'status')+'">'+ico+'<span>'+html+'</span></div>';
+    if(tipo==='ok'){ clearTimeout(c._t); c._t = setTimeout(function(){ c.innerHTML=''; }, 4000); }
+  }
+  // ---- Detalle: checklist, observación y deslizar ----
+  var lista = document.getElementById('checklist'), obs = document.getElementById('obs'),
+      sl = document.getElementById('desliza'), off = document.getElementById('sim-offline'),
+      banda = document.getElementById('banda'), completada = false;
+  var pasos = Array.prototype.slice.call(lista.querySelectorAll('.paso'));
+  function marcados(){ return pasos.filter(function(p){return p.classList.contains('on');}).length; }
+  function actualizar(){
+    var n = marcados(), t = pasos.length, pct = Math.round(n*100/t);
+    document.getElementById('barra-det').style.width = pct+'%';
+    document.getElementById('avance-det').textContent = n+' de '+t+' pasos · '+pct+' %';
+    Array.prototype.forEach.call(document.querySelectorAll('.js-avance-txt'), function(e){ e.textContent = n+' de '+t+' pasos'; });
+    if(completada) return;
+    var faltan = t-n, sinObs = !obs.value.trim(), offline = off.checked, motivo = '';
+    if(offline) motivo = 'Sin conexión';
+    else if(faltan && sinObs) motivo = 'Faltan '+faltan+(faltan===1?' paso':' pasos')+' y la observación';
+    else if(faltan) motivo = 'Faltan '+faltan+(faltan===1?' paso':' pasos');
+    else if(sinObs) motivo = 'Falta la observación';
+    var bloq = !!motivo;
+    sl.classList.toggle('bloq', bloq); sl.classList.toggle('listo', !bloq);
+    sl.setAttribute('aria-disabled', bloq?'true':'false');
+    sl.querySelector('.pulgar').innerHTML = bloq?ICO.candado:ICO.flecha;
+    sl.querySelector('.txt').textContent = bloq?motivo:'Desliza para completar →';
+  }
+  function hora(){ return '09:18'; } // hora fija del ejemplo
+  pasos.forEach(function(p){
+    function alternar(){
+      if(completada) return;
+      if(off.checked){ aviso('aviso-det','amb','Sin conexión: no se puede marcar el paso.'); return; }
+      var on = !p.classList.contains('on');
+      p.classList.toggle('on', on); p.setAttribute('aria-checked', on?'true':'false');
+      p.querySelector('.autor').textContent = on ? 'Luis Mena · '+hora() : '';
+      actualizar(); aviso('aviso-det','ok', (on?'Paso guardado. ':'Paso desmarcado. ')+marcados()+' de '+pasos.length+' pasos.');
+    }
+    p.addEventListener('click', alternar);
+    p.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); alternar(); } });
+  });
+  obs.addEventListener('input', actualizar);
+  off.addEventListener('change', function(){
+    banda.classList.toggle('oculto', !off.checked);
+    pasos.forEach(function(p){
+      p.classList.toggle('bloq', off.checked); p.setAttribute('aria-disabled', off.checked?'true':'false');
+      if(!p.classList.contains('on')){ p.querySelector('.caja').innerHTML = off.checked?ICO.candado:ICO.check; p.querySelector('.autor').textContent = off.checked?'Sin conexión':''; }
+    });
+    actualizar();
+  });
+  function completar(){
+    completada = true; sl.classList.remove('listo','bloq'); sl.classList.add('hecho');
+    sl.innerHTML = '<span class="txt">'+ICO.check+' Completada</span>';
+    var ins = document.getElementById('ins-estado'); ins.className = 'ins completada'; ins.innerHTML = ICO.check+'Completada';
+    var ti = document.getElementById('tiempo-det'); ti.className = 'tiempo listo'; ti.innerHTML = '<span class="p">Completada</span><span class="n">09:18</span>';
+    pasos.forEach(function(p){ p.classList.add('bloq'); });
+    aviso('aviso-det','ok','Tarea completada. La ven tus compañeros y los administradores.');
+  }
+  // arrastre del pulgar
+  var arr = null;
+  sl.addEventListener('pointerdown', function(e){
+    if(!sl.classList.contains('listo')) return;
+    arr = {x:e.clientX, w:sl.clientWidth - sl.querySelector('.pulgar').offsetWidth - 4};
+    sl.setPointerCapture(e.pointerId);
+  });
+  sl.addEventListener('pointermove', function(e){
+    if(!arr) return; var d = Math.max(0, Math.min(arr.w, e.clientX-arr.x));
+    sl.querySelector('.pulgar').style.transform = 'translateX('+d+'px)';
+    sl.querySelector('.relleno').style.width = (d+48)+'px';
+    sl.querySelector('.txt').textContent = d > arr.w*0.85 ? 'Suelta para completar' : 'Desliza para completar →';
+    arr.d = d;
+  });
+  sl.addEventListener('pointerup', function(){
+    if(!arr) return; var ok = arr.d > arr.w*0.85; arr = null;
+    if(ok) completar(); else { sl.querySelector('.pulgar').style.transform=''; sl.querySelector('.relleno').style.width='0'; actualizar(); }
+  });
+  sl.addEventListener('keydown', function(e){
+    if((e.key==='Enter'||e.key===' ') && sl.classList.contains('listo')){ e.preventDefault(); if(window.confirm('¿Completar la tarea «Preparar Sala 3 para mentorías»?')) completar(); }
+  });
+  actualizar();
+  // ---- Mis tareas: una tarea abierta a la vez (R17) ----
+  document.getElementById('card-urgente').addEventListener('click', function(){
+    aviso('aviso-lista','amb','Termina «Preparar Sala 3» antes de empezar otra tarea. <a href="#detalle">Ir a esa tarea</a>');
+  });
+  // ---- Tablero: filtro por vencer y orden ----
+  var fpv = document.getElementById('f-por-vencer');
+  fpv.addEventListener('click', function(){
+    var on = fpv.getAttribute('aria-pressed')!=='true';
+    fpv.setAttribute('aria-pressed', on); fpv.classList.toggle('on', on); fpv.textContent = (on?'✓ ':'')+'Por vencer';
+    Array.prototype.forEach.call(document.querySelectorAll('.js-grupo'), function(g){ g.classList.toggle('oculto', on && g.dataset.grupo!=='por-vencer'); });
+  });
+  var ordenes = document.querySelectorAll('.js-orden');
+  Array.prototype.forEach.call(ordenes, function(b){ b.addEventListener('click', function(){
+    Array.prototype.forEach.call(ordenes, function(o){ o.classList.remove('on'); o.setAttribute('aria-pressed','false'); o.textContent = o.textContent.replace(/^✓ /,''); });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true'); b.textContent = '✓ '+b.textContent;
+  }); });
+  // ---- Formulario: responsables, urgente, pasos y guardar ----
+  var resp = Array.prototype.slice.call(document.querySelectorAll('#responsables .opcion')), urg = document.getElementById('t-urgente');
+  function estadoForm(){
+    var sel = resp.filter(function(o){return o.classList.contains('sel');}).length;
+    var est = document.getElementById('lista-estado');
+    if(sel || urg.checked){ est.className='ins pendiente'; est.innerHTML='<svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente'; }
+    else { est.className='ins sin-asignar'; est.innerHTML='<svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar'; }
+    document.getElementById('nota-resp').textContent = urg.checked ? 'Urgente: se asigna a todos los estudiantes (Ana Torres, Luis Mena y Sofía Paredes).' : (sel ? sel+(sel===1?' responsable':' responsables')+'. La tarea pasa a «Pendiente».' : 'Sin responsables, la tarea queda «Sin asignar» (R7).');
+  }
+  resp.forEach(function(o){ o.addEventListener('click', function(){
+    if(o.dataset.no) { aviso('aviso-form','amb','Mateo Cruz no está disponible el sáb 20.'); return; }
+    if(o.dataset.hora && !urg.checked) { aviso('aviso-form','amb','Sofía Paredes no está disponible a las 13:18 (R28).'); return; }
+    var on = !o.classList.contains('sel'); o.classList.toggle('sel', on); o.setAttribute('aria-pressed', on); estadoForm();
+  }); });
+  urg.addEventListener('change', function(){
+    resp.forEach(function(o){
+      if(o.dataset.hora){ o.classList.toggle('no', !urg.checked); o.setAttribute('aria-disabled', urg.checked?'false':'true');
+        o.querySelector('.js-disp').textContent = urg.checked ? '09:00–13:00 · urgente: va igual (R28)' : '09:00–13:00 · no disponible a las 13:18';
+        if(!urg.checked){ o.classList.remove('sel'); o.setAttribute('aria-pressed','false'); } }
+      if(urg.checked && !o.dataset.no){ o.classList.add('sel'); o.setAttribute('aria-pressed','true'); }
+    });
+    estadoForm();
+  });
+  var pf = document.getElementById('pasos-form');
+  document.getElementById('agregar-paso').addEventListener('click', function(){
+    var n = pf.children.length+1, li = document.createElement('li');
+    li.innerHTML = '<input aria-label="Paso '+n+'" placeholder="Describe el paso"><button class="btn peligro" type="button" aria-label="Quitar paso '+n+'">×</button>';
+    pf.appendChild(li); li.querySelector('input').focus();
+  });
+  pf.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    if(pf.children.length===1){ aviso('aviso-form','err','La tarea necesita al menos un paso.'); return; }
+    b.parentNode.remove();
+  });
+  document.getElementById('form-tarea').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = document.getElementById('t-vence'), c = document.getElementById('c-vence'), vacio = !v.value.trim();
+    c.classList.toggle('error', vacio); document.getElementById('e-vence').classList.toggle('oculto', !vacio); v.setAttribute('aria-invalid', vacio);
+    if(vacio){ aviso('aviso-form','err','No se pudo guardar: revisa los campos marcados.'); v.focus(); return; }
+    aviso('aviso-form','ok','Tarea guardada.');
+  });
+})();
+</script>
+</body>
+</html>

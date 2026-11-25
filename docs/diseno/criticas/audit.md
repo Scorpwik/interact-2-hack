@@ -52,3 +52,12 @@ impeccable detect --json --viewport 390x844 docs/diseno/brand-board.plantilla.ht
 | A-20 | `font-size: 18px` en `.senal h3` y `40px` fijo en `.total .n` y `.anillo span`. | Baja | **Aceptado** | Quedaron en `--fs-titulo-tarea` y `--fs-h1`. |
 | A-21 | La etiqueta de la pestaña del celular está en 12 px, sin token. | Baja | **Rechazado** | DESIGN.md, sección 5.11, pide Sora 600 a 12 px en esa barra. No es un descuido. |
 | A-22 | `@media (prefers-reduced-motion: reduce)` pone `animation: none` y `transition: none` en todo. | Baja | **Rechazado** | Coincide con «con reducir movimiento, nada se anima». El estado no depende del movimiento. |
+
+## Segunda pasada del detector · 25 de noviembre de 2026
+
+Evaluación aparte, con `impeccable detect` sobre la plantilla y sobre `brand-board.html` ya generado. Puntaje de esa pasada: **17/20**. La jerarquía plana y el texto pegado al borde salen de leer la plantilla sin tokens. Con los tokens, los títulos miden 40, 28 y 17 px.
+
+| # | Hallazgo | Gravedad | Decisión | Razón |
+| --- | --- | --- | --- | --- |
+| A-23 | A 360 px la barra del administrador no saltaba de línea y la página medía 407 px de ancho. | Media | **Aceptado** | `.topbar` ahora hace salto de línea. La cuadrícula de tarjetas puede bajar de 300 px. DESIGN.md 5.11 y D-15. |
+| A-24 | Los pasos y el deslizador del muestrario entran al tabulador y no tienen manejador de teclado. | Baja | **Rechazado** | El brand board es una muestra estática. El teclado del producto está en DESIGN.md 5.4 y 5.7: la fila se enfoca y completar se activa como botón. |

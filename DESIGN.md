@@ -339,7 +339,7 @@ Los avisos se anuncian a los lectores de pantalla: los de error y sin conexión 
 - **Celular:** barra inferior con un máximo de 4 destinos, cada uno un enlace con ícono y texto (Sora 600, 12 px) y foco lima. El activo va en blanco con un punto lima; los inactivos, en blanco 64 %.
   - Estudiante: «Mis tareas», «Completadas», «Perfil».
   - Administrador: «Tablero», «Tareas», «Estudiantes», «Usuarios».
-- **Escritorio:** los mismos destinos en una barra superior.
+- **Escritorio:** los mismos destinos en una barra superior. Si el ancho no alcanza, la barra salta de línea. No ensancha la página (D-15).
 
 ## 6. Accesibilidad
 

@@ -40,7 +40,7 @@ Existe **un único super administrador fijo, que no se crea ni se borra desde la
 - Registrar de cada usuario su nombre, correo, teléfono y los días y horas en que está disponible (P-02, N-18, D-S-17).
 - Cambiar la contraseña de cualquier usuario, salvo la del super administrador (N-12, D-S-04).
 - Crear tareas, asignarlas a una o varias personas y dejarlas sin asignar (Descripción, N-01, P-09).
-- Editar y eliminar tareas, solo en los estados que lo permiten (R18, R19).
+- Editar y eliminar tareas, solo en los estados que lo permiten (R21, R22).
 - Marcar una tarea como urgente (N-15; que la marque el administrador es [SUPUESTO S-05]).
 - Reasignar una tarea vencida, poniéndole una nueva hora (P-14, D-S-30).
 - Reabrir una tarea completada (D-S-06).
@@ -53,7 +53,7 @@ Existe **un único super administrador fijo, que no se crea ni se borra desde la
 - Editar ni eliminar una tarea en ejecución (P-05, P-01).
 - Eliminar una tarea completada (P-06).
 - Entrar a una tarea que otro administrador está editando (P-09, D-S-23).
-- Asignar una tarea a un estudiante que no está disponible, salvo en las tareas urgentes (D-S-35, R31).
+- Asignar una tarea a un estudiante que no está disponible, salvo en las tareas urgentes (D-S-35, R28).
 
 ### Estudiante
 **Puede:**
@@ -143,7 +143,7 @@ Queda fuera de esta versión:
   - **Pendiente:** tiene al menos un responsable, ningún paso marcado y su hora no ha llegado (P-09).
   - **En ejecución:** tiene al menos un paso marcado, no está completada y su hora no ha llegado. Entra en este estado cuando alguien marca el primer paso; abrir la tarea sin marcar nada no la pone en ejecución (P-09, D-S-22). ⚠ P-01 decía «Mientras se abre se pone en ejecución».
   - **Vencida:** llegó su hora de vencimiento, desde el minuto exacto, y no está completada, tenga o no pasos marcados (P-14).
-  - **Completada:** un responsable marcó todos los pasos, escribió observaciones y confirmó deslizando «completar tarea» (P-09, N-09, N-22, D-S-24). Solo sale de este estado si un administrador la reabre (R25).
+  - **Completada:** un responsable marcó todos los pasos, escribió observaciones y confirmó deslizando «completar tarea» (P-09, N-09, N-22, D-S-24). Solo sale de este estado si un administrador la reabre (R26).
 - **R12. Marcas que se suman al estado.** No son estados:
   - **Por vencer:** la tarea está Sin asignar, Pendiente o En ejecución y le falta **una hora o menos** para vencer (P-12).
   - **Urgente:** la marcó un administrador (N-15).

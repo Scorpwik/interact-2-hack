@@ -30,7 +30,7 @@ El equipo decidió seguir el brandboard Interact2Hack Señal Neón v1.0 (D-P16).
 
 ## Dirección elegida: B · Tablero de salidas
 
-> Elección hecha con la IA a partir del brief del equipo. **El equipo (Joshua y Raymond) debe confirmarla**, porque la guía pide que la elijan ellos.
+> La comparación de las tres direcciones la preparó la IA a partir del brief del equipo. **El equipo la confirmó el 25 de noviembre de 2026: se queda B.**
 
 **Por qué:**
 1. Es la única que cumple las tres palabras del equipo a la vez. Es plana y densa sin ser decorativa, y la información va primero.

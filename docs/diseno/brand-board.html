@@ -162,7 +162,7 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .senal.barrer{animation:barrido var(--mov-barrido) var(--curva-barrido) 1 both}
 .senal .kicker{color:var(--color-texto-sobre-accion)}
 .senal .cifra{font:900 var(--fs-cifra)/.9 var(--fuente-display);text-transform:uppercase;margin:var(--esp-2) 0}
-.senal h3{font-size:18px}
+.senal h3{font-size:var(--fs-titulo-tarea)}
 @keyframes barrido{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
 /* Checklist */
 .check{list-style:none;padding:0;background:var(--color-superficie);border:var(--borde-componente) solid var(--color-borde)}
@@ -213,16 +213,16 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .aviso.ok{border-left-color:var(--color-exito)} .aviso.ok svg{color:var(--color-exito)}
 .aviso.err{border-left-color:var(--color-error)} .aviso.err svg{color:var(--color-error)}
 .aviso.amb{border-left-color:var(--color-aviso)} .aviso.amb svg{color:var(--color-aviso)}
-.aviso .acc{margin-left:auto;color:var(--color-accion);font:600 var(--fs-insignia)/1.4 var(--fuente-texto);white-space:nowrap;background:none;border:0;min-height:32px;cursor:pointer}
+.aviso .acc{margin-left:auto;color:var(--color-accion);font:600 var(--fs-insignia)/1.4 var(--fuente-texto);white-space:nowrap;background:none;border:0;min-height:var(--tactil-min);padding:0 var(--esp-3);display:inline-flex;align-items:center;cursor:pointer}
 .banda{display:flex;gap:var(--esp-3);align-items:center;background:var(--color-superficie);border-bottom:4px solid var(--color-aviso);padding:var(--esp-3) var(--esp-4);font-size:var(--fs-meta)}
 .banda svg{width:20px;height:20px;color:var(--color-aviso);flex:none}
 /* Indicador del tablero */
 .totales{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:var(--esp-3)}
 .total{border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-3);background:var(--color-superficie)}
-.total .n{font:900 40px/1 var(--fuente-display);display:block;margin-bottom:var(--esp-2)}
+.total .n{font:900 var(--fs-h1)/1 var(--fuente-display);display:block;margin-bottom:var(--esp-2)}
 .cumpl{display:grid;grid-template-columns:auto 1fr;gap:var(--esp-5);align-items:center;margin-top:var(--esp-5)}
 .anillo{width:120px;height:120px;border-radius:var(--radio-circulo);background:conic-gradient(var(--i2h-lima) 0 62%,var(--progreso-pista) 62% 100%);display:flex;align-items:center;justify-content:center}
-.anillo span{width:96px;height:96px;border-radius:var(--radio-circulo);background:var(--color-fondo);display:flex;align-items:center;justify-content:center;font:900 40px/1 var(--fuente-display);color:var(--i2h-lima)}
+.anillo span{width:96px;height:96px;border-radius:var(--radio-circulo);background:var(--color-fondo);display:flex;align-items:center;justify-content:center;font:900 var(--fs-h1)/1 var(--fuente-display);color:var(--i2h-lima)}
 .filtros{display:flex;flex-wrap:wrap;gap:var(--esp-2);margin:var(--esp-4) 0}
 .filtro{min-height:var(--tactil-min);padding:0 var(--esp-4);background:transparent;color:var(--color-texto);border:var(--borde-componente) solid var(--color-borde-control);font:600 var(--fs-insignia)/1 var(--fuente-texto);cursor:pointer}
 .filtro.on{color:var(--color-accion);border-color:var(--color-accion)}
@@ -286,7 +286,7 @@ td.num,td:first-child{white-space:nowrap}
  <h2 id="h-brief">Brief</h2>
  <div class="grid g3">
   <div class="panel"><span class="etq">Personalidad (palabras del equipo)</span><p class="disp" style="font-size:var(--fs-h2);line-height:1">Fácil de usar · Carga rápida · Útil sin excesos</p></div>
-  <div class="panel"><span class="etq">Referente (propuesta a confirmar)</span><p>La pantalla de salidas de un aeropuerto: hora, estado y lugar de un vistazo. Secundario: la app móvil de Señal Neón.</p></div>
+  <div class="panel"><span class="etq">Referente (confirmado por el equipo)</span><p>La pantalla de salidas de un aeropuerto: hora, estado y lugar de un vistazo. Secundario: la app móvil de Señal Neón.</p></div>
   <div class="panel"><span class="etq">Quién y dónde</span><p>Administradores en un escritorio y estudiantes en el celular, en medio de un hackathon, con la conexión del evento que puede fallar.</p></div>
  </div>
 </section>

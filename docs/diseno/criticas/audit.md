@@ -21,3 +21,34 @@
 | A-15 | Nombres largos o sin espacios desbordan la fila en 360 px. | Baja | **Aceptado** | El texto se corta en varias líneas; nada genera scroll horizontal en 360, 390, 768 y 1280 px. |
 | A-16 | Las animaciones de entrada (800 ms + 110 ms por elemento) retrasan la lectura. | Media | **Aceptado** | En listas y en el tablero no hay entradas animadas. Las transiciones de la interfaz duran 200 ms. Con «reducir movimiento» no hay animación. |
 | A-17 | Tamaño de los campos en el celular. | Media | **Aceptado** | Los campos usan texto de 16 px como mínimo, para que el celular no haga zoom al escribir. |
+
+## Pasada con `/impeccable audit` · 25 de noviembre de 2026
+
+No se ejecutó `/impeccable init` ni `/impeccable document`. El detector es el binario de Impeccable (clonado fuera del repositorio).
+
+Comandos, desde la raíz del repo, con `IMPECCABLE_HOME=/tmp/impeccable-home`:
+
+```text
+impeccable detect --json docs/diseno/brand-board.plantilla.html
+impeccable detect --json docs/diseno/bocetos.plantilla.html
+impeccable detect --json --viewport 390x844 docs/diseno/brand-board.plantilla.html
+```
+
+`direcciones.html` no se escaneó: casi todo el archivo son las fuentes en base64. El viewport 390×844 devolvió el mismo único hallazgo que el escaneo sin viewport.
+
+| # | Dimensión | Nota | Evidencia |
+| --- | --- | --- | --- |
+| 1 | Accesibilidad | 3 | Contraste calculado en DESIGN.md, sección 6.1. Foco lima. La acción del aviso medía 32 px. |
+| 2 | Rendimiento | 3 | Cuatro fuentes incrustadas, sin red. Una sola transición de interfaz. Sin brillos en las listas. |
+| 3 | Temas | 3 | Un solo tema oscuro, como pide Señal Neón. Tres tamaños estaban escritos en px sueltos. |
+| 4 | Responsive | 3 | Columna en el celular, cuadrícula desde 300 px. Áreas de 48 y 56 px, salvo la acción del aviso. |
+| 5 | Integridad | 3 | Los estados del PRD están en la página. El detector no encontró otra deriva. |
+| **Total** | | **15/20** | **Bueno** (14–17) |
+
+| # | Hallazgo | Gravedad | Decisión | Razón |
+| --- | --- | --- | --- | --- |
+| A-18 | `flat-type-hierarchy` en la plantilla, en los bocetos y en el viewport 390. El detector reportó h1 = h2 = h3 = 16 px. Salida con hallazgos (código 2). | Baja | **Rechazado** | No calcula las variables. `--fs-h1` es 40 px, `--fs-h2` es 28 px, `--fs-cuerpo` es 16 px. La página renderizada no es plana. |
+| A-19 | `.aviso .acc` con `min-height: 32px`. | Media | **Aceptado** | Quedó en `var(--tactil-min)`, 48 px. |
+| A-20 | `font-size: 18px` en `.senal h3` y `40px` fijo en `.total .n` y `.anillo span`. | Baja | **Aceptado** | Quedaron en `--fs-titulo-tarea` y `--fs-h1`. |
+| A-21 | La etiqueta de la pestaña del celular está en 12 px, sin token. | Baja | **Rechazado** | DESIGN.md, sección 5.11, pide Sora 600 a 12 px en esa barra. No es un descuido. |
+| A-22 | `@media (prefers-reduced-motion: reduce)` pone `animation: none` y `transition: none` en todo. | Baja | **Rechazado** | Coincide con «con reducir movimiento, nada se anima». El estado no depende del movimiento. |

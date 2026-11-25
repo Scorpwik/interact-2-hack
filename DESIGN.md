@@ -3,7 +3,7 @@
 **Sistema de diseño de la herramienta de organización de staff del Interact2Hack** · v1.0 · 24 de noviembre de 2026
 **Equipo:** Joshua Lozada y Raymond Portilla · **Producto:** `docs/prd/PRD.md` · **Identidad:** Interact2Hack · Brandboard extendido · Señal Neón v1.0
 
-> Este documento decide cómo se ve y cómo se comporta la interfaz. Si el brand board (`docs/diseno/brand-board.html`) o cualquier pantalla no coincide con lo que dice aquí, **manda este DESIGN.md**. Las marcas **[SUPUESTO]** son decisiones de diseño que el equipo todavía debe confirmar (sección 11).
+> Este documento decide cómo se ve y cómo se comporta la interfaz. Si el brand board (`docs/diseno/brand-board.html`) o cualquier pantalla no coincide con lo que dice aquí, **manda este DESIGN.md**. Las marcas **[SUPUESTO]** son decisiones de diseño que el equipo todavía debe confirmar (sección 11). SD-01 y SD-02 quedaron confirmados el 25 de noviembre de 2026.
 
 ## 1. Nombre y propósito
 
@@ -16,9 +16,9 @@ Sigue la identidad oficial del evento, Señal Neón v1.0 (negro, morado neón, l
 | | |
 | --- | --- |
 | **Personalidad (palabras del equipo)** | **Fácil de usar** · **Carga rápida** · **Útil sin excesos** |
-| **Referente** | **Propuesta, a confirmar por el equipo:** (1) la **pantalla de salidas de un aeropuerto**: muchas cosas con hora límite, un estado por fila, un lugar y lectura de un vistazo sobre fondo oscuro; (2) la **app móvil del brandboard Señal Neón** (sec. 13): agenda con hora, sala y la regla «Lima = ahora». El Notion «IA» del equipo no nombra un referente; da el método («referentes directos del nicho»), que es el que se siguió (`docs/diseno/brief.md`). |
+| **Referente** | **Confirmado por el equipo el 25 de noviembre de 2026.** (1) La **pantalla de salidas de un aeropuerto**: muchas cosas con hora límite, un estado por fila, un lugar y lectura de un vistazo sobre fondo oscuro. (2) Como secundario, la **app móvil del brandboard Señal Neón** (sec. 13): agenda con hora, sala y la regla «Lima = ahora». El Notion «IA» del equipo no nombra un referente; da el método («referentes directos del nicho»), que es el que se siguió (`docs/diseno/brief.md`). |
 | **Quién la usa** | **Administradores en un escritorio** (tablero de cumplimiento, crear y asignar tareas, panel de estudiantes) y **estudiantes en el celular** (sus tareas, el checklist, completar), **en medio de un hackathon**: con prisa, en movimiento, con horas límite encima y conectividad que puede fallar. Los dos perfiles pueden usar los dos dispositivos (PRD, D-S-01). |
-| **Dirección** | **B · Tablero de salidas**, con la tarjeta señal de A y la barra de progreso de C (`docs/diseno/direcciones/direcciones.md`). Elección a confirmar por el equipo. |
+| **Dirección** | **B · Tablero de salidas**, con la tarjeta señal de A y la barra de progreso de C (`docs/diseno/direcciones/direcciones.md`). Confirmada por el equipo el 25 de noviembre de 2026. |
 
 ## 3. Decisiones de diseño y su porqué
 
@@ -241,7 +241,7 @@ Cada componente cubre lo que necesita un perfil del PRD:
 
 ### 5.3 Tarjeta señal («Vence primero»)
 - **Una por vista.** Fondo morado, texto tinta (5,83:1).
-- **Contenido:** kicker «VENCE PRIMERO», cifra en Big Shoulders («42 MIN»), nombre de la tarea, lugar, avance.
+- **Contenido:** kicker «VENCE PRIMERO», cifra en Big Shoulders («42 MIN»), nombre de la tarea en Sora 600 a 17 px (`--fs-titulo-tarea`), lugar, avance.
 - Entra con un barrido de 900 ms una sola vez (sin animación si se pidió reducir movimiento).
 - Muestra la tarea Por vencer o En ejecución más cercana del usuario. **Si no hay ninguna, no aparece.**
 
@@ -310,6 +310,8 @@ Cada componente cubre lo que necesita un perfil del PRD:
 | **Por vencer** | Faltan 60 min o menos (R14) | Dentro de la herramienta: aviso ámbar «⧗ "Preparar Sala 3" vence en 60 min» con «Ver tarea» | Hasta que se abra o cierre |
 | **Tarea abierta** | Intenta empezar otra (R17) | En línea, ámbar: «Termina "Preparar Sala 3" antes de empezar otra tarea.» + «Ir a esa tarea» | Mientras aplique |
 | **Bloqueo** | Intenta editar o borrar donde no se puede (R21, R22) | En línea, texto suave + candado: «No se puede editar: la tarea está en ejecución.» | Mientras aplique |
+
+La acción del aviso («Ver tarea», «Reintentar», «Ir a esa tarea») es un control de 48 px de alto (D-06), no un enlace de texto.
 
 Los avisos se anuncian a los lectores de pantalla: los de error y sin conexión con prioridad; los de confirmación, sin interrumpir.
 
@@ -501,13 +503,13 @@ print(round(contraste(mezcla('#FFFFFF', 0.45, '#0B0612'), hx('#0B0612')), 2))  #
 
 | Id | [SUPUESTO] | Pregunta para el equipo |
 | --- | --- | --- |
-| SD-01 | El referente es la pantalla de salidas de un aeropuerto, y como secundario, la app móvil de Señal Neón. | ¿Confirman ese referente, o tienen otro? |
-| SD-02 | Dirección elegida: B · Tablero de salidas, con la tarjeta señal de A y la barra de C. | ¿Confirman la elección? |
+| SD-01 | El referente es la pantalla de salidas de un aeropuerto, y como secundario, la app móvil de Señal Neón. | Confirmado por el equipo el 25 de noviembre de 2026. |
+| SD-02 | Dirección elegida: B · Tablero de salidas, con la tarjeta señal de A y la barra de C. | Confirmada por el equipo el 25 de noviembre de 2026. |
 | SD-03 | Rojo #FF5C5C y ámbar #FFB020 se agregan como colores funcionales, porque Señal Neón no define colores de alerta. | ¿Aceptan agregar estos dos colores a la identidad del cliente? ¿Conviene preguntar al cliente? |
 | SD-04 | «Completada» usa el morado #A46CFB (con «✓»), el mismo color que la acción principal; se distinguen porque el botón va relleno y la insignia solo con borde. | ¿Les parece claro, o prefieren otro tratamiento? |
 | SD-05 | No hay modo claro (el brandboard dice que no se ofrece). | ¿Hay espacios al aire libre donde se vaya a usar con sol directo? |
 | SD-06 | Destinos de navegación (5.11). | ¿Son esos destinos los que esperan? |
 | SD-07 | Nombre del sistema: «Señal de Turno». | ¿Les gusta el nombre? |
 | SD-08 | En el brand board, los nombres de personas, horas y tareas son datos de ejemplo, no del cliente. Los lugares (Hall principal, Sala 3 · Edificio Galileo, Teatro Calderón de la Barca) salen de las muestras ilustrativas del brandboard. | ¿Conocen los lugares reales del evento? |
-| SD-09 | La crítica y la auditoría se hicieron con IA, siguiendo las categorías de `/impeccable critique` y `/impeccable audit`, porque esos comandos no estaban disponibles (`docs/diseno/criticas/README.md`). | ¿Van a correr los comandos reales para agregar hallazgos? |
+| SD-09 | El 25 de noviembre de 2026 se corrió `impeccable detect` sobre el brand board y los bocetos. La crítica de diseño se hizo con la rúbrica de `/impeccable critique`. No se ejecutó `/impeccable init` ni `/impeccable document`. | Hecho. Los hallazgos nuevos están en `docs/diseno/criticas/`. |
 | SD-10 | El texto de la notificación con la herramienta cerrada (R14) es el mismo que el del aviso por vencer. | ¿Está bien ese texto? |

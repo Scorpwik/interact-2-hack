@@ -1,1 +1,129 @@
-(pegado por Joshua el 23 nov 2026; texto literal en el mensaje de chat)
+Fuente literal del Avance 1
+Equipo: Joshua Lozada y Raymond Portilla
+Sesión con el cliente: 11 de noviembre de 2026
+Guardado en el repositorio: 25 de noviembre de 2026
+
+Este archivo es el texto literal que usa docs/cliente/preguntas.md.
+Antes solo decía que el texto estaba pegado en el chat. Aquí está el texto.
+
+Las respuestas de P-01 a P-16 se copiaron tal como se anotaron en la sesión,
+con la ortografía original. Las notas N-01 a N-23 son la nota original de esa
+misma sesión. La interpretación del equipo no va aquí: está en preguntas.md
+(columna «Estado del supuesto» y sección 6, D-S-xx).
+
+
+RESPUESTAS DEL CLIENTE
+
+P-01
+Mientras se abre se pone en ejecución, no debe haber la opción dee borrar una restricción de cuando esta en ejecución no se puede borrar.
+Saber mientras quien la tiene abierta.
+No debe dejar completar sin completar algo
+
+P-02
+Nombre
+Correo estud
+Telefono
+Que días y y horas
+
+P-03
+Por correo todas las credenciales o por whats
+
+P-04
+Puede cambiar dentro del portal
+
+P-05
+Una vez que esta en estado de en ejecución no se le puede editar borrar o completar hasta que se complete todo
+
+P-06
+No s epuede borrar y un apartado debajo de todo que no complete
+
+P-07
+si
+
+P-08
+Que tarea la completo cada quien, cual de las 3 personas completo la tarea
+
+P-09
+En ejecución (se abre y se esta completando cuando da el primer check)
+Completado
+Vencido
+Pendiente
+No asignado
+En edición (que no puedan editar 2 personas)
+
+P-10
+No debe poderse salir de una tarea hasta salirse
+
+P-11
+(sin respuesta)
+
+P-12
+Una hora ya es por vencer y una noti de ya esta por vencer
+
+P-13
+si
+
+P-14
+Pasa a un estado de vencida y el admin puede reasignar
+
+P-15
+Celular y también portal pc
+
+P-16
+(sin respuesta)
+
+
+NOTAS DE LA SESIÓN (tal cual se anotaron)
+
+Creo tarea y puedoa siganr a varias personas
+Con que cualquiera complete ya esta
+Tareas
+•	todas las teareas van a estar abiertas no se deben ir desbloqueando
+Tablero
+•	Ingrso a la parte de admin
+•	Debe haber una cuadricula con tarjeta
+o	El estado de cada tearea
+o	La agina principal
+o	Tarea 1 
+	Pendiente (temporizador de cuanto tiempo queda para ejecutar)
+	Progreso
+	Ejecutada
+	Por colores
+	Sin asignar
+•	Un total de cuantas ya están ejecutadas y cuandas pendientes
+•	Orden
+o	Las que estén mas cerca de vencer
+o	La mas reciente a la mas antigua
+•	Que haya una sección de filtros
+o	Por vencer
+•	Como se marca completado
+o	Voy haciendo check, hay cajita de observaciones
+o	Clic en completar tarea
+•	Que te salga quien nomas esta asigando con sus números de teléfono y nombres
+
+Panel admin
+•	Se puede crear mas admin desde ahí o estudiante
+•	Puedo cambiar las contraseñas de todos
+Hay un super admin a quien no se le puede borrar
+
+Tarea
+•	Fecha y hora de vencimiento 
+•	Lugar aula
+•	Checklist de la tarea
+•	Responsable
+Panel de estudiantes
+•	Marcar como urgente
+•	Las que están de urgente se les asigna a todos 
+•	También que puedan ver un panel de que estudiante esta sin tareas o cuantas tareas tiene cada estudiante
+•	Como administrador digo que usuarios van a estar disponibles en cada día
+•	Ver el historial de cada tarea completada cada uno
+•	Un apartado de cuanto tiempo le  queda de vida a un estudiante en ese día de trabajo
+
+vencidas
+por vencer (en orden por vencer)
+en ejecución
+sin asignar
+temrinadas
+
+para completar pongo un slider deslizable de izquierda a derecha para completar
+ver si no tiene internet que le asome un aviso.

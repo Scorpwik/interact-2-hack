@@ -1,9 +1,11 @@
 # Revisión del PRD
 
-**Equipo:** Joshua Lozada y Raymond Portilla · **Fecha:** 23 de noviembre de 2026
+**Equipo:** Joshua Lozada y Raymond Portilla · **Fecha:** 23 de noviembre de 2026 · **Corrección de referencias:** 25 de noviembre de 2026
 **Fuentes:** docs/fuentes/descripcion-proyecto.md y docs/cliente/preguntas.md
 
-> Las filas E1–E5 son la revisión **del equipo, sin IA** (Paso 2 de la guía): las completan Joshua y Raymond. Las filas 1–24 son del revisor con IA (Paso 3a). Las filas 25–33 son una segunda revisión con IA, hecha después de que el equipo resolviera los supuestos (23-nov, D-S-xx) y aplicada en el commit «docs(prd): supuestos resueltos por el equipo». Cada cita se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» cita el borrador (commit «docs(prd): borrador generado con IA»).
+> Las filas 1–24 son del revisor con IA (Paso 3a). Las filas 25–33 son una segunda revisión con IA, hecha después de que el equipo resolviera los supuestos (23-nov, D-S-xx) y aplicada en el commit «docs(prd): supuestos resueltos por el equipo». Las filas 34–36 son la corrección del 25 de noviembre de 2026: referencias cruzadas que apuntaban a otra regla. Cada cita de las filas 1–33 se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» en esas filas cita el borrador (commit «docs(prd): borrador generado con IA»), así que los números de regla de la columna «Corrección» son los de esa pasada, no un índice del PRD actual.
+>
+> No quedaron filas vacías de «revisión del equipo». Lo que el equipo decidió está en la sección 6 de `docs/cliente/preguntas.md` (D-S-xx) y en la sección 8.1 del PRD.
 >
 > Tipos: 1 Supuesto escrito como hecho · 2 Regla vaga o sin cifra · 3 Alcance inflado · 4 Contradicción resuelta en silencio · 5 Pregunta abierta desaparecida · 6 Perfil o permiso incompleto · 7 Detalle técnico · 8 Regla sin trazabilidad.
 
@@ -11,11 +13,6 @@
 
 | # | Sección | Frase exacta del PRD | Tipo (1–8) | Gravedad | Origen | Qué dicen las fuentes | Decisión | Corrección |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| E1 | | | | | Equipo | | | |
-| E2 | | | | | Equipo | | | |
-| E3 | | | | | Equipo | | | |
-| E4 | | | | | Equipo | | | |
-| E5 | | | | | Equipo | | | |
 | 1 | 6. Estados (R8) | «En ejecución: alguien marcó el primer paso (P-09).» | 4 | alta | IA | P-09: «se esta completando cuando da el primer check»; P-01: «Mientras se abre se pone en ejecución» | Aceptado | R11 elige el primer paso y nombra la contradicción → [SUPUESTO S-22] y pregunta al cliente. |
 | 2 | 6. Estados (R8) | «En edición: un administrador la está editando (P-09).» | 4 | alta | IA | P-09 lo lista como estado, pero una tarea en edición sigue teniendo su estado; P-05 prohíbe editar una en ejecución | Aceptado | R12: «En edición» es un bloqueo temporal, no un estado → [SUPUESTO S-23] y pregunta. |
 | 3 | 6. Estados (R8) | «Vencida: llegó la hora de vencimiento sin completarse (P-14).» | 5 | alta | IA | P-14 no dice si el estudiante todavía puede terminarla; el supuesto «completada tarde» quedó descartado | Aceptado | R26 y [SUPUESTO S-08]: no se completa hasta que se reasigne; pregunta al cliente. R11 define «desde el minuto exacto». |
@@ -49,6 +46,9 @@
 | 31 | 6. R17 | «no puede empezar otra» | 2 | media | IA | D-S-26 no define «tarea abierta» ni cuándo termina la restricción | Aceptado | Se definieron → [SUPUESTO S-41]; queda abierto si las urgentes son una excepción. |
 | 32 | 2. Perfiles | «Es solo uno y lo hard codeo» | 7 | baja | IA | D-S-03 | Aceptado | El PRD dice «un único super administrador fijo, que no se crea ni se borra desde la herramienta». |
 | 33 | 6. R6 | «Pasan a sin asignar» | 2 | media | IA | D-S-18 no dice qué pasa si a la tarea le quedan otros responsables, ni si estaba en ejecución | Aceptado | R6, R11 (Sin asignar puede tener pasos marcados) y R21 → [SUPUESTO S-37, S-42]. |
+| 34 | 2. Administrador puede | «editar y eliminar tareas (R18, R19)» | 8 | media | Corrección 25-nov | En el PRD actual, R18 es desmarcar un paso y R19 es trabajar sin internet. Editar es R21 y eliminar es R22. | Aceptado | La frase cita R21 y R22. |
+| 35 | 2. Administrador no puede | «asignar a quien no está disponible (D-S-35, R31)» | 8 | media | Corrección 25-nov | R31 es el orden del tablero. La disponibilidad está en R28. | Aceptado | La frase cita D-S-35 y R28. |
+| 36 | 6. R11 Completada | «la reabre (R25)» | 8 | media | Corrección 25-nov | R25 es reasignar una vencida. Reabrir una completada es R26. | Aceptado | La frase cita R26. |
 
 ## Para presentar
 

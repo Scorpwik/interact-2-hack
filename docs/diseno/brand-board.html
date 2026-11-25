@@ -127,6 +127,7 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .ins{display:inline-flex;align-items:center;gap:var(--esp-2);height:28px;padding:0 var(--esp-2);border:var(--borde-componente) solid var(--color-borde-control);font:600 var(--fs-insignia)/1 var(--fuente-texto);white-space:nowrap}
 .ins svg{width:16px;height:16px;flex:none}
 .ins.sin-asignar{color:var(--estado-sin-asignar);border-style:dashed;border-color:var(--estado-sin-asignar)}
+.ins.sin-tareas{color:var(--color-texto-suave);border-color:var(--color-borde-control)}
 .ins.pendiente{color:var(--estado-pendiente)}
 .ins.en-ejecucion{color:var(--estado-en-ejecucion)}
 .ins.vencida{color:var(--estado-vencida);border-color:var(--estado-vencida)}
@@ -154,7 +155,7 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .barra i{display:block;height:100%;background:var(--progreso)}
 .pie{display:flex;justify-content:space-between;align-items:center;margin-top:var(--esp-3);gap:var(--esp-3)}
 .avatares{display:flex;gap:var(--esp-1)}
-.av{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font:600 11px/1 var(--fuente-texto);border:var(--borde-componente) solid var(--color-borde-control)}
+.av{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font:600 var(--fs-insignia)/1 var(--fuente-texto);border:var(--borde-componente) solid var(--color-borde-control)}
 .tarjeta.bloqueada{cursor:not-allowed;color:var(--color-texto-suave)}
 .tarjeta.bloqueada .tiempo .n{color:var(--color-texto-suave)}
 /* Tarjeta señal */
@@ -163,6 +164,7 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .senal .kicker{color:var(--color-texto-sobre-accion)}
 .senal .cifra{font:900 var(--fs-cifra)/.9 var(--fuente-display);text-transform:uppercase;margin:var(--esp-2) 0}
 .senal h3{font-size:var(--fs-titulo-tarea)}
+button.senal{display:block;width:100%;text-align:left;border:0;font:inherit;cursor:pointer;background:var(--color-accion)}
 @keyframes barrido{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
 /* Checklist */
 .check{list-style:none;padding:0;background:var(--color-superficie);border:var(--borde-componente) solid var(--color-borde)}
@@ -236,14 +238,14 @@ section.bloque{border-top:1px solid var(--color-borde);padding:var(--esp-7) 0}
 .cel{max-width:390px;border:var(--borde-componente) solid var(--color-borde);background:var(--color-fondo)}
 .cel .cont{padding:var(--esp-4)}
 .tabbar{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--color-borde)}
-.tab{min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--esp-1);font:600 12px/1 var(--fuente-texto);color:var(--color-texto-suave)}
+.tab{min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--esp-1);font:600 12px/1 var(--fuente-texto);color:var(--color-texto-suave);text-decoration:none}
 .tab svg{width:24px;height:24px}
 .tab.on{color:var(--color-texto)}
 .tab .pt{width:6px;height:6px;border-radius:var(--radio-circulo);background:transparent}
 .tab.on .pt{background:var(--color-activo)}
 .topbar{display:flex;gap:var(--esp-2);border-bottom:1px solid var(--color-borde);margin-bottom:var(--esp-4)}
-.topbar>span{min-height:var(--tactil-min);display:inline-flex;align-items:center;gap:var(--esp-2);padding:0 var(--esp-3);font:600 var(--fs-insignia)/1 var(--fuente-texto);color:var(--color-texto-suave)}
-.topbar>span.on{color:var(--color-texto)}
+.topbar>a{min-height:var(--tactil-min);display:inline-flex;align-items:center;gap:var(--esp-2);padding:0 var(--esp-3);font:600 var(--fs-insignia)/1 var(--fuente-texto);color:var(--color-texto-suave);text-decoration:none}
+.topbar>a.on{color:var(--color-texto)}
 .topbar .pt{width:6px;height:6px;flex:none;padding:0;min-height:0;border-radius:var(--radio-circulo);background:var(--color-activo)}
 .esc{border:var(--borde-componente) solid var(--color-borde);padding:var(--esp-5)}
 .esc .tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--esp-4)}
@@ -368,12 +370,12 @@ td.num,td:first-child{white-space:nowrap}
  <div class="grid g3">
   <div>
    <span class="etq">Tarjeta señal · una por vista</span>
-   <div class="senal">
+   <button class="senal" type="button">
     <p class="kicker">Vence primero · faltan</p>
     <p class="cifra">42 min</p>
     <h3>Preparar Sala 3 para mentorías</h3>
     <p style="font-size:var(--fs-meta)">Sala 3 · Edificio Galileo · 3 de 5 pasos</p>
-   </div>
+   </button>
   </div>
   <div>
    <span class="etq">Por vencer · en ejecución · checklist a medio completar</span>
@@ -493,11 +495,15 @@ td.num,td:first-child{white-space:nowrap}
    <span class="etq">Primario · reposo / hover / foco / deshabilitado</span>
    <div class="btns" style="margin-bottom:var(--esp-4)"><button class="btn primario" type="button">Continuar tarea</button><button class="btn primario hover" type="button">Continuar tarea</button><button class="btn primario foco" type="button">Continuar tarea</button><button class="btn primario" type="button" disabled>Guardar tarea</button></div>
    <span class="etq">Secundario y peligro</span>
-   <div class="btns"><button class="btn secundario" type="button">Reasignar</button><button class="btn secundario hover" type="button">Reabrir</button><button class="btn peligro" type="button">Eliminar tarea</button></div>
+   <div class="btns"><button class="btn secundario" type="button">Reasignar</button><button class="btn secundario hover" type="button">Reasignar</button><button class="btn peligro" type="button">Eliminar tarea</button></div>
   </div>
   <div>
    <span class="etq">Bloqueado · dice qué falta</span>
-   <div class="desliza bloq" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span class="txt">Faltan 2 pasos y la observación</span></div>
+   <div class="desliza bloq" role="button" aria-disabled="true" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-candado"/></svg></span><span class="txt">Faltan 2 pasos y la observación</span></div>
+   <span class="etq">Sin conexión</span>
+   <div class="desliza bloq" role="button" aria-disabled="true" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-sin-red"/></svg></span><span class="txt">Sin conexión</span></div>
+   <span class="etq">La hora llegó con la tarea abierta (R24)</span>
+   <div class="desliza" role="button" tabindex="0" aria-label="Completar tarea fuera de hora" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-flecha"/></svg></span><span class="txt">Se venció. Si la completas ahora, quedará Fuera de hora.</span></div>
    <span class="etq">Listo</span>
    <div class="desliza" role="button" tabindex="0" aria-label="Completar tarea" style="margin-bottom:var(--esp-3)"><span class="pulgar"><svg aria-hidden="true"><use href="#i-flecha"/></svg></span><span class="txt">Desliza para completar →</span></div>
    <span class="etq">Arrastrando</span>
@@ -525,21 +531,20 @@ td.num,td:first-child{white-space:nowrap}
  <div class="totales">
   <div class="total"><span class="n">4</span><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span></div>
   <div class="total"><span class="n">2</span><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div>
-  <div class="total"><span class="n">3</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div>
   <div class="total"><span class="n">4</span><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span></div>
   <div class="total"><span class="n">1</span><span class="ins sin-asignar"><svg aria-hidden="true"><use href="#i-pregunta"/></svg>Sin asignar</span></div>
   <div class="total"><span class="n">18</span><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div>
  </div>
  <div class="cumpl">
   <div class="anillo" role="img" aria-label="Cumplimiento 62 por ciento"><span>62%</span></div>
-  <div><p class="kicker">Cumplimiento del día</p><p style="margin:var(--esp-2) 0">18 de 29 tareas completadas</p><div class="barra"><i style="width:62%"></i></div><p class="meta" style="margin-top:var(--esp-2)">«Por vencer» se cuenta aparte: son tareas pendientes o en ejecución a 60 min o menos.</p></div>
+  <div><p class="kicker">Cumplimiento del día</p><p style="margin:var(--esp-2) 0">18 de 29 tareas completadas</p><div class="barra"><i style="width:62%"></i></div><p class="meta" style="margin-top:var(--esp-2)">Los cinco totales suman 29. Hay 3 por vencer, contadas aparte: son pendientes o en ejecución a 60 min o menos, no un sexto estado.</p></div>
  </div>
  <div class="filtros" role="group" aria-label="Filtros y orden">
   <button class="filtro on" type="button" aria-pressed="true">✓ Por vencer</button>
   <button class="filtro" type="button" aria-pressed="false">Orden: más cerca de vencer</button>
   <button class="filtro" type="button" aria-pressed="false">Orden: más reciente</button>
-  <button class="filtro" type="button" aria-pressed="false">Por estado</button>
-  <button class="filtro" type="button" aria-pressed="false">Por lugar</button>
+  <button class="filtro" type="button" aria-pressed="false">Orden: por estado</button>
+  <button class="filtro" type="button" aria-pressed="false">Orden: por lugar</button>
  </div>
 </section>
 
@@ -549,7 +554,7 @@ td.num,td:first-child{white-space:nowrap}
   <div class="panel" style="padding:0">
    <div class="persona"><div><h3>Ana Torres</h3><p class="meta">Sáb 20 · 08:00–14:00 · le quedan 4 h 42 min</p></div><span class="ins pendiente">3 tareas</span></div>
    <div class="persona"><div><h3>Luis Mena</h3><p class="meta">Sáb 20 · 09:00–18:00 · le quedan 8 h 42 min</p></div><span class="ins pendiente">2 tareas</span></div>
-   <div class="persona"><div><h3>Sofía Paredes</h3><p class="meta">Sáb 20 · 09:00–13:00 · le quedan 3 h 42 min</p></div><span class="ins por-vencer">Sin tareas</span></div>
+   <div class="persona"><div><h3>Sofía Paredes</h3><p class="meta">Sáb 20 · 09:00–13:00 · le quedan 3 h 42 min</p></div><span class="ins sin-tareas">Sin tareas</span></div>
   </div>
   <div class="panel" style="padding:0">
    <div class="persona"><div><h3>Super administrador</h3><p class="meta">Fijo · no se puede eliminar</p></div><span class="perfil super">Super admin</span></div>
@@ -565,18 +570,18 @@ td.num,td:first-child{white-space:nowrap}
   <div class="cel">
    <div class="cont">
     <p class="kicker">Sáb 20 · 09:18</p><h2 style="margin:var(--esp-2) 0 var(--esp-4)">Mis tareas</h2>
-    <div class="senal" style="margin-bottom:var(--esp-4)"><p class="kicker">Vence primero · faltan</p><p class="cifra">42 min</p><h3>Preparar Sala 3 para mentorías</h3><p style="font-size:var(--fs-meta)">Sala 3 · Edificio Galileo · 3 de 5 pasos</p></div>
+    <button class="senal" type="button" style="margin-bottom:var(--esp-4)"><p class="kicker">Vence primero · faltan</p><p class="cifra">42 min</p><h3>Preparar Sala 3 para mentorías</h3><p style="font-size:var(--fs-meta)">Sala 3 · Edificio Galileo · 3 de 5 pasos</p></button>
     <div class="grid" style="gap:var(--esp-3)">
-     <button class="tarjeta" type="button"><div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div><h3>Armar mesas de check-in</h3><p class="meta">Hall principal</p></button>
      <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><span class="ins urgente"><svg aria-hidden="true"><use href="#i-rayo"/></svg>Urgente</span></div><div class="tiempo"><span class="p">Faltan</span><span class="n">1 h 12 min</span></div></div><h3>Llevar extensiones eléctricas a la Sala 3</h3><p class="meta">Sala 3 · Edificio Galileo</p></button>
+     <button class="tarjeta" type="button"><div class="cab"><span class="ins pendiente"><svg aria-hidden="true"><use href="#i-circulo"/></svg>Pendiente</span><div class="tiempo"><span class="p">Faltan</span><span class="n">2 h 42 min</span></div></div><h3>Armar mesas de check-in</h3><p class="meta">Hall principal</p></button>
     </div>
     <p class="kicker" style="margin:var(--esp-5) 0 var(--esp-2);color:var(--color-texto-suave)">Completadas</p>
     <button class="tarjeta completada" type="button"><div class="cab"><span class="ins completada"><svg aria-hidden="true"><use href="#i-check"/></svg>Completada</span><div class="tiempo listo"><span class="p">Completada</span><span class="n">09:12</span></div></div><h3>Revisar el proyector del teatro</h3></button>
    </div>
-   <nav class="tabbar" aria-label="Navegación del estudiante [SUPUESTO]"><span class="tab on" aria-current="page"><svg aria-hidden="true"><use href="#i-lista"/></svg>Mis tareas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-check"/></svg>Completadas<span class="pt"></span></span><span class="tab"><svg aria-hidden="true"><use href="#i-persona"/></svg>Perfil<span class="pt"></span></span></nav>
+   <nav class="tabbar" aria-label="Navegación del estudiante [SUPUESTO]"><a class="tab on" href="#h-disp" aria-current="page"><svg aria-hidden="true"><use href="#i-lista"/></svg>Mis tareas<span class="pt"></span></a><a class="tab" href="#h-disp"><svg aria-hidden="true"><use href="#i-check"/></svg>Completadas<span class="pt"></span></a><a class="tab" href="#h-disp"><svg aria-hidden="true"><use href="#i-persona"/></svg>Perfil<span class="pt"></span></a></nav>
   </div>
   <div class="esc">
-   <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><span class="on" aria-current="page"><span class="pt"></span>Tablero</span><span>Tareas</span><span>Estudiantes</span><span>Usuarios</span></nav>
+   <nav class="topbar" aria-label="Navegación del administrador [SUPUESTO]"><a class="on" href="#h-disp" aria-current="page"><span class="pt"></span>Tablero</a><a href="#h-disp">Tareas</a><a href="#h-disp">Estudiantes</a><a href="#h-disp">Usuarios</a></nav>
    <p class="kicker">Tablero · administrador · 1280 px</p>
    <div class="grupo"><h3>Pendientes</h3><span class="meta">4</span></div>
    <div class="tarjetas">
@@ -584,13 +589,13 @@ td.num,td:first-child{white-space:nowrap}
    </div>
    <div class="grupo"><h3 style="color:var(--estado-vencida)">Vencidas</h3><span class="meta">2</span></div>
    <div class="tarjetas">
-    <button class="tarjeta" type="button"><div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div><h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · 0 de 2</p></button>
+    <button class="tarjeta" type="button"><div class="cab"><span class="ins vencida"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span><div class="tiempo t-error"><span class="p">Venció hace</span><span class="n">18 min</span></div></div><h3>Reponer agua en la mesa de mentores</h3><p class="meta">Hall principal · Luis Mena · 0 de 2</p></button>
    </div>
    <div class="grupo"><h3 style="color:var(--marca-por-vencer)">Por vencer</h3><span class="meta">3</span></div>
    <div class="tarjetas">
     <button class="tarjeta" type="button"><div class="cab"><div class="fila-ins"><span class="ins en-ejecucion"><span class="punto" aria-hidden="true"></span>En ejecución</span><span class="ins por-vencer"><svg aria-hidden="true"><use href="#i-reloj-arena"/></svg>Por vencer</span></div><div class="tiempo t-aviso"><span class="p">Faltan</span><span class="n">42 min</span></div></div><h3>Preparar Sala 3 para mentorías</h3><div class="progreso"><div class="barra"><i style="width:60%"></i></div><p class="meta" style="margin-top:var(--esp-1)">3 de 5 pasos · 60 %</p></div></button>
    </div>
-   <p class="meta" style="margin-top:var(--esp-4)">Siguen En ejecución, Sin asignar y Terminadas (PRD R31).</p>
+   <p class="meta" style="margin-top:var(--esp-4)">Este espécimen muestra una tarjeta por grupo. En la herramienta cada grupo lista todas sus tareas. Siguen En ejecución, Sin asignar y Terminadas (PRD R31).</p>
   </div>
  </div>
 </section>

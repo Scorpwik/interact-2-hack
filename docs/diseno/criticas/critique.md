@@ -54,4 +54,17 @@
 | C-18 | Quitar filtros para dejar 4 opciones o menos. | Baja | **Rechazado** | R32 pide esas opciones. Se agrupan en una sola fila que salta de línea. |
 | C-19 | Con «reducir movimiento», la página apaga toda transición. | Baja | **Rechazado** | Es la decisión DD-09 y A-16. El cambio de estado sigue en color, ícono y texto. |
 
-Questions skipped: 2 priority issues.
+## Evaluación A aislada · 25 de noviembre de 2026
+
+La lectura de diseño de `/impeccable critique` se hizo aparte del detector, sobre `brand-board.plantilla.html`. Esa plantilla deja vacíos los tokens, las fuentes y la tabla de contraste: el color se juzga en `brand-board.html`, que es el que se abre. Nota de esa pasada: **25/40, Aceptable**. Lo que sigue es la decisión sobre cada hallazgo.
+
+| # | Hallazgo | Gravedad | Decisión | Razón |
+| --- | --- | --- | --- | --- |
+| C-20 | En «Mis tareas» la tarjeta de 42 min no se podía abrir, y la lista ponía una tarea a 2 h 42 min antes que una urgente a 1 h 12 min. | Alta | **Aceptado** | La tarjeta señal es un botón (DESIGN.md 5.3). La lista no la repite y sigue por cercanía al vencimiento (R35). |
+| C-21 | Cambiar el tablero a filas, agregar búsqueda y reasignar vencidas por lote para ver 30 tareas. | Alta | **Rechazado** | El cliente pidió cuadrícula de tarjetas (N-05, C-02). Búsqueda y lote no están en el PRD. El espécimen aclara que muestra una tarjeta por grupo y que en la herramienta el grupo lista todas. |
+| C-22 | «Por vencer» se leía como sexto estado porque tenía una cifra igual a las de R11. | Alta | **Aceptado** | La fila de totales son los cinco estados y suma 29 (R33). Las 3 por vencer quedan en la nota. El grupo del tablero se mantiene (R31). |
+| C-23 | «Sin tareas» usaba la insignia ámbar de Por vencer. | Media | **Aceptado** | Pasa a etiqueta propia, en texto suave (DESIGN.md 5.10). |
+| C-24 | No se veía qué pasa si la hora llega con la tarea abierta (R24). | Media | **Aceptado** | El deslizador sigue activo y dice «Se venció. Si la completas ahora, quedará Fuera de hora.» |
+| C-25 | La navegación del celular y la del administrador eran texto, no enlaces. El deslizador bloqueado no tenía rol, y faltaba el estado sin conexión. | Media | **Aceptado** | Pasaron a enlaces. El bloqueado tiene rol y está el estado «Sin conexión». |
+| C-26 | Agregar Cancelar al formulario y partir la hora en controles de fecha. | Media | **Rechazado** | El espécimen muestra los estados del campo, incluido el error «Pon la hora». Cancelar y un selector de fecha no los pidió el PRD. |
+| C-27 | Las iniciales de los responsables estaban a 11 px, y el hover del botón secundario decía «Reabrir» al lado de «Reasignar». | Baja | **Aceptado** | Las iniciales usan `--fs-insignia` (13 px). El hover repite «Reasignar», que es el mismo botón. |

@@ -244,6 +244,7 @@ Cada componente cubre lo que necesita un perfil del PRD:
 - **Contenido:** kicker «VENCE PRIMERO», cifra en Big Shoulders («42 MIN»), nombre de la tarea en Sora 600 a 17 px (`--fs-titulo-tarea`), lugar, avance.
 - Entra con un barrido de 900 ms una sola vez (sin animación si se pidió reducir movimiento).
 - Muestra la tarea Por vencer o En ejecución más cercana del usuario. **Si no hay ninguna, no aparece.**
+- **Es un botón** y abre el detalle de esa tarea. En la lista de debajo no se repite. El resto de la lista va por cercanía al vencimiento (R35): una urgente a 1 h 12 min queda antes que una pendiente a 2 h 42 min.
 
 ### 5.4 Ítem de checklist
 - **Anatomía:** casilla de 24 px (borde 2 px blanco 45 %) + texto del paso (16 px) + debajo, si está marcado, «Ana Torres · 09:31» (meta). Toda la fila es el área táctil, de **56 px de alto**.
@@ -299,6 +300,7 @@ Cada componente cubre lo que necesita un perfil del PRD:
   - **arrastrando**
   - **completado:** la pista se llena, aparece «✓ Completada» y el aviso de confirmación.
   - **sin conexión:** bloqueado, con «Sin conexión».
+  - **vencida con la tarea abierta (R24):** sigue activo y el texto dice «Se venció. Si la completas ahora, quedará Fuera de hora.»
 - **Alternativa accesible:** con teclado o lector de pantalla, el control se activa como un botón «Completar tarea», que pide confirmación.
 
 ### 5.8 Aviso
@@ -317,7 +319,7 @@ Los avisos se anuncian a los lectores de pantalla: los de error y sin conexión 
 
 ### 5.9 Indicador del tablero de cumplimiento
 - **Anatomía:**
-  - **Fila de totales por estado** (R33): una cifra en Big Shoulders 900 de 40 px más la insignia de su estado. Se ven los cinco estados, más «Por vencer».
+  - **Fila de totales por estado** (R33): una cifra en Big Shoulders 900 de 40 px más la insignia de su estado. Son los cinco estados, y suman el total del día. «Por vencer» no entra en esa fila: es una marca (R12), y su cantidad va en la nota del cumplimiento («3 por vencer, contadas aparte»).
   - **Cumplimiento:** completadas / total, con un **indicador circular** (la única forma curva) y la cifra en lima («62 %», la única cifra lima de la vista, 13,61:1).
   - **Barra de progreso** morado → lima con el texto «18 de 29 tareas completadas».
 - **Grupos (R31):** Pendientes, Vencidas, Por vencer, En ejecución, Sin asignar y Terminadas, cada uno con su título H2 y su total.
@@ -330,11 +332,11 @@ Los avisos se anuncian a los lectores de pantalla: los de error y sin conexión 
   - **sin conexión:** banda fija y los datos con la hora de la última actualización.
 
 ### 5.10 Fila de estudiante y de usuario
-- **Panel de estudiantes (R36):** nombre, número de tareas («3 tareas» o «Sin tareas», en ámbar), disponibilidad del día («Sáb 20 · 08:00–14:00») y horas que le quedan («Le quedan 2 h 30 min», R29). Al tocarla se abre su historial de completadas.
+- **Panel de estudiantes (R36):** nombre, número de tareas («3 tareas» o «Sin tareas»), disponibilidad del día («Sáb 20 · 08:00–14:00») y horas que le quedan («Le quedan 2 h 30 min», R29). «Sin tareas» es una etiqueta propia, en texto suave, y no usa el ámbar ni el reloj de «Por vencer». Al tocarla se abre su historial de completadas.
 - **Usuarios:** nombre, correo, teléfono e insignia de perfil («Super admin», «Admin» o «Estudiante»). La fila del **super administrador no tiene acción de eliminar** ni de cambiar su contraseña (R3).
 
 ### 5.11 Navegación [SUPUESTO]
-- **Celular:** barra inferior con un máximo de 4 destinos, cada uno con ícono y texto (Sora 600, 12 px). El activo va en blanco con un punto lima; los inactivos, en blanco 64 %.
+- **Celular:** barra inferior con un máximo de 4 destinos, cada uno un enlace con ícono y texto (Sora 600, 12 px) y foco lima. El activo va en blanco con un punto lima; los inactivos, en blanco 64 %.
   - Estudiante: «Mis tareas», «Completadas», «Perfil».
   - Administrador: «Tablero», «Tareas», «Estudiantes», «Usuarios».
 - **Escritorio:** los mismos destinos en una barra superior.
@@ -511,5 +513,5 @@ print(round(contraste(mezcla('#FFFFFF', 0.45, '#0B0612'), hx('#0B0612')), 2))  #
 | SD-06 | Destinos de navegación (5.11). | ¿Son esos destinos los que esperan? |
 | SD-07 | Nombre del sistema: «Señal de Turno». | ¿Les gusta el nombre? |
 | SD-08 | En el brand board, los nombres de personas, horas y tareas son datos de ejemplo, no del cliente. Los lugares (Hall principal, Sala 3 · Edificio Galileo, Teatro Calderón de la Barca) salen de las muestras ilustrativas del brandboard. | ¿Conocen los lugares reales del evento? |
-| SD-09 | El 25 de noviembre de 2026 se corrió `impeccable detect` sobre el brand board y los bocetos. La crítica de diseño se hizo con la rúbrica de `/impeccable critique`. No se ejecutó `/impeccable init` ni `/impeccable document`. | Hecho. Los hallazgos nuevos están en `docs/diseno/criticas/`. |
+| SD-09 | El 25 de noviembre de 2026 se corrió `impeccable detect` y, aparte, la evaluación de diseño de `/impeccable critique` (C-20 a C-27). No se ejecutó `/impeccable init` ni `/impeccable document`. | Hecho. Los hallazgos están en `docs/diseno/criticas/`. |
 | SD-10 | El texto de la notificación con la herramienta cerrada (R14) es el mismo que el del aviso por vencer. | ¿Está bien ese texto? |

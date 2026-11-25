@@ -24,7 +24,7 @@ Durante el Interact2Hack, los organizadores necesitan repartir y controlar el tr
 **Contexto de uso:**
 - **Dispositivos:** todos los perfiles pueden usar la herramienta tanto en el celular como en la computadora (P-15, D-S-01).
 - **Conectividad:** si el usuario se queda sin internet, la herramienta le muestra un aviso (N-23) y **no le deja marcar pasos** hasta que vuelva la conexión (D-S-02). No se trabaja sin conexión.
-- **Notificaciones:** cuando una tarea está por vencer, la herramienta avisa a los estudiantes responsables y a los administradores, **aunque tengan la herramienta cerrada** (P-12, D-S-15).
+- **Notificaciones:** cuando una tarea está por vencer, la herramienta avisa **dentro de la herramienta** a los estudiantes responsables y a los administradores (P-12). Avisar aunque la tengan cerrada es Should (S3).
 - **Respuesta a cada acción:** cada acción importante (guardar, completar, asignar, eliminar, etc.) muestra un mensaje breve de confirmación o de error (D-S-11).
 
 ## 2. Usuarios y perfiles
@@ -43,10 +43,10 @@ Existe **un único super administrador fijo, que no se crea ni se borra desde la
 - Editar y eliminar tareas, solo en los estados que lo permiten (R21, R22).
 - Marcar una tarea como urgente (N-15; que la marque el administrador es [SUPUESTO S-05]).
 - Reasignar una tarea vencida, poniéndole una nueva hora (P-14, D-S-30).
-- Reabrir una tarea completada (D-S-06).
+- Reabrir una tarea completada (D-S-06). Should (S4).
 - **Ejecutar tareas**: marcar pasos, escribir observaciones y completarlas, igual que un estudiante (D-S-07).
 - Ver el tablero de cumplimiento (N-04, N-05) y el panel de estudiantes (N-17).
-- Ver quién inició cada tarea, quién marcó cada paso y a qué hora, quién la completó, y el historial de tareas completadas de cada estudiante (P-01, P-08, N-19, D-S-28, D-S-29).
+- Ver quién inició cada tarea, quién marcó cada paso y a qué hora, y quién la completó (P-01, P-08, D-S-28, D-S-29). El historial de completadas de cada estudiante es Should (S6, N-19).
 
 **No puede:**
 - Eliminar al super administrador ni cambiar su contraseña (N-13, D-S-03, D-S-04).
@@ -60,7 +60,7 @@ Existe **un único super administrador fijo, que no se crea ni se borra desde la
 - Ver las tareas que le asignaron y las tareas urgentes, con su estado y el tiempo que le queda a cada una (Descripción, N-05, D-S-10).
 - Entrar al detalle de una tarea, marcar y desmarcar sus pasos en cualquier orden, escribir observaciones y completarla (Descripción, N-03, N-09, D-S-20, D-S-27).
 - Ver a los demás responsables de la tarea, con su nombre y su teléfono (N-10, D-S-29).
-- Cambiar su contraseña dentro de la herramienta, y recuperarla con su correo si la olvida (P-04, D-S-16).
+- Cambiar su contraseña dentro de la herramienta (P-04). Recuperarla por correo si no puede entrar es Should (S2, D-S-16).
 - Ver el apartado de sus tareas completadas (P-06, D-S-34).
 
 **No puede:**
@@ -77,38 +77,45 @@ El equipo sabrá que la herramienta funcionó si se cumple lo siguiente:
 - **Cada acción tiene respuesta.** Ante cada acción importante, el usuario ve un mensaje de confirmación o de error, así que nunca se queda con la duda de si algo se guardó (D-S-11).
 - **Cada estudiante sabe qué hacer, dónde y para cuándo.** Al entrar ve sus tareas y las urgentes, con el lugar y el tiempo que le queda (N-05, D-S-10).
 - **Nada se da por hecho sin terminarse.** Ninguna tarea se completa con pasos sin marcar o sin observaciones, y siempre se sabe quién marcó cada paso y quién la completó (P-01, D-S-24, D-S-28).
-- **El administrador reacciona a tiempo.** Recibe un aviso de lo que vence en una hora o menos y lo ve en el tablero (P-12, D-S-15).
-- **El trabajo se reparte bien.** El administrador ve qué estudiantes no tienen tareas, cuántas tiene cada uno y cuántas horas de disponibilidad le quedan en el día (N-17, N-20, D-S-36).
+- **El administrador reacciona a tiempo.** Recibe un aviso **dentro de la herramienta** de lo que vence en una hora o menos y lo ve en el tablero (P-12). El aviso con la herramienta cerrada es Should (S3, D-S-15).
+- **El trabajo se reparte bien.** El administrador ve qué estudiantes no tienen tareas y cuántas tiene cada uno (N-17). Las horas de disponibilidad que le quedan en el día son Should (S5, N-20, D-S-36).
 
 ## 4. Alcance (MoSCoW)
 
-El equipo decidió que **todo** lo del alcance es imprescindible para el avance funcional del 2 de diciembre (D-S-12). Por eso las funcionalidades quedan en Must, y Should y Could quedan vacíos.
-⚠ **Riesgo anotado:** es mucho para el 2 de diciembre, sobre todo las notificaciones con la herramienta cerrada (M15) y la recuperación de contraseña por correo (M2). Si no alcanza el tiempo, el equipo decidirá qué se mueve a Should y lo dirá en la entrega del Avance 3 (ver la sección 8.3).
+El 23 de noviembre el equipo dijo que todo era imprescindible (D-S-12). El 25 de noviembre priorizó de verdad, para que el 2 de diciembre quepa: **15 Must, 6 Should y 2 Could**. La mayoría sigue en Must. Lo que salió de Must es lo que el evento puede hacer de otra forma, o lo que el cliente no pidió con esas palabras.
 
-**Must**
+**Must** — sin esto la herramienta no reparte ni controla el trabajo del staff.
 - M1. Login con el correo registrado por el administrador; perfiles de administrador y estudiante; un único super administrador fijo (Descripción, N-11, N-13, D-S-03, D-S-17).
-- M2. Contraseñas: la herramienta envía las credenciales por correo al crear el usuario; cada usuario cambia la suya y la recupera con su correo; el administrador cambia la de cualquiera, salvo la del super administrador (P-03, P-04, N-12, D-S-04, D-S-14, D-S-16).
+- M2. Contraseñas dentro de la herramienta: cada usuario cambia la suya, y el administrador cambia la de cualquiera, salvo la del super administrador (P-04, N-12, D-S-04).
 - M3. Gestión de usuarios: crear, ver, editar y eliminar, con nombre, correo, teléfono, perfil y disponibilidad por día y hora (P-02, N-11, N-18).
 - M4. Gestión de tareas: crear con nombre, descripción opcional, fecha y hora de vencimiento, lugar o aula, checklist y responsables; editar y eliminar solo en los estados permitidos; bloqueo «en edición» (N-14, P-05, P-06, D-S-19, D-S-23, D-S-25).
 - M5. Asignar una tarea a una o varias personas disponibles (N-01, D-S-35).
-- M6. Estados de la tarea, alerta «por vencer» y temporizador (P-09, P-12, N-05).
+- M6. Estados de la tarea, la alerta «por vencer» **dentro de la herramienta** y el temporizador (P-09, P-12, N-05).
 - M7. Lista de tareas del estudiante (las suyas y las urgentes), con el apartado de completadas (Descripción, P-06, D-S-10, D-S-34).
-- M8. Ejecución: marcar y desmarcar pasos en cualquier orden, observaciones obligatorias para completar, completar deslizando para confirmar, sin poder empezar otra tarea mientras haya una abierta (N-09, N-22, D-S-20, D-S-24, D-S-26, D-S-27).
+- M8. Ejecución: marcar y desmarcar pasos en cualquier orden, observaciones obligatorias para completar, completar deslizando para confirmar, sin poder empezar otra tarea mientras haya una abierta, y poder terminar una vencida si se está dentro (N-09, N-22, D-S-20, D-S-24, D-S-26, D-S-27, D-S-08).
 - M9. Registro de quién marcó cada paso y a qué hora, quién inició y quién completó cada tarea (P-08, D-S-28, D-S-29).
-- M10. Reasignar las vencidas con una nueva hora, y reabrir las completadas (P-14, D-S-06, D-S-30).
-- M11. Tablero de cumplimiento en tarjetas, con estado, temporizador, porcentaje de pasos, totales, y un panel de filtros y orden (N-05 a N-08, D-S-13, D-S-33).
+- M10. Reasignar las vencidas con una nueva hora (P-14, D-S-30).
+- M11. Tablero de cumplimiento en tarjetas, con estado, temporizador, avance en pasos («3 de 5»), totales, el orden por defecto y el filtro «por vencer», más los dos órdenes de la sesión: por cercanía al vencimiento y de la más reciente a la más antigua (N-05 a N-08, D-S-32).
 - M12. Marcar una tarea como urgente y asignarla a todos los estudiantes (N-15, N-16, D-S-05).
-- M13. Panel de estudiantes: quién no tiene tareas, cuántas tiene cada uno, su disponibilidad, las horas que le quedan en el día y su historial de completadas (N-17 a N-20, D-S-36).
+- M13. Panel de estudiantes: quién no tiene tareas, cuántas tiene cada uno y su disponibilidad (N-17, N-18).
 - M14. Aviso sin internet, y que sin internet no se puedan marcar pasos (N-23, D-S-02).
-- M15. Notificación de «por vencer» a los responsables y a los administradores, aunque la herramienta esté cerrada (P-12, D-S-15).
-- M16. Mensajes de confirmación o de error en cada acción importante (D-S-11).
+- M15. Mensajes de confirmación o de error en cada acción importante (D-S-11).
 
-**Should** — vacío por decisión del equipo (D-S-12).
-**Could** — vacío por decisión del equipo (D-S-12).
+**Should** — el producto los incluye; el 2 de diciembre no se cae si faltan, porque hay otro camino.
+- S1. Al crear un usuario, la herramienta le envía las credenciales por correo (P-03, D-S-14). Si no está, el administrador se las entrega.
+- S2. Recuperar la contraseña por correo cuando la persona no puede entrar (D-S-16). Si no está, se la cambia un administrador (M2).
+- S3. Aviso de «por vencer» aunque la herramienta esté cerrada, a los responsables y a los administradores (P-12, D-S-15). Dentro de la herramienta el aviso ya es Must (M6).
+- S4. Reabrir una tarea completada (D-S-06). El cliente no lo pidió; el equipo lo quiere por si se completó por error.
+- S5. En el panel, cuántas horas de disponibilidad le quedan a cada estudiante en el día (N-20, D-S-36).
+- S6. Historial de tareas completadas de cada estudiante (N-19).
+
+**Could** — se hace si sobra tiempo.
+- C1. Mostrar el porcentaje de pasos además de «3 de 5» (D-S-13).
+- C2. Ordenar el tablero por lugar (D-S-33, S-46).
 
 **Won't (no en esta versión)**
 - W1. Registro abierto de usuarios (Descripción).
-- W2. Enviar las credenciales por WhatsApp desde la herramienta: P-03 lo mencionaba, pero el equipo decidió que la herramienta las envíe por correo (D-S-14).
+- W2. Enviar las credenciales por WhatsApp desde la herramienta: P-03 lo mencionaba, pero el equipo decidió que, si se envían solas, sea por correo (D-S-14, S1).
 - W3. Trabajar o marcar pasos sin conexión (D-S-02).
 - W4. Crear o borrar al super administrador desde la herramienta (D-S-03).
 
@@ -127,8 +134,8 @@ Queda fuera de esta versión:
 - **R1.** Solo se entra con una cuenta creada por un administrador; no hay registro propio (Descripción, N-11). Se entra con el correo que registró el administrador, estudiantil o no, y una contraseña (D-S-17).
 - **R2.** Hay dos perfiles, administrador y estudiante, y cada usuario tiene uno. Un administrador puede crear administradores y estudiantes (N-11).
 - **R3.** Existe un único super administrador fijo, que no se crea ni se borra desde la herramienta (N-13, D-S-03). Nadie más puede cambiar su contraseña (D-S-04).
-- **R4.** Al crear un usuario, la herramienta le envía sus credenciales por correo (P-03, D-S-14).
-- **R5.** Cada usuario puede cambiar su contraseña dentro de la herramienta (P-04) y recuperarla con su correo si la olvida (D-S-16). Un administrador puede cambiar la contraseña de cualquier usuario, salvo la del super administrador (N-12, D-S-04).
+- **R4.** Al crear un usuario, el administrador le entrega la contraseña. Que la herramienta se la envíe por correo es Should (S1, P-03, D-S-14).
+- **R5.** Cada usuario puede cambiar su contraseña dentro de la herramienta (P-04). Un administrador puede cambiar la contraseña de cualquier usuario, salvo la del super administrador (N-12, D-S-04). Recuperarla por correo si no puede entrar es Should (S2, D-S-16).
 - **R6.** Al eliminar a un estudiante, la tarea no se borra: él deja de ser responsable, y si la tarea se queda sin responsables, pasa a «Sin asignar» (D-S-18). Que la tarea siga como está cuando le quedan otros responsables es [SUPUESTO S-37]. Las tareas que completó y los pasos que marcó siguen mostrando su nombre. [SUPUESTO S-37]
 
 ### Tarea
@@ -150,7 +157,7 @@ Queda fuera de esta versión:
   - **En edición:** un administrador la está editando (P-09, D-S-23).
   - **Fuera de hora:** se completó después de su hora de vencimiento (R24). [SUPUESTO S-38]
 - **R13. En edición.** Mientras un administrador edita una tarea, su tarjeta muestra que está «en edición», y **nadie más puede entrar a ella** hasta que termine (P-09: «que no puedan editar 2 personas»; D-S-23).
-- **R14. Por vencer.** Cuando una tarea entra en «por vencer», la herramienta avisa a sus estudiantes responsables y a los administradores, aunque tengan la herramienta cerrada (P-12, D-S-15). Las que no tienen responsables solo se avisan a los administradores. [SUPUESTO S-39]
+- **R14. Por vencer.** Cuando una tarea entra en «por vencer», la herramienta avisa **dentro de la herramienta** a sus estudiantes responsables y a los administradores (P-12). Las que no tienen responsables solo se avisan a los administradores. [SUPUESTO S-39] Avisar aunque tengan la herramienta cerrada es Should (S3, D-S-15).
 - **R15. Temporizador.** Toda tarea que no está completada ni vencida muestra cuánto tiempo le queda para vencer (N-05).
 
 ### Ejecución
@@ -172,35 +179,35 @@ Queda fuera de esta versión:
 ### Vencimiento, reasignación y reapertura
 - **R24. Terminar una vencida.** Si un responsable está dentro de la tarea cuando vence, puede terminarla. La tarea queda Completada, con la marca «fuera de hora» (D-S-08; la marca es [SUPUESTO S-38]). «Estar dentro» significa tenerla abierta en pantalla en el momento del vencimiento; si sale, ya no puede completarla hasta que la reasignen. [SUPUESTO S-43] ⚠ P-14 decía «Pasa a un estado de vencida y el admin puede reasignar».
 - **R25. Reasignar.** Al reasignar una tarea vencida, el administrador **debe** poner una nueva hora de vencimiento, y puede cambiar los responsables. Los pasos marcados se conservan, y la tarea toma el estado que le corresponda según R11 (P-14, D-S-30).
-- **R26. Reabrir.** Un administrador puede reabrir una tarea completada, por ejemplo si se completó por error (D-S-06). Los pasos siguen marcados y la tarea pasa a En ejecución, o a Vencida si su hora ya pasó. Queda registrado quién la reabrió y cuándo, y la marca «fuera de hora» se quita. [SUPUESTO S-44]
+- **R26. Reabrir.** Un administrador puede reabrir una tarea completada, por ejemplo si se completó por error (D-S-06). Es Should (S4). Los pasos siguen marcados y la tarea pasa a En ejecución, o a Vencida si su hora ya pasó. Queda registrado quién la reabrió y cuándo, y la marca «fuera de hora» se quita. [SUPUESTO S-44]
 
 ### Urgencia y disponibilidad
 - **R27. Urgente.** Una tarea marcada como urgente se asigna a todos los estudiantes, que se suman a los responsables que ya tenía (N-16, D-S-05). Todos la ven en su lista (D-S-10) y va primero dentro de su grupo. [SUPUESTO S-05]
 - **R28. Disponibilidad.** Cada estudiante tiene días y horas de disponibilidad (P-02, N-18). No se le puede asignar una tarea si no está disponible (D-S-35). Estar disponible significa que la hora de vencimiento de la tarea cae dentro de su horario de ese día [SUPUESTO S-45]. Las urgentes son la excepción, porque van a todos (D-S-05). ⚠ Ver 8.3.
-- **R29. Horas que le quedan.** El panel de estudiantes muestra cuántas horas de disponibilidad le quedan a cada estudiante en el día, es decir, cuánto le falta para irse a casa (N-20, D-S-36).
+- **R29. Horas que le quedan.** El panel de estudiantes muestra cuántas horas de disponibilidad le quedan a cada estudiante en el día, es decir, cuánto le falta para irse a casa (N-20, D-S-36). Es Should (S5).
 
 ### Tablero de cumplimiento y listas
-- **R30. Tarjetas.** El tablero es la página principal del administrador (N-04, N-05). Muestra una tarjeta por tarea, con su estado en color y con nombre, el temporizador, el lugar, los responsables, el porcentaje de pasos marcados y sus marcas (por vencer, urgente, en edición) (N-05, N-10, D-S-13). Que el estado nunca dependa solo del color es [SUPUESTO S-31].
+- **R30. Tarjetas.** El tablero es la página principal del administrador (N-04, N-05). Muestra una tarjeta por tarea, con su estado en color y con nombre, el temporizador, el lugar, los responsables, el avance en pasos («3 de 5») y sus marcas (por vencer, urgente, en edición) (N-05, N-10). El porcentaje además de «3 de 5» es Could (C1, D-S-13). Que el estado nunca dependa solo del color es [SUPUESTO S-31].
 - **R31. Orden por defecto.** Por defecto, el tablero agrupa las tareas en este orden: **Pendientes, Vencidas, Por vencer, En ejecución, Sin asignar, Terminadas**. Cada tarea aparece en un solo grupo; una tarea por vencer va en «Por vencer». (D-S-32: las pendientes «van primeras»; el resto, en el orden de N-21.) ⚠ N-21 empezaba por «vencidas»; ver 8.3.
-- **R32. Filtros y orden.** Un panel de filtros permite al administrador elegir cómo ordenar las tareas, como prefiera (D-S-33): por cercanía al vencimiento o de la más reciente a la más antigua (N-07), por estado o por lugar [SUPUESTO S-46]. También permite filtrar «por vencer» (N-08).
+- **R32. Filtros y orden.** Un panel permite al administrador elegir cómo ordenar las tareas (D-S-33): por cercanía al vencimiento o de la más reciente a la más antigua (N-07), o por estado. También permite filtrar «por vencer» (N-08). Ordenar por lugar es Could (C2). [SUPUESTO S-46]
 - **R33. Totales.** El tablero muestra cuántas tareas hay en cada estado, incluido cuántas están ejecutadas y cuántas pendientes (N-06).
 - **R34. Apartado de completadas.** Las tareas completadas se acumulan y se ven en un apartado propio (P-06, D-S-34), tanto en el tablero («Terminadas») como en la lista del estudiante.
 - **R35. Lista del estudiante.** El estudiante ve sus tareas y las urgentes, ordenadas por cercanía al vencimiento, y sus completadas en el apartado del final (D-S-10, D-S-34). El orden es [SUPUESTO S-47].
-- **R36. Panel de estudiantes.** Muestra cuántas tareas tiene cada estudiante y quién no tiene ninguna (N-17), su disponibilidad (N-18), las horas que le quedan en el día (R29) y su historial de tareas completadas (N-19).
+- **R36. Panel de estudiantes.** Muestra cuántas tareas tiene cada estudiante y quién no tiene ninguna (N-17) y su disponibilidad (N-18). Las horas que le quedan en el día (R29) y el historial de tareas completadas (N-19) son Should (S5, S6).
 
 ### Respuesta de la herramienta
 - **R37.** Cada acción importante (iniciar sesión, guardar, marcar, completar, asignar, reasignar, reabrir, eliminar) muestra un mensaje breve de confirmación o de error (D-S-11).
 
 ## 7. Épicas
 
-Todas son **Must** por decisión del equipo (D-S-12).
+El núcleo de cada épica es **Must**. Donde una parte es Should o Could, el párrafo lo dice.
 
-- **E1 · Acceso y usuarios — Must.** El administrador da de alta al staff y a otros administradores con su nombre, correo, teléfono, perfil y disponibilidad. La herramienta les envía sus credenciales por correo; cada uno puede cambiar su contraseña o recuperarla con su correo, y el administrador puede cambiar la de cualquiera, salvo la del super administrador fijo. Cubre R1–R6.
+- **E1 · Acceso y usuarios — Must.** El administrador da de alta al staff y a otros administradores con su nombre, correo, teléfono, perfil y disponibilidad, y les entrega la contraseña. Cada uno puede cambiar la suya dentro de la herramienta, y el administrador puede cambiar la de cualquiera, salvo la del super administrador fijo. Enviar las credenciales por correo (S1) y recuperar la contraseña por correo (S2) son Should. Cubre R1–R6.
 - **E2 · Tareas y asignación — Must.** El administrador crea tareas con nombre, hora límite, lugar, checklist y, si quiere, una descripción. Las asigna a una o varias personas disponibles, o las deja sin asignar. Puede editarlas mientras nadie las haya empezado, sin que otro entre mientras edita, y eliminarlas si están pendientes, sin asignar o vencidas. Cubre R7–R10, R13, R21, R22, R28.
 - **E3 · Ejecución — Must.** Desde el celular o la computadora, el responsable ve sus tareas y las urgentes con el tiempo que le queda. Entra a una, marca los pasos en cualquier orden, escribe observaciones y la completa deslizando para confirmar. No puede empezar otra mientras tenga una abierta, y sin internet no puede marcar. Basta con que uno complete. Cubre R11, R15–R20, R23, R24, R35.
-- **E4 · Estados y tablero de cumplimiento — Must.** El administrador ve todas las tareas como tarjetas agrupadas por estado, con su temporizador, el porcentaje de pasos, los totales y un panel para filtrarlas y ordenarlas como prefiera. Cubre R11, R12, R15, R30–R34.
-- **E5 · Vencimientos, urgencias y avisos — Must.** La herramienta avisa a los responsables y a los administradores cuando una tarea está por vencer, aunque no la tengan abierta. El administrador reasigna las vencidas con una nueva hora, reabre las completadas por error y marca tareas urgentes, que llegan a todos los estudiantes. Cubre R12, R14, R24–R27.
-- **E6 · Panel de estudiantes — Must.** El administrador ve quién está sin tareas, cuántas tiene cada uno, su disponibilidad, cuántas horas le quedan en el día y su historial de tareas completadas. Cubre R29, R36.
+- **E4 · Estados y tablero de cumplimiento — Must.** El administrador ve todas las tareas como tarjetas agrupadas por estado, con su temporizador, el avance en pasos («3 de 5»), los totales, el filtro «por vencer» y el orden (por cercanía al vencimiento, de la más reciente a la más antigua, o por estado). El porcentaje además de «3 de 5» es Could (C1). Ordenar por lugar es Could (C2). Cubre R11, R12, R15, R30–R34.
+- **E5 · Vencimientos, urgencias y avisos — Must.** Dentro de la herramienta, avisa a los responsables y a los administradores cuando una tarea está por vencer. El administrador reasigna las vencidas con una nueva hora y marca tareas urgentes, que llegan a todos los estudiantes. Avisar con la herramienta cerrada (S3) y reabrir una completada (S4) son Should. Cubre R12, R14, R24–R27.
+- **E6 · Panel de estudiantes — Must.** El administrador ve quién está sin tareas, cuántas tiene cada uno y su disponibilidad. Las horas que le quedan en el día (S5) y el historial de completadas (S6) son Should. Cubre R29, R36.
 - **E7 · Respuesta y conexión — Must.** Cada acción muestra un mensaje de confirmación o de error, y la herramienta avisa cuando no hay internet. Cubre R19, R37.
 
 ## 8. Supuestos y puntos abiertos
@@ -216,16 +223,16 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 | D-S-03 | Un solo super administrador | «Es solo uno […]» (el resto de la respuesta es un detalle de construcción, en `docs/cliente/preguntas.md`) | Un único super administrador fijo, que no se crea ni se borra desde la herramienta. |
 | D-S-04 | ¿Un administrador cambia la contraseña del super administrador? | «no» | Nadie más que él cambia su contraseña. |
 | D-S-05 | Urgente: ¿a todos o solo a los disponibles? | «A todos» | La urgente se asigna a todos los estudiantes. (Quién la marca sigue siendo S-05.) |
-| D-S-06 | ¿El administrador reabre una completada por error? | «si» | Sí puede reabrirla. ⚠ Cambia la decisión anterior («Completada es final»). |
+| D-S-06 | ¿El administrador reabre una completada por error? | «si» | Sí puede reabrirla. ⚠ Cambia la decisión anterior («Completada es final»). El 25-nov pasó a Should (S4). |
 | D-S-07 | ¿El administrador ejecuta tareas? | «si» | Sí: marca pasos y completa. |
 | D-S-08 | ¿Se puede terminar una vencida? | «Si esta dentro de la tarea poder terminarla» | Si el responsable está dentro de la tarea cuando vence, puede terminarla. ⚠ Ver P-14. |
 | D-S-10 | ¿Qué tareas ve el estudiante? | «Ósea a el le sale las asisganaciones que se le asignaron a el y las urgente, las que no le pertenecen no debe poder ver» | Ve las suyas y las urgentes; ninguna otra. |
 | D-S-11 | Cómo medir el éxito | «Con mensajes de retroalimentación de confirmación o de error estilo pop up» | Cada acción muestra un mensaje de confirmación o de error. |
-| D-S-12 | ¿Qué es imprescindible para el 2 de diciembre? | «todo» | Todo es Must. ⚠ Riesgo de plazo. |
-| D-S-13 | ¿El tablero muestra el porcentaje de pasos? | «si» | Sí, por tarea. |
-| D-S-14 | ¿Quién envía las credenciales? | «La herramienta a través de correo una vez que se crea el usuario» | Las envía la herramienta por correo al crear el usuario. |
-| D-S-15 | ¿Notificación con la herramienta cerrada? ¿A quién? | «Si, a estudiantes y admin» | Sí, aunque esté cerrada, a los estudiantes responsables y a los administradores. ⚠ Riesgo de plazo. |
-| D-S-16 | Contraseña olvidada | «Si pero también puede recuperarla a través de se su correo» | La cambia un administrador, o el usuario la recupera con su correo. |
+| D-S-12 | ¿Qué es imprescindible para el 2 de diciembre? | «todo» | El 23-nov el equipo dijo que todo era Must. El 25-nov priorizó: 15 Must, 6 Should y 2 Could (sección 4). La respuesta literal no se borra. |
+| D-S-13 | ¿El tablero muestra el porcentaje de pasos? | «si» | Sí, por tarea. El 25-nov el «3 de 5» quedó en Must y el porcentaje, en Could (C1). |
+| D-S-14 | ¿Quién envía las credenciales? | «La herramienta a través de correo una vez que se crea el usuario» | La herramienta las envía por correo. El 25-nov eso quedó en Should (S1): si no está, el administrador las entrega. |
+| D-S-15 | ¿Notificación con la herramienta cerrada? ¿A quién? | «Si, a estudiantes y admin» | Sí, a los responsables y a los administradores. El 25-nov el aviso dentro de la herramienta quedó en Must (M6) y el aviso con la herramienta cerrada, en Should (S3). |
+| D-S-16 | Contraseña olvidada | «Si pero también puede recuperarla a través de se su correo» | La cambia un administrador (Must, M2). Recuperarla por correo es Should (S2). |
 | D-S-17 | ¿Con qué se entra? | «Con el correo que cree el admin no necesariamente estudiantil» | Con el correo que registró el administrador. |
 | D-S-18 | Estudiante eliminado | «Pasan a sin asignar no se borra la tarea» | Sus tareas pasan a Sin asignar y no se borran. |
 | D-S-19 | Datos obligatorios | «La descripción es opcional el nombre obligatorio. Pero las subtareas obligatorio igualmente» | Nombre y pasos obligatorios; descripción opcional. |
@@ -243,7 +250,7 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 | D-S-33 | ¿Cuándo se usa cada orden? | «Depende del uso, mejor que haya un panel de filtro donde el admin pueda ordenar a su gusto como quiere ver el orden de las tareas» | Panel de filtros para que el administrador elija el orden. |
 | D-S-34 | ¿Qué es «un apartado debajo de todo»? | «Me refería al apartado donde se acumulan y visualizan todas las tareas completadas» | Es el apartado de tareas completadas. |
 | D-S-35 | ¿Asignar a alguien no disponible? | «no» | No se puede. |
-| D-S-36 | ¿Qué es «tiempo de vida»? | «Cuánto tiempo le queda para que se vaya a su casa, o sea las horas disponibles que tiene» | Las horas de disponibilidad que le quedan en el día. |
+| D-S-36 | ¿Qué es «tiempo de vida»? | «Cuánto tiempo le queda para que se vaya a su casa, o sea las horas disponibles que tiene» | Las horas de disponibilidad que le quedan en el día. El 25-nov quedó en Should (S5). |
 | D-P16 | Identidad visual (punto abierto de P-16) | «Sí, ese es el panel de colores, tipografía y muestras de animaciones que debemos seguir.» | El sistema de diseño sigue el brandboard «Señal Neón» de Interact2Hack. Afecta al DESIGN.md. El cliente no lo respondió en la sesión. |
 
 ### 8.2 Supuestos que siguen abiertos
@@ -252,7 +259,7 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 | --- | --- | --- |
 | S-05 | La marca de urgente la pone el administrador. | N-15 (está bajo «Panel de estudiantes»); D-S-05 solo respondió «A todos» |
 | S-09 | El estudiante no ve el tablero ni el panel de estudiantes. | N-04 «Ingrso a la parte de admin»; sin respuesta del equipo |
-| S-12 | No-alcance (sección 5). | D-S-12 «todo» se refiere a lo ya descrito |
+| S-12 | No-alcance (sección 5). | D-S-12 «todo» se refiere a lo ya descrito; la prioridad de cada parte está en la sección 4 |
 | S-21 | Las horas son las de Ecuador continental. | Sin respuesta del equipo |
 | S-31 | Cada estado se muestra con color y con nombre. | N-05 «Por colores»; criterio de accesibilidad del curso |
 | S-37 | Si a la tarea le quedan otros responsables, sigue como está; lo que hizo el estudiante eliminado conserva su nombre. | D-S-18 |
@@ -269,14 +276,14 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 
 ### 8.3 Contradicciones y puntos abiertos (sin resolver)
 
-1. **⚠ D-S-12 frente al plazo.** «Todo» es Must para el 2 de diciembre, y eso incluye las notificaciones con la herramienta cerrada, la recuperación de contraseña por correo y el envío de credenciales por correo. Es un riesgo de plazo: si no alcanza, el equipo debe decidir qué pasa a Should y decírselo al cliente.
-2. **⚠ D-S-06 (reabrir) frente a la decisión anterior.** El borrador revisado decía que una completada era final, apoyado en P-05 y P-06. El equipo ahora permite que el administrador la reabra (R26). El cliente no lo prohibió, pero tampoco lo pidió.
+1. **D-S-12, priorizado el 25-nov.** El equipo ya no deja todo en Must. Quedaron en Should el envío de credenciales por correo, la recuperación por correo, el aviso con la herramienta cerrada, reabrir una completada, las horas que le quedan y el historial. Quedaron en Could el porcentaje además de «3 de 5» y ordenar por lugar. El resto, la mayoría, sigue en Must (sección 4).
+2. **⚠ D-S-06 (reabrir) frente a la decisión anterior.** El borrador revisado decía que una completada era final, apoyado en P-05 y P-06. El equipo ahora permite que el administrador la reabra (R26) y el 25-nov lo dejó en Should (S4). El cliente no lo prohibió, pero tampoco lo pidió.
 3. **⚠ D-S-08 frente a P-14.** El cliente dijo «Pasa a un estado de vencida y el admin puede reasignar». El equipo permite terminarla si el responsable está dentro de la tarea (R24). Hay que confirmarlo con el cliente.
-4. **⚠ D-S-15: notificaciones con la herramienta cerrada.** El cliente pidió «una noti» (P-12), sin decir si con la herramienta cerrada. El equipo decidió que sí. Es la funcionalidad más difícil para el 2 de diciembre.
+4. **⚠ D-S-15: notificaciones con la herramienta cerrada.** El cliente pidió «una noti» (P-12), sin decir si con la herramienta cerrada. El equipo decidió que sí, y el 25-nov la dejó en Should (S3). El aviso dentro de la herramienta es Must (M6).
 5. **⚠ D-S-32 frente a N-21.** En la sesión, el cliente enumeró «vencidas» primero y no mencionó las pendientes; el equipo pone las pendientes primero. El panel de filtros (D-S-33) permite cambiar el orden, pero el orden por defecto hay que confirmarlo con el cliente.
 6. **⚠ D-S-05 frente a D-S-35.** La urgente va «a todos», pero no se puede asignar a quien no está disponible. Se resolvió con las urgentes como excepción (R28). Hay que confirmar si deben ir también a quienes no están disponibles ese día.
 7. **⚠ D-S-17 frente a P-02.** El cliente dijo «Correo estud»; el equipo acepta cualquier correo.
-8. **⚠ D-S-14 frente a P-03.** El cliente dijo «Por correo todas las credenciales o por whats»; el equipo solo envía por correo, y WhatsApp queda en Won't.
+8. **⚠ D-S-14 frente a P-03.** El cliente dijo «Por correo todas las credenciales o por whats». El equipo no usa WhatsApp (Won't). El envío por correo quedó en Should (S1): si no está, el administrador entrega las credenciales.
 9. **P-11 sigue sin respuesta del cliente.** El equipo decidió que se puede desmarcar (D-S-27).
 10. **P-16 sin respuesta del cliente.** El equipo decidió seguir el brandboard «Señal Neón» (D-P16); conviene confirmarlo con el cliente.
 11. **D-S-26 y las urgentes.** ¿Puede alguien con una tarea abierta empezar una urgente? (S-41)

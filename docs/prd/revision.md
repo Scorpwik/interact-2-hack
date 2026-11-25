@@ -1,9 +1,9 @@
 # Revisión del PRD
 
-**Equipo:** Joshua Lozada y Raymond Portilla · **Fecha:** 23 de noviembre de 2026 · **Corrección de referencias:** 25 de noviembre de 2026
+**Equipo:** Joshua Lozada y Raymond Portilla · **Fecha:** 23 de noviembre de 2026 · **Corrección de referencias y de MoSCoW:** 25 de noviembre de 2026
 **Fuentes:** docs/fuentes/descripcion-proyecto.md y docs/cliente/preguntas.md
 
-> Las filas 1–24 son del revisor con IA (Paso 3a). Las filas 25–33 son una segunda revisión con IA, hecha después de que el equipo resolviera los supuestos (23-nov, D-S-xx) y aplicada en el commit «docs(prd): supuestos resueltos por el equipo». Las filas 34–36 son la corrección del 25 de noviembre de 2026: referencias cruzadas que apuntaban a otra regla. Cada cita de las filas 1–33 se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» en esas filas cita el borrador (commit «docs(prd): borrador generado con IA»), así que los números de regla de la columna «Corrección» son los de esa pasada, no un índice del PRD actual.
+> Las filas 1–24 son del revisor con IA (Paso 3a). Las filas 25–33 son una segunda revisión con IA, hecha después de que el equipo resolviera los supuestos (23-nov, D-S-xx) y aplicada en el commit «docs(prd): supuestos resueltos por el equipo». Las filas 34–36 son la corrección del 25 de noviembre de 2026: referencias cruzadas que apuntaban a otra regla. La fila 37 es la priorización MoSCoW del mismo día. Cada cita de las filas 1–33 se comprobó contra `docs/cliente/preguntas.md`. La columna «Frase exacta del PRD» en esas filas cita el borrador (commit «docs(prd): borrador generado con IA»), así que los números de regla de la columna «Corrección» son los de esa pasada, no un índice del PRD actual.
 >
 > No quedaron filas vacías de «revisión del equipo». Lo que el equipo decidió está en la sección 6 de `docs/cliente/preguntas.md` (D-S-xx) y en la sección 8.1 del PRD.
 >
@@ -49,6 +49,7 @@
 | 34 | 2. Administrador puede | «editar y eliminar tareas (R18, R19)» | 8 | media | Corrección 25-nov | En el PRD actual, R18 es desmarcar un paso y R19 es trabajar sin internet. Editar es R21 y eliminar es R22. | Aceptado | La frase cita R21 y R22. |
 | 35 | 2. Administrador no puede | «asignar a quien no está disponible (D-S-35, R31)» | 8 | media | Corrección 25-nov | R31 es el orden del tablero. La disponibilidad está en R28. | Aceptado | La frase cita D-S-35 y R28. |
 | 36 | 6. R11 Completada | «la reabre (R25)» | 8 | media | Corrección 25-nov | R25 es reasignar una vencida. Reabrir una completada es R26. | Aceptado | La frase cita R26. |
+| 37 | 4. Alcance | «Todo es Must» y Should y Could vacíos (fila 25) | 3 | alta | Corrección 25-nov | D-S-12 dice «todo». La guía pide que el alcance quepa el 2 de diciembre, con una división real. | Aceptado | 15 Must, 6 Should y 2 Could. La respuesta literal «todo» se conserva en preguntas.md. Should: correo de credenciales, recuperación por correo, aviso con la herramienta cerrada, reabrir, horas que le quedan e historial. Could: el porcentaje además de «3 de 5», y ordenar por lugar. |
 
 ## Para presentar
 
@@ -63,7 +64,7 @@ _(Propuesta; el equipo confirma o cambia la selección.)_
 Para el Avance 3 (2 de diciembre). Son las que siguen necesitando al cliente. Las demás las resolvió el equipo (D-S-xx, sección 8.1 del PRD).
 
 1. Si una tarea vence mientras el estudiante está dentro, ¿puede terminarla? Ustedes dijeron «Pasa a un estado de vencida y el admin puede reasignar» (P-14 frente a D-S-08).
-2. ¿Es imprescindible para el 2 de diciembre que la notificación de «por vencer» llegue con la herramienta cerrada, o basta con un aviso dentro de la herramienta? (P-12 frente a D-S-15)
+2. ¿Confirman el aviso de «por vencer» con la herramienta cerrada? El 25-nov el equipo lo dejó en Should (S3); el aviso dentro de la herramienta es Must (P-12 frente a D-S-15).
 3. En el tablero, ¿van primero las pendientes o las vencidas? (N-21 frente a D-S-32)
 4. Si alguien completa una tarea por error, ¿está bien que el administrador pueda reabrirla? (D-S-06)
 5. Una tarea urgente, ¿se asigna también a los estudiantes que no están disponibles ese día? ¿Quién la marca como urgente? ¿Alguien con una tarea abierta puede empezar una urgente? (N-15, N-16; D-S-05, D-S-26, D-S-35)

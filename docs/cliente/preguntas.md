@@ -141,7 +141,7 @@ ver si no tiene internet que le asome un aviso.
 
 ## 6. Decisiones del equipo posteriores a la sesión (confirmado por el equipo, 23-nov)
 
-> **No son palabras del cliente.** Son las respuestas del equipo (Joshua Lozada y Raymond Portilla) a los supuestos de la sección 8 del PRD. Se copian literalmente y en el PRD se citan como **D-S-xx**. Los supuestos S-09, S-21 y S-31 no tienen respuesta y siguen como supuestos.
+> **No son palabras del cliente.** Son las respuestas del equipo (Joshua Lozada y Raymond Portilla) a los supuestos de la sección 8 del PRD. Se copian literalmente y en el PRD se citan como **D-S-xx**. Los supuestos S-09, S-21 y S-31 no tienen respuesta y siguen como supuestos. La celda de D-S-12 sigue diciendo «todo»: el 25 de noviembre el equipo priorizó esa respuesta en Must, Should y Could, y eso está en la sección 4 del PRD, no en esta tabla.
 
 | Id | Supuesto o pregunta del PRD | Respuesta del equipo (literal) |
 | --- | --- | --- |

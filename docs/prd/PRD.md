@@ -156,14 +156,14 @@ Queda fuera de esta versión:
   - **Urgente:** la marcó un administrador (N-15).
   - **En edición:** un administrador la está editando (P-09, D-S-23).
   - **Fuera de hora:** se completó después de su hora de vencimiento (R24). [SUPUESTO S-38]
-- **R13. En edición.** Mientras un administrador edita una tarea, su tarjeta muestra que está «en edición», y **nadie más puede entrar a ella** hasta que termine (P-09: «que no puedan editar 2 personas»; D-S-23).
+- **R13. En edición.** Mientras un administrador edita una tarea, su tarjeta muestra que está «en edición», y **nadie más puede entrar a ella** hasta que termine (P-09: «que no puedan editar 2 personas»; D-S-23). El bloqueo se libera cuando el administrador guarda, cancela o cierra sesión, o tras 15 minutos sin actividad. [SUPUESTO S-48]
 - **R14. Por vencer.** Cuando una tarea entra en «por vencer», la herramienta avisa **dentro de la herramienta** a sus estudiantes responsables y a los administradores (P-12). Las que no tienen responsables solo se avisan a los administradores. [SUPUESTO S-39] Avisar aunque tengan la herramienta cerrada es Should (SH3, D-S-15).
 - **R15. Temporizador.** Toda tarea que no está completada ni vencida muestra cuánto tiempo le queda para vencer (N-05).
 
 ### Ejecución
 - **R16. Completar.** Una tarea se completa solo cuando todos sus pasos están marcados, tiene observaciones escritas y un responsable confirma deslizando para completar (P-01, P-05, N-09, N-22, D-S-24). Que baste con que la tarea tenga alguna observación, sin importar quién la escribió, es [SUPUESTO S-40].
 - **R17. Una tarea abierta a la vez.** Cada paso queda guardado en cuanto se marca, y el responsable puede salir de la tarea y volver sin perder nada. Pero mientras tenga una tarea abierta sin terminar, **no puede empezar otra**: si lo intenta, la herramienta le avisa por qué (P-10, D-S-26).
-  - «Tarea abierta» es una tarea en ejecución en la que esa persona marcó al menos un paso. La restricción termina cuando la tarea se completa, se reasigna, se elimina o esa persona deja de ser responsable. [SUPUESTO S-41]
+  - «Tarea abierta» es una tarea en ejecución en la que esa persona marcó al menos un paso. La restricción termina cuando la tarea se completa, se reasigna, se elimina, esa persona deja de ser responsable, o la tarea pasa a Vencida (deja de estar En ejecución); desde ese momento el estudiante puede empezar otra tarea. [SUPUESTO S-41]
   - Las tareas urgentes no son una excepción. [SUPUESTO S-41; ver 8.3]
 - **R18. Desmarcar.** Mientras la tarea no esté completada, cualquier responsable puede desmarcar un paso. Si quedan cero pasos marcados, la tarea vuelve a Pendiente, o sigue Vencida (D-S-27; P-11 sin respuesta del cliente).
 - **R19. Sin internet.** Sin conexión, la herramienta muestra un aviso y no deja marcar ni desmarcar pasos, ni completar (N-23, D-S-02).
@@ -275,6 +275,7 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 | S-45 | «Disponible» significa que la hora de vencimiento cae dentro de su horario de ese día. | D-S-35, N-18 |
 | S-46 | Opciones del panel de orden: vencimiento, reciente a antigua, estado y lugar. | D-S-33, N-07 |
 | S-47 | La lista del estudiante se ordena por cercanía al vencimiento. | — |
+| S-48 | El bloqueo de edición se libera por inactividad a los 15 minutos. | D-S-23 |
 
 ### 8.3 Contradicciones y puntos abiertos (sin resolver)
 
@@ -307,7 +308,7 @@ Son decisiones del equipo, no respuestas del cliente. Se citan como D-S-xx.
 | R10 | — | — | S-21 |
 | R11 | P-09 · P-14 · N-05 · N-09 · N-21 · N-22 · P-01 | D-S-22 · D-S-24 | — |
 | R12 | P-12 · N-15 · P-09 | D-S-23 | S-38 |
-| R13 | P-09 | D-S-23 | — |
+| R13 | P-09 | D-S-23 | S-48 |
 | R14 | P-12 | D-S-15 | S-39 |
 | R15 | N-05 | — | — |
 | R16 | P-01 · P-05 · N-09 · N-22 | D-S-24 | S-40 |

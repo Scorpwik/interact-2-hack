@@ -72,3 +72,4 @@ Para el Avance 3 (2 de diciembre). Son las que siguen necesitando al cliente. La
 7. ¿Está bien que se entre con cualquier correo, no solo el estudiantil, y que las credenciales lleguen solo por correo, no por WhatsApp? (P-02, P-03 frente a D-S-17, D-S-14)
 8. ¿Debemos seguir el brandboard «Señal Neón» de Interact2Hack? (P-16; el equipo decidió que sí, D-P16)
 9. ¿Cuántas tareas, estudiantes y días de evento esperan?
+10. Si un administrador deja una tarea «en edición», ¿está bien que el bloqueo se libere al guardar, cancelar o cerrar sesión, o a los 15 minutos sin actividad? (S-48; D-S-23)

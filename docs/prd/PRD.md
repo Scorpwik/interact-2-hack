@@ -73,12 +73,12 @@ Existe **un único super administrador fijo, que no se crea ni se borra desde la
 
 ## 3. Objetivos y éxito
 
-El equipo sabrá que la herramienta funcionó si se cumple lo siguiente:
-- **Cada acción tiene respuesta.** Ante cada acción importante, el usuario ve un mensaje de confirmación o de error, así que nunca se queda con la duda de si algo se guardó (D-S-11).
-- **Cada estudiante sabe qué hacer, dónde y para cuándo.** Al entrar ve sus tareas y las urgentes, con el lugar y el tiempo que le queda (N-05, D-S-10).
-- **Nada se da por hecho sin terminarse.** Ninguna tarea se completa con pasos sin marcar o sin observaciones, y siempre se sabe quién marcó cada paso y quién la completó (P-01, D-S-24, D-S-28).
-- **El administrador reacciona a tiempo.** Recibe un aviso **dentro de la herramienta** de lo que vence en una hora o menos y lo ve en el tablero (P-12). El aviso con la herramienta cerrada es Should (S3, D-S-15).
-- **El trabajo se reparte bien.** El administrador ve qué estudiantes no tienen tareas y cuántas tiene cada uno (N-17). Las horas de disponibilidad que le quedan en el día son Should (S5, N-20, D-S-36).
+El cliente (organizadores del Interact2Hack) sabrá que la herramienta funcionó si, durante el evento, se cumple lo siguiente:
+- **Cada acción tiene respuesta.** Ante cada acción importante, aparece un mensaje de confirmación o de error; el cliente lo comprueba al guardar, completar o asignar: no queda duda de si algo se guardó (D-S-11).
+- **Cada estudiante sabe qué hacer, dónde y para cuándo.** Al entrar, cada estudiante ve sus tareas y las urgentes, con el lugar y el tiempo que le queda; el cliente lo comprueba abriendo la lista de cualquier estudiante (N-05, D-S-10).
+- **Nada se da por hecho sin terminarse.** Ninguna tarea figura como completada con pasos sin marcar o sin observaciones. Cada tarea completada muestra quién marcó cada paso y a qué hora, y quién la completó (P-01, D-S-24, D-S-28).
+- **El administrador reacciona a tiempo.** El administrador ve en el tablero todas las tareas por vencer (una hora o menos) sin preguntar a nadie, y recibe un aviso **dentro de la herramienta** (P-12). El aviso con la herramienta cerrada es Should (S3, D-S-15).
+- **El trabajo se reparte bien.** Ningún estudiante con tareas pasa el día sin que el administrador lo vea en el panel. El administrador ve quién no tiene tareas y cuántas tiene cada uno (N-17). Las horas de disponibilidad que le quedan en el día son Should (S5, N-20, D-S-36).
 
 ## 4. Alcance (MoSCoW)
 

@@ -11,7 +11,7 @@
 > - «D-S-xx» = **decisión del equipo, confirmada por el equipo el 23-nov**, sobre el supuesto S-xx. No son palabras del cliente.
 > - «[SUPUESTO S-xx]» = lo que nadie definió todavía (sección 8).
 >
-> Cuando la descripción y el cliente dicen cosas distintas, manda el cliente. Cuando una decisión del equipo choca con una respuesta o una nota del cliente, la regla sigue la decisión del equipo, la diferencia queda anotada (⚠) y se confirma con el cliente (sección 8.3).
+> Cuando la descripción y el cliente dicen cosas distintas, manda el cliente. Cuando una decisión del equipo choca con una respuesta o una nota del cliente, la regla sigue provisionalmente la decisión del equipo, la diferencia queda anotada (⚠) y se confirma con el cliente (sección 8.3) antes del Avance 3.
 
 ## 1. Problema y contexto
 
@@ -118,6 +118,8 @@ El 23 de noviembre el equipo dijo que todo era imprescindible (D-S-12). El 25 de
 - W2. Enviar las credenciales por WhatsApp desde la herramienta: P-03 lo mencionaba, pero el equipo decidió que, si se envían solas, sea por correo (D-S-14, SH1).
 - W3. Trabajar o marcar pasos sin conexión (D-S-02).
 - W4. Crear o borrar al super administrador desde la herramienta (D-S-03).
+
+**Orden de recorte si el 2 de diciembre no alcanza** (decisión del equipo, no del cliente): primero CO1, CO2; luego SH3, SH1, SH2, SH4, SH5, SH6. Los Must no se recortan.
 
 ## 5. No-alcance
 

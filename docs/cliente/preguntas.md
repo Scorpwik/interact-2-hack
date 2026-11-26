@@ -179,3 +179,20 @@ ver si no tiene internet que le asome un aviso.
 | D-S-35 | ¿Asignar a alguien no disponible? | no |
 | D-S-36 | ¿Qué es «tiempo de vida»? | Cuánto tiempo le queda para que se vaya a su casa, o sea las horas disponibles que tiene |
 | D-P16 | Brandboard «Señal Neón» (P-16) | Sí, ese es el panel de colores, tipografía y muestras de animaciones que debemos seguir. |
+
+## 7. Supuestos nacidos al escribir el PRD (S-37 a S-48)
+
+| Id | Supuesto | Se apoya en | Estado |
+| --- | --- | --- | --- |
+| S-37 | Si a la tarea le quedan otros responsables, sigue como está; lo que hizo el estudiante eliminado conserva su nombre. | D-S-18 | pendiente |
+| S-38 | Una tarea completada después de vencer lleva la marca «fuera de hora». | D-S-08 y P-14 | pendiente |
+| S-39 | Una tarea por vencer sin responsables solo se avisa a los administradores. | D-S-15 | pendiente |
+| S-40 | Para completar basta con que la tarea tenga una observación, de cualquier responsable; las observaciones guardan su autor. | D-S-24, N-09 | pendiente |
+| S-41 | «Tarea abierta» es una en ejecución en la que la persona marcó un paso. La restricción termina al completarse, reasignarse o eliminarse la tarea, o al dejar de ser responsable. Las urgentes no son excepción. | D-S-26 | pendiente |
+| S-42 | Una Sin asignar con pasos marcados solo admite que se le agreguen responsables. | D-S-18, P-05 | pendiente |
+| S-43 | «Estar dentro» de la tarea es tenerla abierta en pantalla en el momento del vencimiento. | D-S-08 | pendiente |
+| S-44 | Al reabrir, los pasos siguen marcados, la tarea pasa a En ejecución (o a Vencida), queda registrado quién la reabrió y se quita la marca «fuera de hora». | D-S-06 | pendiente |
+| S-45 | «Disponible» significa que la hora de vencimiento cae dentro de su horario de ese día. | D-S-35, N-18 | pendiente |
+| S-46 | Opciones del panel de orden: vencimiento, reciente a antigua, estado y lugar. | D-S-33, N-07 | pendiente |
+| S-47 | La lista del estudiante se ordena por cercanía al vencimiento. | — | pendiente |
+| S-48 | El bloqueo de edición se libera por inactividad a los 15 minutos. | D-S-23 | pendiente |

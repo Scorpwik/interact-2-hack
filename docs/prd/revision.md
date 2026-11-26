@@ -32,9 +32,9 @@
 | 17 | 6. R4 | «cada usuario puede cambiar la suya dentro de la herramienta (N-12, P-04).» | 5 | media | IA | P-04 no cubre el caso de olvidarla sin poder entrar | Aceptado | R4 + [SUPUESTO S-16]: la cambia un administrador. |
 | 18 | 2. Perfiles | «Es un administrador que no se puede eliminar (N-13).» | 6 | media | IA | N-12 «Puedo cambiar las contraseñas de todos» choca con proteger al super admin | Aceptado | R3 + [SUPUESTO S-03, S-04]. |
 | 19 | 6. R17 | «Una tarea urgente se asigna a todos los estudiantes (N-16).» | 6 | media | IA | En las notas, «Marcar como urgente» está bajo «Panel de estudiantes»; no dice quién marca ni si son todos o solo los disponibles | Aceptado | R27 + [SUPUESTO S-05], con pregunta. |
-| 20 | 6. Reglas | (falta P-01 «Saber mientras quien la tiene abierta») | 5 | media | IA | P-01 | Aceptado | R23 + [SUPUESTO S-29]; Should S5. |
+| 20 | 6. Reglas | (falta P-01 «Saber mientras quien la tiene abierta») | 5 | media | IA | P-01 | Aceptado | R23 + [SUPUESTO S-29]; Should SH5. |
 | 21 | 8. Supuestos | Tabla con solo 6 supuestos y trazabilidad sin columna de supuestos | 8 | alta | IA | La guía pide que cada regla apunte a P-xx o a un supuesto | Aceptado | 36 supuestos con pregunta; la trazabilidad tiene columna de supuesto. |
-| 22 | 4. Alcance | «S1. Marcar una tarea como urgente…» … «S3. Disponibilidad…» como Should | 3 | baja | IA | N-15 a N-20 piden urgencias, panel, disponibilidad e historial | Rechazado | Ya están en Should, no en Must: el 2 de diciembre no depende de ellos. Se aclaró qué significa cada prioridad para el 2 de diciembre. |
+| 22 | 4. Alcance | «SH1. Marcar una tarea como urgente…» … «SH3. Disponibilidad…» como Should | 3 | baja | IA | N-15 a N-20 piden urgencias, panel, disponibilidad e historial | Rechazado | Ya están en Should, no en Must: el 2 de diciembre no depende de ellos. Se aclaró qué significa cada prioridad para el 2 de diciembre. |
 | 23 | 4. Alcance | «completar la tarea con un gesto deliberado (N-22)» | 7 | baja | IA | N-22: «slider deslizable de izquierda a derecha» | Rechazado | Es un comportamiento que pidió el cliente, no una tecnología. Su forma visual se define en el DESIGN.md. |
 | 24 | 3. Objetivos | «En el tablero ve primero lo vencido» | 1 | baja | IA | N-21 pone «vencidas» primero | Rechazado | Sí tiene fuente (N-21); la señal de éxito sigue como [SUPUESTO S-11]. |
 | 25 | 4. Alcance | «Todo es Must» (D-S-12) | 3 | alta | IA | La guía pide que el alcance quepa en el avance funcional del 2 de diciembre | Aceptado (riesgo anotado) | Se respeta la decisión del equipo, con un aviso de riesgo en la sección 4 y en 8.3 (punto 1). |
@@ -64,7 +64,7 @@ _(Propuesta; el equipo confirma o cambia la selección.)_
 Para el Avance 3 (2 de diciembre). Son las que siguen necesitando al cliente. Las demás las resolvió el equipo (D-S-xx, sección 8.1 del PRD).
 
 1. Si una tarea vence mientras el estudiante está dentro, ¿puede terminarla? Ustedes dijeron «Pasa a un estado de vencida y el admin puede reasignar» (P-14 frente a D-S-08).
-2. ¿Confirman el aviso de «por vencer» con la herramienta cerrada? El 25-nov el equipo lo dejó en Should (S3); el aviso dentro de la herramienta es Must (P-12 frente a D-S-15).
+2. ¿Confirman el aviso de «por vencer» con la herramienta cerrada? El 25-nov el equipo lo dejó en Should (SH3); el aviso dentro de la herramienta es Must (P-12 frente a D-S-15).
 3. En el tablero, ¿van primero las pendientes o las vencidas? (N-21 frente a D-S-32)
 4. Si alguien completa una tarea por error, ¿está bien que el administrador pueda reabrirla? (D-S-06)
 5. Una tarea urgente, ¿se asigna también a los estudiantes que no están disponibles ese día? ¿Quién la marca como urgente? ¿Alguien con una tarea abierta puede empezar una urgente? (N-15, N-16; D-S-05, D-S-26, D-S-35)

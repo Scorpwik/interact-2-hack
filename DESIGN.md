@@ -349,24 +349,24 @@ Fórmula: contraste = (L1 + 0,05) / (L2 + 0,05), con la luminancia relativa L de
 
 | Id | Uso | Primer plano | Fondo | Contraste | Mínimo | Resultado |
 | --- | --- | --- | --- | --- | --- | --- |
-| C-01 | Texto principal | blanco #FFFFFF | fondo #050307 | **20,54:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-02 | Texto principal en tarjetas | blanco #FFFFFF | superficie #0B0612 | **20,02:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-03 | Texto secundario (lugar, autor y hora de un paso, placeholder) | blanco 64 % | fondo #050307 | **8,27:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-04 | Texto secundario en tarjetas | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-05 | Botón primario y tarjeta señal | tinta #0B0612 | morado #A46CFB | **5,83:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-06 | Kicker, enlace, botón secundario | morado #A46CFB | fondo #050307 | **5,98:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-07 | Insignia «Completada» | morado #A46CFB | superficie #0B0612 | **5,83:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-08 | Insignia y temporizador «Por vencer» | ámbar #FFB020 | superficie #0B0612 | **10,95:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-09 | Insignia y temporizador «Vencida», marca «Fuera de hora», error | rojo #FF5C5C | superficie #0B0612 | **6,61:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-10 | Insignias «Pendiente» y «En ejecución» (texto) | blanco #FFFFFF | superficie #0B0612 | **20,02:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-11 | Insignia «Sin asignar» | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-12 | Marca «Urgente» | blanco #FFFFFF | morado profundo #5B2BB5 | **8,54:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-13 | Marca «En edición» | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-14 | Botón primario en hover | tinta #0B0612 | lima #5CF000 | **13,27:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-15 | Estados sobre el fondo (encabezados de grupo del tablero): ámbar | ámbar #FFB020 | fondo #050307 | **11,23:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-16 | Estados sobre el fondo: rojo | rojo #FF5C5C | fondo #050307 | **6,78:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-17 | Cifra clave del indicador de cumplimiento (una por vista) | lima #5CF000 | fondo #050307 | **13,61:1** | 4,5:1 | Pasa (≥ 4,5) |
-| C-18 | Texto deshabilitado (exento de WCAG, solo con ícono de candado) | blanco 45 % | superficie #0B0612 | **4,48:1** | — (exento) | Exento (deshabilitado) |
+| K-01 | Texto principal | blanco #FFFFFF | fondo #050307 | **20,54:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-02 | Texto principal en tarjetas | blanco #FFFFFF | superficie #0B0612 | **20,02:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-03 | Texto secundario (lugar, autor y hora de un paso, placeholder) | blanco 64 % | fondo #050307 | **8,27:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-04 | Texto secundario en tarjetas | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-05 | Botón primario y tarjeta señal | tinta #0B0612 | morado #A46CFB | **5,83:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-06 | Kicker, enlace, botón secundario | morado #A46CFB | fondo #050307 | **5,98:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-07 | Insignia «Completada» | morado #A46CFB | superficie #0B0612 | **5,83:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-08 | Insignia y temporizador «Por vencer» | ámbar #FFB020 | superficie #0B0612 | **10,95:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-09 | Insignia y temporizador «Vencida», marca «Fuera de hora», error | rojo #FF5C5C | superficie #0B0612 | **6,61:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-10 | Insignias «Pendiente» y «En ejecución» (texto) | blanco #FFFFFF | superficie #0B0612 | **20,02:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-11 | Insignia «Sin asignar» | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-12 | Marca «Urgente» | blanco #FFFFFF | morado profundo #5B2BB5 | **8,54:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-13 | Marca «En edición» | blanco 64 % | superficie #0B0612 | **8,20:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-14 | Botón primario en hover | tinta #0B0612 | lima #5CF000 | **13,27:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-15 | Estados sobre el fondo (encabezados de grupo del tablero): ámbar | ámbar #FFB020 | fondo #050307 | **11,23:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-16 | Estados sobre el fondo: rojo | rojo #FF5C5C | fondo #050307 | **6,78:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-17 | Cifra clave del indicador de cumplimiento (una por vista) | lima #5CF000 | fondo #050307 | **13,61:1** | 4,5:1 | Pasa (≥ 4,5) |
+| K-18 | Texto deshabilitado (exento de WCAG, solo con ícono de candado) | blanco 45 % | superficie #0B0612 | **4,48:1** | — (exento) | Exento (deshabilitado) |
 | B-01 | Borde de campo, casilla y botón secundario neutro | blanco 45 % | superficie #0B0612 | **4,48:1** | 3:1 | Pasa (≥ 3) |
 | B-02 | Borde de campo sobre el fondo | blanco 45 % | fondo #050307 | **4,43:1** | 3:1 | Pasa (≥ 3) |
 | B-03 | Borde del botón secundario | morado #A46CFB | fondo #050307 | **5,98:1** | 3:1 | Pasa (≥ 3) |
@@ -381,12 +381,12 @@ Fórmula: contraste = (L1 + 0,05) / (L2 + 0,05), con la luminancia relativa L de
 | X-02 | Borde de componente del brandboard usado en un control (rechazado) | blanco 14 % | fondo #050307 | **1,37:1** | — | No pasa → no se usa |
 | X-03 | Blanco sobre morado (rechazado) | blanco #FFFFFF | morado #A46CFB | **3,43:1** | — | No pasa → no se usa |
 | X-04 | Morado profundo como texto (rechazado) | morado profundo #5B2BB5 | fondo #050307 | **2,40:1** | — | No pasa → no se usa |
-| X-05 | Etiqueta de la tarjeta señal en tinta al 72 %, como dice el brandboard (rechazado; se usa tinta 100 %, C-05) | tinta 72 % | morado #A46CFB | **4,02:1** | — | No pasa → no se usa |
+| X-05 | Etiqueta de la tarjeta señal en tinta al 72 %, como dice el brandboard (rechazado; se usa tinta 100 %, K-05) | tinta 72 % | morado #A46CFB | **4,02:1** | — | No pasa → no se usa |
 | X-06 | Blanco 45 % como texto normal (rechazado) | blanco 45 % | fondo #050307 | **4,43:1** | — | No pasa → no se usa |
 **Pares que no pasaron y cómo se resolvieron:**
 - **X-02** · blanco 14 % en un control: **1,37:1**. Es el borde de componente del brandboard. Los controles usan blanco 45 % (B-01/B-02: 4,48:1 y 4,43:1). El 14 % queda solo para tarjetas y separadores (X-01, decorativo).
-- **X-03** · blanco sobre morado: **3,43:1**. El texto sobre morado es siempre tinta (C-05: 5,83:1), como recomienda el brandboard.
-- **X-04** · morado profundo como texto: **2,40:1**. Solo es fondo de la marca «Urgente», con texto blanco (C-12: 8,54:1).
+- **X-03** · blanco sobre morado: **3,43:1**. El texto sobre morado es siempre tinta (K-05: 5,83:1), como recomienda el brandboard.
+- **X-04** · morado profundo como texto: **2,40:1**. Solo es fondo de la marca «Urgente», con texto blanco (K-12: 8,54:1).
 - **X-05** · tinta 72 % sobre morado: **4,02:1**. El brandboard usa esa etiqueta al 72 % en la tarjeta señal; aquí va en tinta al 100 % (5,83:1).
 - **X-06** · blanco 45 % como texto: **4,43:1**. Solo se usa en texto deshabilitado (exento), siempre con candado.
 
@@ -456,6 +456,8 @@ print(round(contraste(mezcla('#FFFFFF', 0.45, '#0B0612'), hx('#0B0612')), 2))  #
 10. Usar el borde blanco 14 % en un control.
 
 ## 9. Criterios verificables
+
+> Convención de IDs: K = contraste, B = borde, X = rechazado, D-xx = criterio de diseño, C-xx de las críticas = hallazgos de crítica.
 
 | Id | Criterio | Cómo se comprueba |
 | --- | --- | --- |

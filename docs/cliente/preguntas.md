@@ -180,10 +180,12 @@ ver si no tiene internet que le asome un aviso.
 | D-S-36 | ¿Qué es «tiempo de vida»? | Cuánto tiempo le queda para que se vaya a su casa, o sea las horas disponibles que tiene |
 | D-P16 | Brandboard «Señal Neón» (P-16) | Sí, ese es el panel de colores, tipografía y muestras de animaciones que debemos seguir. |
 
-## 7. Supuestos nacidos al escribir el PRD (S-37 a S-48)
+## 7. Supuestos nacidos al escribir el PRD (S-05, S-12 y S-37 a S-48)
 
 | Id | Supuesto | Se apoya en | Estado |
 | --- | --- | --- | --- |
+| S-05 | La marca de urgente la pone el administrador. | N-15 (está bajo «Panel de estudiantes»); D-S-05 solo respondió «A todos» | pendiente |
+| S-12 | No-alcance (sección 5). | D-S-12 «todo» se refiere a lo ya descrito; la prioridad de cada parte está en la sección 4 | pendiente |
 | S-37 | Si a la tarea le quedan otros responsables, sigue como está; lo que hizo el estudiante eliminado conserva su nombre. | D-S-18 | pendiente |
 | S-38 | Una tarea completada después de vencer lleva la marca «fuera de hora». | D-S-08 y P-14 | pendiente |
 | S-39 | Una tarea por vencer sin responsables solo se avisa a los administradores. | D-S-15 | pendiente |

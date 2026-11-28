@@ -41,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       className={`${fuenteDisplay.variable} ${fuenteTexto.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-fondo font-texto text-texto">
         <ThemeProvider attribute="class" forcedTheme="dark" enableSystem={false}>

@@ -108,3 +108,13 @@ Las skills del proyecto están en el repo y Cursor las carga solo: `.agents/skil
 - Impeccable: solo `/impeccable critique`, `/impeccable audit` y `npx impeccable detect`. **Nunca** `/impeccable init` ni `/impeccable document`.
 - No se agregan skills, packs de agentes ni servidores MCP sin acordarlo (presupuesto de contexto del Kit Inicial Web). Las skills del repo no se editan a mano: se actualizan con `npx skills update` en una rama `chore/skills-…`.
 - Hábitos del Kit: un objetivo por prompt, diffs mínimos, no leer ni imprimir `.env*`, `getUser()`/`getClaims()` en vez de solo `getSession()`, nunca `select('*')`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

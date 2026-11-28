@@ -1,0 +1,12 @@
+---
+description: Reglas de interfaz (DESIGN.md) para componentes y pantallas
+globs: components/**,app/**/*.tsx,app/globals.css
+alwaysApply: false
+---
+- Usa solo tokens de DESIGN.md sección 4 (variables CSS o clases mapeadas). Sin hex, px sueltos ni duraciones a mano (D-09).
+- Radio 0, salvo el punto de estado y el indicador circular (D-07). Sin modo claro, sin sombras ni degradados (salvo la barra de progreso).
+- Estados y marcas con los nombres exactos del PRD (R11, R12) y siempre texto + ícono (D-01, D-02). Íconos lucide con strokeWidth 2.4.
+- Áreas táctiles de 48 px; filas de checklist y deslizador de 56 px (D-06). Foco lima visible (D-05). Big Shoulders solo a 24 px o más (D-10).
+- Una sola tarjeta morada sólida por vista (D-08). El lima solo marca lo que pasa ahora (DD-04).
+- Los componentes de `components/**` no importan `lib/supabase` ni hacen fetch: reciben props tipadas con `lib/tipos.ts` según `docs/specs/01-contratos-ui.md`.
+- Textos en español, en «tú», frases cortas, sin signos de exclamación.

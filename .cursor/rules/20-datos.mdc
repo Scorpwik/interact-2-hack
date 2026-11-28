@@ -1,0 +1,11 @@
+---
+description: Reglas de datos, seguridad y lógica de negocio
+globs: lib/**,supabase/**,app/api/**,scripts/**,app/**/actions.ts
+alwaysApply: false
+---
+- Toda regla del PRD que prohíbe algo se aplica en el servidor: RLS, funciones RPC de Postgres o acciones de servidor con zod. La interfaz solo la refleja.
+- El estado de la tarea se calcula con `lib/estados.ts` y la vista `tareas_vista`; ambos deben pasar los casos de `docs/specs/04-estados.md`.
+- `SUPABASE_SERVICE_ROLE_KEY` solo en `lib/supabase/admin.ts` y `scripts/`, nunca en código de cliente.
+- Horas en `timestamptz`; se muestran y comparan en America/Guayaquil (R10, S-21).
+- Las acciones devuelven `{ ok, datos | error }` con un mensaje listo para el aviso (R37).
+- El super administrador es único y fijo: no se crea ni se borra desde la herramienta y nadie más cambia su contraseña (R3).

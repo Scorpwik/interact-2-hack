@@ -1,0 +1,9 @@
+---
+description: Reglas generales del proyecto Señal de Turno (staff Interact2Hack)
+alwaysApply: true
+---
+- Antes de cualquier cambio, lee `AGENTS.md`, el paso correspondiente de `docs/plan/PLAN.md` y su spec en `docs/specs/`.
+- Manda el PRD (`docs/prd/PRD.md`) para el comportamiento y `DESIGN.md` para la interfaz. No inventes requisitos: lo no definido se marca [SUPUESTO] en la spec citando la R# o S-xx.
+- Trabaja solo en la rama del paso y solo en las carpetas que el paso lista. Si necesitas tocar otra, detente y dilo en el PR.
+- Commits convencionales en español, en el orden del plan. No agregues dependencias a `package.json`.
+- Antes de terminar: `npm run lint && npm run typecheck && npm test && npm run build`.

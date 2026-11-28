@@ -148,7 +148,9 @@ Así las políticas no se consultan entre sí.
 
 ### Políticas RLS
 
-RLS activada en las seis tablas. `anon` no tiene permisos. `authenticated` tiene permisos de tabla y la política filtra. `service_role` sigue saltándose RLS (scripts y `admin.ts`).
+RLS activada en las seis tablas. `anon` no tiene permisos. `authenticated` tiene los permisos de tabla que lista la migración y la política filtra. `service_role` sigue saltándose RLS (scripts y `admin.ts`).
+
+Supabase otorga `ALL` (incluido `TRUNCATE`, que no pasa por RLS) al crear una tabla en `public`. La migración `20261128045500_revocar_privilegios.sql` lo quita y deja en `pasos` y `observaciones` solo `SELECT`.
 
 | Tabla | Quién | Comando | Condición | Regla |
 | --- | --- | --- | --- | --- |
@@ -195,13 +197,12 @@ El trigger de R3 corre también para el administrador y para la service role: la
 
 ## 7. Cómo se verifica
 
-Con un administrador y un estudiante de prueba, después de `npx supabase db push`:
+Probado el 27 de noviembre de 2026 en el proyecto `jsrhnqsmxlxtgyrqxhke`, con `set local role authenticated` y `auth.uid()` de un administrador y de un estudiante creados para la prueba. Los usuarios y las tareas se borraron al terminar.
 
-- El estudiante lee una tarea donde es responsable y una urgente, y no lee una tarea ajena que no es urgente.
-- El estudiante lee el perfil de un compañero de esa tarea y no el de alguien con quien no comparte tarea.
-- El estudiante no inserta una tarea ni actualiza un paso.
-- El administrador lee y crea una tarea.
-- Borrar al super administrador o cambiarle el rol falla con el mensaje de la spec.
-- Cinco filas de ejemplo cubren los estados de la tabla de arriba y coinciden con la vista.
-
-El resultado de esa prueba se anota aquí cuando el proyecto de Supabase esté enlazado. Hasta entonces esta sección es el guion, no el resultado.
+- El estudiante lee su tarea (1 fila) y la urgente (1 fila). La tarea ajena no urgente devuelve 0 filas.
+- El estudiante lee el perfil del compañero de su tarea (1 fila) y no el de quien solo está en la tarea ajena (0 filas).
+- El estudiante no inserta una tarea: `42501 new row violates row-level security policy for table "tareas"`.
+- El estudiante no actualiza un paso: `42501 permission denied for table pasos`. El texto del paso sigue igual. Antes de quitar los privilegios de más, el `update` no lanzaba error y tampoco cambiaba la fila, porque no hay política de `update`.
+- El administrador lee la tarea ajena (1 fila) y crea una tarea.
+- Borrar al super administrador y cambiarle el rol fallan con «No se puede borrar ni cambiar el perfil del super administrador.» Un segundo `es_super_admin` falla con `23505` en `perfiles_un_super_admin`.
+- `tareas_vista` con seis filas: sin_asignar, pendiente, en_ejecucion, vencida y completada, todas con `por_vencer = false`; a 60 min exactos, pendiente y `por_vencer = true`.

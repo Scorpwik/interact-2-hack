@@ -1,5 +1,6 @@
 ## Paso del plan
-<!-- Ej.: J4 · feat/tareas-crear-asignar (docs/plan/PLAN.md) -->
+<!-- Ej.: P7 · feat/tareas-crear (docs/plan/PLAN.md) -->
+- [ ] Paso tomado en `docs/plan/estado.md` (commit `docs(plan): tomar Pn`, solo la línea de este paso)
 
 ## Spec
 <!-- docs/specs/NN-....md -->

@@ -6,10 +6,10 @@
 
 ## 1. Cómo usar este plan
 
-1. Los pasos se hacen **en el orden de su número**, respetando la columna «Depende de». Dos pasos de personas distintas pueden ir a la vez si sus dependencias ya están en `main`.
-2. Cada paso tiene **una rama**, **sus archivos**, **una spec** que se escribe primero, **un prompt** listo para pegar en Cursor, **sus criterios de aceptación** y **sus commits en orden**.
-3. Las listas personales están en `docs/plan/tareas-joshua.md` y `docs/plan/tareas-raymond.md`. Son el mismo contenido que este plan, filtrado por persona.
-4. Al terminar un paso: PR, revisión y merge (sección 2). Luego se marca en la tabla de estado (sección 7).
+1. Los pasos se hacen **en el orden de su número**, respetando la columna «Depende de». El plan funciona de dos maneras (sección 4): **modo solo**, con Joshua haciendo todos los pasos en orden, y **modo en paralelo**, con los dos a la vez en carriles distintos. Se puede pasar de uno a otro en cualquier momento.
+2. Cada paso es autocontenido: tiene **una rama**, **sus archivos**, **una spec** que se escribe primero, **un prompt** listo para pegar en Cursor (con las skills que usa), **sus criterios de aceptación** y **sus commits en orden**. Ningún paso necesita que una persona concreta haga algo: solo que sus dependencias estén en `main`.
+3. Las listas personales están en `docs/plan/tareas-joshua.md` y `docs/plan/tareas-raymond.md`. Son el mismo contenido que este plan, filtrado por carril. Las skills de Cursor de cada paso están en `docs/plan/skills.md`.
+4. Antes de empezar un paso se **toma** (sección 4.3); al terminarlo: PR, revisión y merge (sección 2). El estado de todos los pasos está en `docs/plan/estado.md`.
 
 ## 2. Flujo de trabajo con git
 
@@ -27,6 +27,10 @@
 git checkout main
 git pull origin main
 git checkout -b feat/ui-base          # el nombre de la rama del paso
+# tomar el paso (sección 4.3): cambia su línea en docs/plan/estado.md
+git add docs/plan/estado.md && git commit -m "docs(plan): tomar P2"
+git push -u origin feat/ui-base
+gh pr create --draft --base main --title "P2 · Componentes base de DESIGN.md y catálogo" --body "Paso tomado."
 ```
 
 ### 2.3 Mientras trabajas
@@ -44,8 +48,9 @@ Se usa `merge` (no `rebase`) para no tener que reescribir ramas ya subidas.
 ```bash
 npm run lint && npm run typecheck && npm test && npm run build
 git diff --stat origin/main           # solo deben salir archivos del paso
-git push -u origin feat/ui-base
-gh pr create --base main --title "P2 · Componentes base de DESIGN.md y catálogo" --fill
+git push
+gh pr edit --body-file .github/pull_request_template.md   # o complétalo en GitHub
+gh pr ready                           # el borrador pasa a listo para revisión
 ```
 
 Completa la plantilla del PR (`.github/pull_request_template.md`): paso, spec, criterios marcados y verificación. Vercel publica una vista previa de la rama.
@@ -88,58 +93,129 @@ El PRD dice que **los 15 Must no se recortan del Avance 3** (PRD §4). Lo que es
 | M14 Sin internet | Banda y pasos bloqueados (P4, P9) | — |
 | M15 Mensajes de confirmación o error | En cada acción del MVP (P2 y cada paso) | En cada acción nueva |
 
-**Fase 3 (solo si la Fase 2 está en `main` el martes 1 a las 12:00):** SH6 y SH5 (P23), SH4 (P24), SH2 y SH1 (P25), SH3 (P26), CO2 (P27), CO1 (P28). Lo que no alcance queda fuera del Avance 3 y se anota en la sección 7.
+**Fase 3 (solo si la Fase 2 está en `main` el martes 1 a las 12:00):** SH6 y SH5 (P23), SH4 (P24), SH2 y SH1 (P25), SH3 (P26), CO2 (P27), CO1 (P28). Lo que no alcance queda fuera del Avance 3 y se anota en `docs/plan/estado.md`.
 
-## 4. Calendario
+## 4. Modo solo (hoy) y modo en paralelo
 
-| Cuándo (hora de Ecuador) | Joshua | Raymond |
+El mismo plan sirve para una persona o para dos. Lo que no cambia en ningún modo: **una rama y un PR por paso**, los archivos de cada paso (Anexo B), los commits del paso y el merge por PR. Por eso se puede empezar solo y sumar a la segunda persona en cualquier momento sin rehacer nada.
+
+Los pasos están repartidos en **dos carriles** que nunca tocan los mismos archivos:
+
+| Carril | Qué contiene | Carpetas (Anexo B) | Pasos | Responsable en modo en paralelo |
+| --- | --- | --- | --- | --- |
+| **A · Datos y reglas** | Proyecto, base de datos, RLS, autenticación, reglas de negocio, rutas con datos reales, tiempo real, despliegue | `lib/`, `supabase/`, `scripts/`, `app/(auth)/`, `app/(estudiante)/`, `app/(admin)/`, `app/perfil/`, `proxy.ts`, archivos compartidos | P0, P1, P3, P5, P7, P9, P11, P14, P15, P17–P20, P23–P27, P29 | Joshua |
+| **B · Interfaz** | Componentes de DESIGN.md, catálogo, navegación, pantallas, PWA, datos de demo, README, revisiones de diseño y de la demo | `components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `public/`, `datos-demo/`, `README.md`, `docs/qa/` | P2, P4, P6, P8, P10, P12, P13, P16, P21, P22, P28, P30 | Raymond |
+
+**Regla de oro:** cada carril lo lleva **una sola persona a la vez**. Dentro de un carril varios pasos tocan el mismo archivo (por ejemplo `app/catalogo/page.tsx`), así que dentro de un carril se va en orden; entre carriles, en paralelo.
+
+### 4.1 Modo solo (hoy)
+
+Joshua hace **todos los pasos, en el orden de su número**, alternando carriles. El orden numérico ya respeta todas las dependencias:
+
+| Bloque | Pasos en orden | Suma aproximada | Al terminar el bloque |
+| --- | --- | --- | --- |
+| Preparación | P0 | 1 h 15 min | Proyecto, Supabase, Vercel y skills listos |
+| MVP de la demo | P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8 → P9 → P10 → P11 → P12 | 14 h 30 min | **Hito MVP:** crear → asignar → ejecutar → completar → ver en el tablero |
+| Resto de los Must | P13 → P14 → P15 → P16 → P17 → P18 → P19 → P20 → P21 → P22 | 13 h 30 min | Los 15 Must del PRD |
+| Should y Could | P23 → P24 → P25 → P26 → P27 → P28 | 5 h | Solo si la Fase 2 está en `main` el martes 1 a las 12:00 |
+| Cierre | P29 → P30 | 2 h | Producción, demo cargada y prueba |
+
+- Cada paso igual se **toma** (4.3), se abre como PR borrador, se verifica y se mergea antes de empezar el siguiente. Joshua mergea sus propios PR después de revisar la vista previa de Vercel.
+- En modo solo se pueden posponer, sin romper nada, P12 (revisión de diseño del MVP), P16 (PWA) y P21 (datos de demo) hasta el final de su fase.
+- Las estimaciones son por persona. En modo solo, la Fase 1 no cabe en una noche: el objetivo de hoy es llegar lo más lejos posible en orden. El hito MVP se cierra el sábado si hace falta.
+
+### 4.2 Modo en paralelo (cuando Raymond se suma)
+
+Raymond puede sumarse **después de P0** o al terminar cualquier paso. El cambio de modo es así:
+
+1. Joshua termina (o deja en un PR borrador) el paso que tiene abierto y **avisa en el chat del equipo** qué pasos de cada carril están hechos.
+2. Raymond hace `git pull` en `main`, sigue la «Instalación» de `docs/plan/skills.md`, revisa `docs/plan/estado.md` y `gh pr list --state open`, y **toma el primer paso libre del carril B** cuyas dependencias ya estén en `main`.
+3. Desde ese momento Joshua **solo toma pasos del carril A**. Si Joshua tenía un paso del carril B en curso, lo termina él (o lo deja en borrador y avisa) antes de que Raymond tome el siguiente de ese carril.
+4. Joshua sigue revisando y mergeando todos los PR (sección 2.5).
+
+Si Raymond tiene que dejar de trabajar, avisa en el chat y deja su paso en curso como PR borrador con lo que haya. Joshua puede retomar ese carril donde quedó: modo solo otra vez.
+
+### 4.3 Tomar un paso (para no duplicar trabajo)
+
+Antes de pegar el prompt de un paso, **siempre** (también en modo solo):
+
+1. `git checkout main && git pull origin main`.
+2. Comprueba que el paso está libre: su línea en `docs/plan/estado.md` dice `— libre` **y** no hay un PR abierto con su número (`gh pr list --state open`).
+3. Comprueba que sus dependencias («Depende de») ya están en `main`.
+4. Crea la rama del paso, cambia **solo su línea** en `docs/plan/estado.md` (`— libre` → `— Joshua` o `— Raymond`) y haz el commit `docs(plan): tomar Pn`.
+5. `git push -u origin <rama>` y abre el **PR borrador**: `gh pr create --draft --base main --title "Pn · <título del paso>" --body "Paso tomado."`
+6. Escribe en el chat del equipo: «Tomo Pn». Recién entonces pegas el prompt en Cursor.
+
+Si dos personas tomaron el mismo paso, se queda quien abrió primero el PR borrador; el otro cierra el suyo (`gh pr close --delete-branch`) y toma el siguiente libre de su carril.
+
+### 4.4 Qué se puede hacer a la vez
+
+Cada fila dice qué pasos quedan disponibles en cada carril según lo que ya esté en `main`. Los dos carriles de una misma fila pueden avanzar al mismo tiempo sin tocar los mismos archivos.
+
+| Ya está en `main` | Carril A puede tomar | Carril B puede tomar |
 | --- | --- | --- |
-| Vie 27, 21:45–23:00 | P0 (solo) | Lee AGENTS.md, DESIGN.md y su lista; prepara Cursor y el repo |
-| Vie 27, 23:00 → sáb 28 | P1, P3, P5, P7, P9, P11 | P2, P4, P6, P8, P10, P12 |
-| Sáb 28 (al cerrar la Fase 1) | Hito MVP: merge, despliegue y prueba rápida | Revisión de diseño del MVP (P12) |
-| Sáb 28 – lun 30 | P14, P15, P17, P18, P19, P20 | P13, P16, P21, P22 |
-| Mar 1, hasta 12:00 | Fase 3 en orden, si la Fase 2 está en `main` | P28 si llega su turno |
-| Mar 1, 12:00–20:00 | P29: carga de demo, producción, ensayo | P30: prueba en celular y computadora |
-| Mar 1, 20:00 | **Congelación:** solo entran `fix` del guion | |
-| Mié 2 | Ensayo final y demo | Ensayo final y demo |
+| Nada | P0 (solo; nadie más trabaja hasta que entra) | — |
+| P0 | P1, luego P3 | P2; también P16 |
+| P0, P1 | P3; P5 por la parte de servidor | P2 (o el que siga); P21 ya se puede hacer |
+| P2, P3, P1 | P5 (conecta `LoginVista` cuando entra P4) | P4, luego P6, luego P8 |
+| P5, P6 | P7 | P8, luego P10 |
+| P7, P8 | P9 | P10 |
+| P9, P10 | P11; también P18 | P13 (y P12 en cuanto entre P11) |
+| P11 | P15, P18 y P19 (no esperan al carril B) | P12 y P13, el que siga libre |
+| P13 | P14 → P17 → P20 | P16 y P21 si siguen libres |
+| P14 a P20 | Fase 3 en orden (P23 → P27) | P22 |
+| P27 (o descartado) | — | P28 |
+| Todo lo de la demo | P29 | P30 cuando P29 esté en producción |
 
-La Fase 1 suma unas 8 h de trabajo por persona. Si no termina hoy, se cierra el sábado por la mañana antes de abrir pasos de la Fase 2.
+Si un paso del carril A necesita un componente del carril B que aún no está en `main`, se empieza por la parte de servidor y la pantalla se conecta cuando entra el componente (sección 8). Nunca se crea una segunda versión del componente en el otro carril.
+
+### 4.5 Calendario de referencia
+
+| Cuándo (hora de Ecuador) | Modo solo (Joshua) | Modo en paralelo · carril A (Joshua) | Modo en paralelo · carril B (Raymond) |
+| --- | --- | --- | --- |
+| Vie 27, noche | P0, P1, P2, P3… en orden | P0, luego P1, P3, P5, P7 | Tras P0: P2, P4, P6 |
+| Sáb 28 | Hasta P12 (hito MVP) | P9, P11, P15, P18, P19 | P8, P10, P12, P13 |
+| Sáb 28 – lun 30 | P13 a P22 | P14, P17, P20 | P16, P21, P22 |
+| Mar 1, hasta 12:00 | Fase 3 si la Fase 2 está en `main` | Fase 3 en orden | P28 si llega su turno |
+| Mar 1, 12:00–20:00 | P29 y P30 | P29: demo, producción, ensayo | P30: prueba en celular y computadora |
+| Mar 1, 20:00 | **Congelación:** solo entran `fix` del guion | | |
+| Mié 2 | Ensayo final y demo | Ensayo final y demo | Ensayo final y demo |
 
 ## 5. Pasos
 
-| Paso | Fase | Rama | Responsable | Estimación | Depende de |
+| Paso | Fase | Rama | Carril · responsable en paralelo | Estimación | Depende de |
 | --- | --- | --- | --- | --- | --- |
-| P0 | 0 | `chore/setup` | Joshua | 1 h 15 min | Ninguna. Se hace antes de que empiece cualquier otro paso. |
-| P1 | 1 | `feat/esquema-datos` | Joshua | 1 h 15 min | P0 mergeado. |
-| P2 | 1 | `feat/ui-base` | Raymond | 1 h 30 min | P0 mergeado. |
-| P3 | 1 | `feat/estados-tarea` | Joshua | 45 min | P0 mergeado (puede ir en paralelo con P1). |
-| P4 | 1 | `feat/layout-navegacion` | Raymond | 1 h 15 min | P2 mergeado. |
-| P5 | 1 | `feat/auth-roles` | Joshua | 1 h 15 min | P1 mergeado. P4 mergeado para conectar `LoginVista` (si aún no está, empieza por la parte de servidor). |
-| P6 | 1 | `feat/ui-formulario-tarea` | Raymond | 1 h | P2 mergeado. |
-| P7 | 1 | `feat/tareas-crear` | Joshua | 1 h 15 min | P3, P5 y P6 mergeados. |
-| P8 | 1 | `feat/ui-tarea` | Raymond | 2 h | P2 mergeado. |
-| P9 | 1 | `feat/ejecucion` | Joshua | 1 h 30 min | P7 y P8 mergeados (P4 para la banda sin conexión). |
-| P10 | 1 | `feat/ui-tablero` | Raymond | 1 h | P8 mergeado. |
-| P11 | 1 | `feat/tablero` | Joshua | 1 h | P9 y P10 mergeados. |
-| P12 | 1 | `docs/revision-diseno-mvp` | Raymond | 45 min | P11 mergeado y desplegado en la vista previa. |
-| P13 | 2 | `feat/ui-pantallas` | Raymond | 2 h | P2 mergeado (puede empezar en cuanto termine P12). |
-| P14 | 2 | `feat/usuarios` | Joshua | 2 h | P5 y P13 mergeados. |
-| P15 | 2 | `feat/edicion-bloqueo` | Joshua | 1 h 30 min | P7 mergeado (P13 para el diálogo de confirmación). |
-| P16 | 2 | `feat/pwa` | Raymond | 45 min | P0 mergeado. |
-| P17 | 2 | `feat/asignacion-urgentes` | Joshua | 1 h 30 min | P14 y P15 mergeados. |
-| P18 | 2 | `feat/reglas-ejecucion` | Joshua | 1 h 15 min | P9 mergeado. |
-| P19 | 2 | `feat/tiempo-real` | Joshua | 1 h 15 min | P11 mergeado. |
-| P20 | 2 | `feat/tablero-filtros-panel` | Joshua | 1 h | P11, P13 y P14 mergeados. |
-| P21 | 2 | `feat/datos-demo` | Raymond | 1 h 15 min | P1 mergeado (formato en `docs/specs/09-datos-demo.md`). |
-| P22 | 2 | `docs/revision-diseno-final` | Raymond | 1 h | P14 a P20 mergeados. |
-| P23 | 3 | `feat/panel-historial` | Joshua | 1 h | Fase 2 completa. |
-| P24 | 3 | `feat/reabrir` | Joshua | 45 min | P23 mergeado o descartado. |
-| P25 | 3 | `feat/correo` | Joshua | 1 h | P24 mergeado o descartado. |
-| P26 | 3 | `feat/aviso-cerrada` | Joshua | 1 h 30 min | P25 mergeado o descartado. |
-| P27 | 3 | `feat/orden-lugar` | Joshua | 20 min | P26 mergeado o descartado. |
-| P28 | 3 | `feat/porcentaje-pasos` | Raymond | 20 min | P27 mergeado o descartado. |
-| P29 | 4 | `chore/cierre` | Joshua | 1 h | Todo lo que entra en la demo mergeado. |
-| P30 | 4 | `docs/prueba-demo` | Raymond | 1 h | P29 desplegado en producción. |
+| P0 | 0 | `chore/setup` | A · Joshua | 1 h 15 min | Ninguna. Se hace antes de que empiece cualquier otro paso. |
+| P1 | 1 | `feat/esquema-datos` | A · Joshua | 1 h 15 min | P0 mergeado. |
+| P2 | 1 | `feat/ui-base` | B · Raymond | 1 h 30 min | P0 mergeado. |
+| P3 | 1 | `feat/estados-tarea` | A · Joshua | 45 min | P0 mergeado (puede ir en paralelo con P1). |
+| P4 | 1 | `feat/layout-navegacion` | B · Raymond | 1 h 15 min | P2 mergeado. |
+| P5 | 1 | `feat/auth-roles` | A · Joshua | 1 h 15 min | P1 mergeado. P4 mergeado para conectar `LoginVista` (si aún no está, empieza por la parte de servidor). |
+| P6 | 1 | `feat/ui-formulario-tarea` | B · Raymond | 1 h | P2 mergeado. |
+| P7 | 1 | `feat/tareas-crear` | A · Joshua | 1 h 15 min | P3, P5 y P6 mergeados. |
+| P8 | 1 | `feat/ui-tarea` | B · Raymond | 2 h | P2 mergeado. |
+| P9 | 1 | `feat/ejecucion` | A · Joshua | 1 h 30 min | P7 y P8 mergeados (P4 para la banda sin conexión). |
+| P10 | 1 | `feat/ui-tablero` | B · Raymond | 1 h | P8 mergeado. |
+| P11 | 1 | `feat/tablero` | A · Joshua | 1 h | P9 y P10 mergeados. |
+| P12 | 1 | `docs/revision-diseno-mvp` | B · Raymond | 45 min | P11 mergeado y desplegado en la vista previa. |
+| P13 | 2 | `feat/ui-pantallas` | B · Raymond | 2 h | P2 mergeado (puede empezar en cuanto termine P12). |
+| P14 | 2 | `feat/usuarios` | A · Joshua | 2 h | P5 y P13 mergeados. |
+| P15 | 2 | `feat/edicion-bloqueo` | A · Joshua | 1 h 30 min | P7 mergeado (P13 para el diálogo de confirmación). |
+| P16 | 2 | `feat/pwa` | B · Raymond | 45 min | P0 mergeado. |
+| P17 | 2 | `feat/asignacion-urgentes` | A · Joshua | 1 h 30 min | P14 y P15 mergeados. |
+| P18 | 2 | `feat/reglas-ejecucion` | A · Joshua | 1 h 15 min | P9 mergeado. |
+| P19 | 2 | `feat/tiempo-real` | A · Joshua | 1 h 15 min | P11 mergeado. |
+| P20 | 2 | `feat/tablero-filtros-panel` | A · Joshua | 1 h | P11, P13 y P14 mergeados. |
+| P21 | 2 | `feat/datos-demo` | B · Raymond | 1 h 15 min | P1 mergeado (formato en `docs/specs/09-datos-demo.md`). |
+| P22 | 2 | `docs/revision-diseno-final` | B · Raymond | 1 h | P14 a P20 mergeados. |
+| P23 | 3 | `feat/panel-historial` | A · Joshua | 1 h | Fase 2 completa. |
+| P24 | 3 | `feat/reabrir` | A · Joshua | 45 min | P23 mergeado o descartado. |
+| P25 | 3 | `feat/correo` | A · Joshua | 1 h | P24 mergeado o descartado. |
+| P26 | 3 | `feat/aviso-cerrada` | A · Joshua | 1 h 30 min | P25 mergeado o descartado. |
+| P27 | 3 | `feat/orden-lugar` | A · Joshua | 20 min | P26 mergeado o descartado. |
+| P28 | 3 | `feat/porcentaje-pasos` | B · Raymond | 20 min | P27 mergeado o descartado. |
+| P29 | 4 | `chore/cierre` | A · Joshua | 1 h | Todo lo que entra en la demo mergeado. |
+| P30 | 4 | `docs/prueba-demo` | B · Raymond | 1 h | P29 desplegado en producción. |
 
 ### 5.1 Fase 0 · Preparación
 
@@ -156,7 +232,7 @@ Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además de
 #### P0 · Preparar el proyecto, Supabase y Vercel
 
 - **Rama:** `chore/setup`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** Ninguna. Se hace antes de que empiece cualquier otro paso.
 - **Archivos y carpetas del paso:** Todo el esqueleto: `package.json`, configuración (`next.config.ts`, `tsconfig.json`, `eslint`, `vitest.config.ts`, `components.json`), `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `components/ui/` (shadcn), `lib/tipos.ts`, `lib/supabase/` (cliente de navegador, de servidor y admin), `proxy.ts` vacío, `.env.example`, `.gitignore`, carpetas vacías con `.gitkeep` (`components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `datos-demo/`, `docs/qa/`, `supabase/migrations/`, `scripts/`).
@@ -165,13 +241,15 @@ Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además de
   - [ ] `npm run dev` abre una página en negro #050307 con un título en Big Shoulders 900 y un texto en Sora, servidas desde el propio proyecto (D-18).
   - [ ] El bloque de tokens de DESIGN.md §4 está copiado tal cual en `app/globals.css` y mapeado en Tailwind (colores, espacios, tamaños, radio 0) (D-09, D-07).
   - [ ] shadcn/ui instalado con `--radius: 0` y sin modo claro (DD-01).
-  - [ ] Dependencias instaladas de una vez: `@supabase/supabase-js`, `@supabase/ssr`, `zod`, `lucide-react`, `sonner`, `vitest`, y los componentes shadcn que se usen (button, input, textarea, checkbox, dialog, sonner, dropdown-menu).
+  - [ ] Dependencias instaladas de una vez: `@supabase/supabase-js`, `@supabase/ssr`, `zod`, `lucide-react`, `sonner`, `vitest`, el CLI `supabase` (desarrollo), y los componentes shadcn que se usen (button, input, textarea, checkbox, dialog, sonner, dropdown-menu).
   - [ ] `lib/tipos.ts` y `docs/specs/01-contratos-ui.md` publicados en `main`: con eso Raymond puede empezar sin esperar datos reales.
   - [ ] `npm run lint`, `npm run typecheck`, `npm test` (una prueba de humo) y `npm run build` pasan.
   - [ ] Proyecto de Supabase **nuevo** creado por Joshua en su otra cuenta; Joshua pegó `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` en `.env.local` (no se sube) y en Vercel (Preview y Production). Ninguna clave aparece en el repo, en un prompt ni en el chat.
   - [ ] `.env.example` trae `SUPER_ADMIN_EMAIL=superadmin@interact2hack.test` marcado como **PROVISIONAL**; cambiarlo es editar solo esa variable (y volver a correr el script de P5).
   - [ ] Proyecto de Vercel en el team `scorpwik`, conectado a `Scorpwik/interact-2-hack`, rama de producción `main`; la URL de producción muestra la página de prueba.
+- **Skills de Cursor** ([skills.md](skills.md)): `shadcn CLI` (inicializar shadcn/ui y agregar componentes); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (solo para revisar los clientes de Supabase)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P0` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `chore: crear proyecto Next.js con TypeScript, Tailwind y App Router`
   2. `chore(ui): configurar shadcn/ui con radio 0 y sin modo claro`
   3. `feat(diseno): tokens y fuentes de DESIGN.md en globals.css`
@@ -186,18 +264,21 @@ Lee AGENTS.md, DESIGN.md (secciones 4, 8 y 9) y docs/plan/PLAN.md (paso P0 y Ane
 Objetivo: dejar el esqueleto del proyecto listo para que dos personas trabajen en paralelo sin tocar los mismos archivos.
 1. Crea un proyecto Next.js (App Router, TypeScript estricto, Tailwind, ESLint, carpeta app/ en la raíz, sin src/, alias @/*) con `npx create-next-app@latest` y la opción `--no-agents-md` (create-next-app genera su propio AGENTS.md y CLAUDE.md; aquí ya existe el nuestro). Como el repo no está vacío, créalo en una carpeta temporal fuera del repo y copia los archivos al repo sin sobrescribir AGENTS.md, DESIGN.md, docs/, .cursor/, .agents/, .github/ ni skills-lock.json.
 2. Inicializa shadcn/ui con radio 0 y solo tema oscuro; agrega button, input, textarea, checkbox, dialog, dropdown-menu y sonner.
-3. Instala @supabase/supabase-js, @supabase/ssr, zod, lucide-react y vitest. Agrega scripts: lint, typecheck (tsc --noEmit), test (vitest run), build.
+3. Instala @supabase/supabase-js, @supabase/ssr, zod, lucide-react, y como dependencias de desarrollo vitest y supabase (el CLI, que se usa con npx supabase). Agrega scripts: lint, typecheck (tsc --noEmit), test (vitest run), build.
 4. Copia en app/globals.css, tal cual, el bloque CSS entre <!-- tokens:inicio --> y <!-- tokens:fin --> de DESIGN.md. Mapea en Tailwind los colores (--color-*, --estado-*, --marca-*), espacios (--esp-*), tamaños (--fs-*) y radio 0, para que los componentes usen clases y nunca valores a mano.
 5. Copia docs/diseno/fuentes/*.woff2 a app/fuentes/ y cárgalas con next/font/local (Big Shoulders Display 700 y 900, Sora 400 y 600) en app/layout.tsx, con lang="es" y fondo --color-fondo.
 6. Crea lib/tipos.ts con los tipos del Anexo A del plan (EstadoTarea, MarcaTarea, TemporizadorVista, TareaTarjeta, TareaDetalle, PasoVista, PersonaResumen, OpcionResponsable, TotalesTablero, UsuarioFila, EstudianteFila, ResultadoAccion).
 7. Crea lib/supabase/cliente.ts (navegador), lib/supabase/servidor.ts (Server Components y acciones, con cookies) y lib/supabase/admin.ts (service role, con import 'server-only'). Crea .env.example con NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY y SUPER_ADMIN_PASSWORD sin valores, y SUPER_ADMIN_EMAIL=superadmin@interact2hack.test con el comentario «# PROVISIONAL: cambiar por el correo real del super administrador». No leas, no imprimas y no edites .env.local: lo llena Joshua a mano.
 8. Crea las carpetas vacías con .gitkeep: components/ui-i2h, components/layout, components/pantallas, app/catalogo, datos-demo, docs/qa, supabase/migrations, scripts.
-9. Una página de prueba en app/page.tsx con un título en Big Shoulders y un texto en Sora, y una prueba de humo en lib/__tests__/humo.test.ts.
-10. Escribe docs/specs/00-arquitectura.md y docs/specs/01-contratos-ui.md con la plantilla de docs/specs/README.md, usando el Anexo A.
+9. Corre npm run dev una vez desde Cursor: Next.js agrega a AGENTS.md un bloque entre <!-- BEGIN:nextjs-agent-rules --> y <!-- END:nextjs-agent-rules --> que apunta a node_modules/next/dist/docs/. Déjalo tal cual (no toques el resto de AGENTS.md) e inclúyelo en el commit de scripts, para que no aparezca como cambio en las ramas de nadie. Comprueba que .agents/skills/ y .cursor/skills/ siguen en el repo (no los borres ni los muevas).
+10. Una página de prueba en app/page.tsx con un título en Big Shoulders y un texto en Sora, y una prueba de humo en lib/__tests__/humo.test.ts.
+11. Escribe docs/specs/00-arquitectura.md y docs/specs/01-contratos-ui.md con la plantilla de docs/specs/README.md, usando el Anexo A.
 Haz los commits exactamente en este orden y con estos mensajes: chore: crear proyecto Next.js con TypeScript, Tailwind y App Router; chore(ui): configurar shadcn/ui con radio 0 y sin modo claro; feat(diseno): tokens y fuentes de DESIGN.md en globals.css; chore: estructura de carpetas y tipos compartidos en lib/tipos.ts; chore(supabase): clientes de Supabase y variables de entorno de ejemplo; ci: scripts de lint, typecheck, test y build; docs(specs): arquitectura y contratos de interfaz. Antes de cada commit, npm run lint && npm run typecheck. Al final, npm test && npm run build. No inventes requisitos ni pantallas: este paso no tiene funciones de usuario.
+Skills de Cursor para este paso (docs/plan/skills.md): shadcn CLI para inicializar shadcn/ui y agregar componentes; docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions); /supabase-postgres-best-practices para solo para revisar los clientes de Supabase. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P0» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin chore/setup` → `gh pr create --base main --title "P0 · Preparar el proyecto, Supabase y Vercel"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 ### 5.2 Fase 1 · MVP de la demo (meta: hoy)
 
@@ -207,10 +288,10 @@ Objetivo: el recorrido completo de una tarea con datos reales. El administrador 
 #### P1 · Esquema de datos, RLS y formato de datos de demo
 
 - **Rama:** `feat/esquema-datos`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P0 mergeado.
-- **Archivos y carpetas del paso:** `supabase/migrations/**`, `supabase/config.toml`, `lib/supabase/tipos-bd.ts` (tipos generados), `docs/specs/02-datos-y-rls.md`, `docs/specs/09-datos-demo.md`.
+- **Archivos y carpetas del paso:** `supabase/migrations/**`, la configuración que genere `supabase init` (`supabase/config.*`), `lib/supabase/tipos-bd.ts` (tipos generados), `docs/specs/02-datos-y-rls.md`, `docs/specs/09-datos-demo.md`.
 - **Spec antes de programar:** `docs/specs/02-datos-y-rls.md` y `docs/specs/09-datos-demo.md` (formato del JSON de demo que llenará Raymond en P21).
 - **Criterios de aceptación:**
   - [ ] Tablas: `perfiles` (id = auth.users.id, nombre, correo, telefono, rol `admin|estudiante`, es_super_admin), `disponibilidades` (perfil, dia, desde, hasta) (R28, M3), `tareas` (nombre, descripcion, vence_en, lugar, urgente, creada_por, iniciada_por/en, completada_por/en, fuera_de_hora, editando_por/desde) (R7, R12, R13, R23), `pasos` (tarea, orden, texto, marcado_por, marcado_en) (R9, R23), `responsables` (tarea, perfil) (R8), `observaciones` (tarea, autor, texto, creada_en) (R20).
@@ -219,7 +300,9 @@ Objetivo: el recorrido completo de una tarea con datos reales. El administrador 
   - [ ] RLS activada en todas las tablas: el estudiante solo lee las tareas donde es responsable o que son urgentes (R27, R35) y los perfiles de sus compañeros (R23); solo los administradores escriben tareas, responsables y perfiles (R2).
   - [ ] Las escrituras de ejecución (marcar paso, observar, completar) no se permiten por tabla: quedan reservadas a funciones RPC que se escriben en P9.
   - [ ] Migración aplicada en el proyecto de Supabase sin errores; `docs/specs/09-datos-demo.md` define el JSON de demo con horas relativas a «ahora».
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (esquema, índices, RLS y su rendimiento); `Supabase CLI` (supabase migration new, db push y gen types)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P1` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): esquema de datos, RLS y formato de datos de demo`
   2. `feat(bd): tablas de perfiles, disponibilidades, tareas, pasos, responsables y observaciones`
   3. `feat(bd): super administrador único y protegido`
@@ -238,14 +321,16 @@ Objetivo: el modelo de datos de Señal de Turno en Postgres (Supabase) con RLS, 
 5. RLS en todas las tablas: administradores leen y escriben todo salvo lo prohibido por R3; estudiantes leen sus tareas y las urgentes, sus pasos y observaciones, y los perfiles (nombre y teléfono) de sus compañeros. Nadie actualiza pasos ni observaciones por tabla: eso lo harán funciones RPC en P9.
 6. Aplica la migración al proyecto de Supabase y genera los tipos en lib/supabase/tipos-bd.ts.
 Commits en este orden: docs(specs): esquema de datos, RLS y formato de datos de demo; feat(bd): tablas de perfiles, disponibilidades, tareas, pasos, responsables y observaciones; feat(bd): super administrador único y protegido; feat(bd): vista tareas_vista con estado y por vencer; feat(bd): políticas RLS por perfil; chore(bd): tipos de la base generados para TypeScript. Verifica con dos usuarios de prueba (un admin y un estudiante) que las políticas hacen lo que dice la spec, y anota el resultado en la sección 7 de la spec.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para esquema, índices, RLS y su rendimiento; Supabase CLI para supabase migration new, db push y gen types. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P1» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/esquema-datos` → `gh pr create --base main --title "P1 · Esquema de datos, RLS y formato de datos de demo"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P2 · Componentes base de DESIGN.md y catálogo
 
 - **Rama:** `feat/ui-base`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 30 min
 - **Depende de:** P0 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/Insignia.tsx`, `Boton.tsx`, `Avisos.tsx`, `Campo.tsx`, `Casilla.tsx`, `Icono.tsx`, `components/ui-i2h/index.ts`, `app/catalogo/page.tsx`, `docs/specs/03-ui-base.md`.
@@ -257,7 +342,9 @@ Commits en este orden: docs(specs): esquema de datos, RLS y formato de datos de 
   - [ ] Campo con etiqueta visible, «(obligatorio)» escrito, ayuda y error con ícono «!», alto 48 px y texto de 16 px (DESIGN.md §5.5).
   - [ ] `/catalogo` muestra todos estos componentes en todos sus estados con los datos de ejemplo de `docs/diseno/bocetos.html`.
   - [ ] Sin valores escritos a mano (D-09), radio 0 (D-07), foco lima (D-05), sin scroll horizontal en 360 px (D-15).
+- **Skills de Cursor** ([skills.md](skills.md)): `frontend-design` (criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual); `accessibility` (foco, contraste y nombres accesibles); `ux-writing` (textos de botones y avisos); `web-design-guidelines` (auditoría de los componentes antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P2` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes base de la interfaz`
   2. `feat(ui): insignias de estado y marcas`
   3. `feat(ui): botones primario, secundario y peligro`
@@ -278,14 +365,16 @@ Objetivo: los componentes base de Señal de Turno, presentacionales, con las pro
 6. app/catalogo/page.tsx: una sección por componente con todos sus estados y datos de ejemplo de docs/diseno/bocetos.html (marcados «Datos de ejemplo»).
 Reglas: solo tokens (clases de Tailwind mapeadas o var(--…)), radio 0, foco lima, 48 px de alto en controles, textos en español en «tú» sin signos de exclamación. Los componentes no importan lib/supabase ni hacen fetch.
 Haz estos commits, en este orden: docs(specs): componentes base de la interfaz; feat(ui): insignias de estado y marcas; feat(ui): botones primario, secundario y peligro; feat(ui): avisos de confirmación, error y bloqueo; feat(ui): campo de formulario y casilla; feat(catalogo): catálogo de componentes base con datos de ejemplo. Antes de abrir el PR: npm run lint && npm run typecheck && npm run build, y revisa /catalogo en 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /frontend-design para criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual; /accessibility para foco, contraste y nombres accesibles; /ux-writing para textos de botones y avisos; /web-design-guidelines para auditoría de los componentes antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P2» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ui-base` → `gh pr create --base main --title "P2 · Componentes base de DESIGN.md y catálogo"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P3 · Lógica de estados y de tiempo
 
 - **Rama:** `feat/estados-tarea`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 45 min
 - **Depende de:** P0 mergeado (puede ir en paralelo con P1).
 - **Archivos y carpetas del paso:** `lib/estados.ts`, `lib/tiempo.ts`, `lib/__tests__/estados.test.ts`, `lib/__tests__/tiempo.test.ts`, `docs/specs/04-estados.md`.
@@ -295,7 +384,9 @@ Haz estos commits, en este orden: docs(specs): componentes base de la interfaz; 
   - [ ] `calcularMarcas()` devuelve por vencer (≤ 60 min y Sin asignar, Pendiente o En ejecución), urgente, en edición (con bloqueo vigente de 15 min, S-48) y fuera de hora (R12, R13).
   - [ ] `temporizador()` devuelve «Faltan 42 min», «Faltan 2 h 42 min», «Venció hace 18 min» o «Completada 09:12», con tono normal, aviso, error o listo (R15, D-20), en hora de Ecuador (R10).
   - [ ] Todas las pruebas de Vitest pasan; los mismos casos se comprueban contra `tareas_vista` (P1) y coinciden.
+- **Skills de Cursor** ([skills.md](skills.md)): ninguna en especial; basta con AGENTS.md y las reglas de `.cursor/rules/`.
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P3` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): casos de estados, marcas y temporizador`
   2. `test(estados): casos de R11 y R12`
   3. `feat(estados): calcular estado y marcas de una tarea`
@@ -309,14 +400,15 @@ Objetivo: una sola fuente de verdad en TypeScript para el estado, las marcas y e
 2. Escribe primero las pruebas en Vitest con esa tabla (test(estados): …) y luego la implementación pura en lib/estados.ts (sin Supabase, sin Date.now(): ahora entra por parámetro).
 3. lib/tiempo.ts: temporizador(tarea, ahora): TemporizadorVista con palabra, valor y tono, y formatearHora() en America/Guayaquil con Intl.DateTimeFormat.
 Haz estos commits, en este orden: docs(specs): casos de estados, marcas y temporizador; test(estados): casos de R11 y R12; feat(estados): calcular estado y marcas de una tarea; feat(tiempo): temporizador y horas en America/Guayaquil. Verifica con npm test y deja en la sección 7 de la spec el resultado de comparar 5 casos con la vista tareas_vista.
+El commit «docs(plan): tomar P3» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/estados-tarea` → `gh pr create --base main --title "P3 · Lógica de estados y de tiempo"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P4 · Navegación, login visual y aviso sin conexión
 
 - **Rama:** `feat/layout-navegacion`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/layout/MarcoApp.tsx`, `BarraInferior.tsx`, `BarraSuperior.tsx`, `BandaSinConexion.tsx`, `use-en-linea.ts`, `components/pantallas/LoginVista.tsx`, sección nueva en `app/catalogo/page.tsx`, `docs/specs/05-layout-navegacion.md`.
@@ -327,7 +419,9 @@ Haz estos commits, en este orden: docs(specs): casos de estados, marcas y tempor
   - [ ] `useEnLinea()` devuelve si hay conexión (eventos online/offline) y `BandaSinConexion` muestra el texto exacto de DESIGN.md §5.8, fija arriba, mientras no haya internet (R19, M14, D-11).
   - [ ] `LoginVista` recibe una acción de formulario y un error, con campos de correo y contraseña, botón primario «Entrar» y el error con ícono (R1, R37).
   - [ ] Todo aparece en `/catalogo`, incluida la banda al simular sin conexión.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (barras, navegación y banda en 360–1280 px); `accessibility` (navegación con teclado y anuncios de la banda); `ux-writing` (textos del login y de la banda); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P4` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): navegación, login visual y aviso sin conexión`
   2. `feat(layout): marco de la app con barra inferior y superior`
   3. `feat(layout): banda sin conexión y detector de conexión`
@@ -344,14 +438,16 @@ Objetivo: el marco de navegación de la app, la vista de inicio de sesión y el 
 4. LoginVista({ accion, error?, cargando? }): título «Entrar», campos Correo y Contraseña con el Campo de components/ui-i2h, botón primario «Entrar» de 56 px en el celular, y el error con el Aviso de error. Sin enlace de registro (W1).
 5. Agrega una sección al catálogo para cada pieza, con un interruptor para simular sin conexión.
 Haz estos commits, en este orden: docs(specs): navegación, login visual y aviso sin conexión; feat(layout): marco de la app con barra inferior y superior; feat(layout): banda sin conexión y detector de conexión; feat(pantallas): vista de inicio de sesión; feat(catalogo): navegación, login y banda sin conexión. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para barras, navegación y banda en 360–1280 px; /accessibility para navegación con teclado y anuncios de la banda; /ux-writing para textos del login y de la banda; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P4» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/layout-navegacion` → `gh pr create --base main --title "P4 · Navegación, login visual y aviso sin conexión"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P5 · Autenticación, perfiles y super administrador
 
 - **Rama:** `feat/auth-roles`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P1 mergeado. P4 mergeado para conectar `LoginVista` (si aún no está, empieza por la parte de servidor).
 - **Archivos y carpetas del paso:** `app/(auth)/**`, `app/page.tsx`, `proxy.ts`, `lib/auth/**`, `scripts/crear-super-admin.ts`, el script `crear-super-admin` en `package.json`, `docs/specs/06-auth-perfiles.md`.
@@ -362,7 +458,9 @@ Haz estos commits, en este orden: docs(specs): navegación, login visual y aviso
   - [ ] `npm run crear-super-admin` crea una sola vez el super administrador desde `SUPER_ADMIN_EMAIL` (hoy el provisional `superadmin@interact2hack.test`) y `SUPER_ADMIN_PASSWORD`; si ya existe con ese correo no hace nada, y si existe con otro correo le actualiza el correo, así nunca hay dos (R3, W4).
   - [ ] Cerrar sesión funciona desde el marco de la app.
   - [ ] Se puede crear un administrador y un estudiante de prueba con el script de P1/P21 o desde el panel de Supabase para probar.
+- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (políticas que leen el perfil y el rol)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P5` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): autenticación, perfiles y super administrador`
   2. `feat(auth): iniciar y cerrar sesión con correo y contraseña`
   3. `feat(auth): proteger rutas por perfil con proxy.ts`
@@ -375,18 +473,20 @@ Objetivo: iniciar sesión, proteger rutas por perfil y crear el super administra
 1. Escribe docs/specs/06-auth-perfiles.md con la plantilla. Commit: docs(specs): autenticación, perfiles y super administrador.
 2. app/(auth)/login/page.tsx usa LoginVista de components/pantallas con una acción de servidor que llama a supabase.auth.signInWithPassword y devuelve ResultadoAccion con un mensaje en español para el aviso. Sin registro propio.
 3. lib/auth/sesion.ts: obtenerPerfilActual() (perfil + rol + es_super_admin) para Server Components y acciones; requiereAdmin() y requiereSesion().
-4. proxy.ts con @supabase/ssr: refresca la sesión; deja pasar /login y /catalogo; sin sesión → /login; estudiante en /tablero, /tareas, /estudiantes o /usuarios → /mis-tareas. app/page.tsx redirige según el perfil.
+4. proxy.ts con @supabase/ssr: refresca la sesión (para decidir el acceso usa supabase.auth.getUser() o getClaims(), nunca solo getSession(); sin consultas pesadas en proxy.ts); deja pasar /login y /catalogo; sin sesión → /login; estudiante en /tablero, /tareas, /estudiantes o /usuarios → /mis-tareas. app/page.tsx redirige según el perfil.
 5. scripts/crear-super-admin.ts (tsx) y el script "crear-super-admin" en package.json: con la service role crea el usuario de SUPER_ADMIN_EMAIL con email confirmado y su perfil es_super_admin = true y rol admin. Es idempotente: si ya existe un super administrador con ese correo no hace nada; si existe con otro correo (el provisional cambió), le actualiza el correo. El correo nunca se escribe en el código: solo se lee de la variable.
 6. Cerrar sesión: acción de servidor usada por MarcoApp.
 Haz estos commits, en este orden: docs(specs): autenticación, perfiles y super administrador; feat(auth): iniciar y cerrar sesión con correo y contraseña; feat(auth): proteger rutas por perfil con proxy.ts; feat(auth): script para crear el super administrador único. Verifica: login correcto e incorrecto, redirecciones por perfil, y que el script corrido dos veces no crea un segundo super administrador.
+Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions); /supabase-postgres-best-practices para políticas que leen el perfil y el rol. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P5» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/auth-roles` → `gh pr create --base main --title "P5 · Autenticación, perfiles y super administrador"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P6 · Componentes del formulario de tarea
 
 - **Rama:** `feat/ui-formulario-tarea`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/EditorPasos.tsx`, `SelectorResponsables.tsx`, `CasillaUrgente.tsx`, `components/pantallas/FormularioTareaVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/07-ui-formulario-tarea.md`.
@@ -397,7 +497,9 @@ Haz estos commits, en este orden: docs(specs): autenticación, perfiles y super 
   - [ ] `SelectorResponsables` muestra nombre y disponibilidad; las personas no disponibles salen deshabilitadas con su motivo, salvo si la tarea es urgente (R28, DESIGN.md §5.5).
   - [ ] Los errores de cada campo llegan por props y se muestran con borde rojo, ícono y mensaje (D-13).
   - [ ] Todo en `/catalogo` con datos de ejemplo de los bocetos.
+- **Skills de Cursor** ([skills.md](skills.md)): `accessibility` (etiquetas, errores ligados con aria-describedby y orden de foco del formulario); `ux-writing` (etiquetas, ayudas y errores); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P6` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes del formulario de tarea`
   2. `feat(ui): editor de pasos del checklist`
   3. `feat(ui): selector de responsables con disponibilidad`
@@ -415,14 +517,16 @@ Objetivo: el formulario de tarea, presentacional, con las props de docs/specs/01
 5. FormularioTareaVista({ modo: 'crear' | 'editar', valores, opciones, errores, accion, cargando }): usa Campo, EditorPasos, SelectorResponsables, CasillaUrgente y un botón primario «Guardar tarea» y uno secundario «Cancelar». Los campos tienen name para FormData.
 6. Agrega al catálogo el formulario vacío, con errores y en modo editar.
 Haz estos commits, en este orden: docs(specs): componentes del formulario de tarea; feat(ui): editor de pasos del checklist; feat(ui): selector de responsables con disponibilidad; feat(pantallas): vista del formulario de tarea; feat(catalogo): formulario de tarea con datos de ejemplo. Antes del PR: lint, typecheck, build, revisión en 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /accessibility para etiquetas, errores ligados con aria-describedby y orden de foco del formulario; /ux-writing para etiquetas, ayudas y errores; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P6» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ui-formulario-tarea` → `gh pr create --base main --title "P6 · Componentes del formulario de tarea"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P7 · Crear tareas y asignar responsables
 
 - **Rama:** `feat/tareas-crear`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P3, P5 y P6 mergeados.
 - **Archivos y carpetas del paso:** `app/(admin)/tareas/**` (página, `nueva/`, `actions.ts`), `lib/tareas/**` (consultas y validación zod), `docs/specs/08-crear-tarea.md`.
@@ -433,7 +537,9 @@ Haz estos commits, en este orden: docs(specs): componentes del formulario de tar
   - [ ] En esta fase el selector muestra la disponibilidad y no deja asignar a quien no está disponible; la validación final en el servidor se completa en P17 (R28).
   - [ ] La lista `/tareas` muestra las tareas con su insignia de estado calculada por `lib/estados.ts` (R11).
   - [ ] Un estudiante no puede crear tareas: la acción lo rechaza en el servidor y la ruta lo redirige (R2).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (inserciones de tarea, pasos y responsables en una transacción); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P7` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): crear tareas y asignar responsables`
   2. `feat(tareas): validación y consulta de tareas`
   3. `feat(tareas): acción para crear una tarea con pasos y responsables`
@@ -450,14 +556,16 @@ Objetivo: el administrador crea tareas y asigna responsables con datos reales.
 5. Avisos con avisar() después de cada acción (R37).
 No implementes todavía editar, eliminar, bloqueo ni urgentes (pasos P15 y P17).
 Haz estos commits, en este orden: docs(specs): crear tareas y asignar responsables; feat(tareas): validación y consulta de tareas; feat(tareas): acción para crear una tarea con pasos y responsables; feat(tareas): pantallas de lista y nueva tarea. Verifica: crear con todos los datos, sin pasos, sin hora, sin responsables (queda Sin asignar) y como estudiante (rechazado).
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para inserciones de tarea, pasos y responsables en una transacción; docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P7» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/tareas-crear` → `gh pr create --base main --title "P7 · Crear tareas y asignar responsables"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P8 · Componentes de tarea, checklist y deslizar para completar
 
 - **Rama:** `feat/ui-tarea`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 2 h
 - **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/TarjetaTarea.tsx`, `TarjetaSenal.tsx`, `Temporizador.tsx`, `BarraProgreso.tsx`, `ItemChecklist.tsx`, `DeslizarParaCompletar.tsx`, `components/pantallas/DetalleTareaVista.tsx`, `components/pantallas/MisTareasVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/10-ui-tarea.md`.
@@ -469,7 +577,9 @@ Haz estos commits, en este orden: docs(specs): crear tareas y asignar responsabl
   - [ ] `DeslizarParaCompletar` bloqueado con el motivo («Faltan 2 pasos y la observación»), listo, arrastrando, completado y sin conexión; con teclado funciona como botón «Completar tarea» con confirmación (DESIGN.md §5.7, R16, D-12).
   - [ ] `DetalleTareaVista` y `MisTareasVista` arman la pantalla del estudiante como en los bocetos, solo con props.
   - [ ] Todo en `/catalogo` con los datos de ejemplo de los bocetos.
+- **Skills de Cursor** ([skills.md](skills.md)): `accessibility` (checklist y deslizador con teclado y lector de pantalla); `mobile-first-responsive` (áreas de 56 px y uso con el pulgar); `frontend-design` (movimiento con criterio y reducir movimiento); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P8` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes de tarea, checklist y deslizar`
   2. `feat(ui): tarjeta de tarea, temporizador y barra de progreso`
   3. `feat(ui): tarjeta señal`
@@ -490,14 +600,16 @@ Objetivo: los componentes de la tarea para el estudiante y el tablero, presentac
 6. MisTareasVista({ senal?, tareas, completadas }) y DetalleTareaVista({ tarea: TareaDetalle, sinConexion, observacion, onAlternarPaso, onCambiarObservacion, onCompletar, motivoBloqueo? }).
 7. Agrega todo al catálogo con los datos de los bocetos (Preparar Sala 3, 3 de 5 pasos, faltan 42 min, etc.).
 Haz estos commits, en este orden: docs(specs): componentes de tarea, checklist y deslizar; feat(ui): tarjeta de tarea, temporizador y barra de progreso; feat(ui): tarjeta señal; feat(ui): ítem de checklist; feat(ui): deslizar para completar; feat(pantallas): vistas de mis tareas y detalle de tarea; feat(catalogo): tarjetas, checklist y deslizar con datos de ejemplo. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px, con teclado y con reducir movimiento (D-05, D-06, D-15, D-16).
+Skills de Cursor para este paso (docs/plan/skills.md): /accessibility para checklist y deslizador con teclado y lector de pantalla; /mobile-first-responsive para áreas de 56 px y uso con el pulgar; /frontend-design para movimiento con criterio y reducir movimiento; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P8» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ui-tarea` → `gh pr create --base main --title "P8 · Componentes de tarea, checklist y deslizar para completar"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P9 · Ejecución: lista del estudiante, marcar pasos y completar
 
 - **Rama:** `feat/ejecucion`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 30 min
 - **Depende de:** P7 y P8 mergeados (P4 para la banda sin conexión).
 - **Archivos y carpetas del paso:** `app/(estudiante)/**` (mis-tareas, tarea/[id], completadas mínima, `actions.ts`), `lib/ejecucion/**`, `supabase/migrations/*_ejecucion.sql` (funciones RPC), `docs/specs/11-ejecucion.md`.
@@ -508,7 +620,9 @@ Haz estos commits, en este orden: docs(specs): componentes de tarea, checklist y
   - [ ] Función RPC `completar_tarea(tarea, observacion)`: solo si todos los pasos están marcados y hay observación; guarda quién y cuándo completó (R16, R20, R23).
   - [ ] El deslizador dice qué falta mientras no se pueda completar (D-12); sin conexión la banda aparece y no se puede marcar ni completar (R19, D-11).
   - [ ] Cada acción muestra su aviso (R37, D-13).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (funciones RPC SECURITY DEFINER y bloqueos cortos); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P9` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): ejecución de tareas por el estudiante`
   2. `feat(bd): funciones para marcar pasos y completar tareas`
   3. `feat(ejecucion): acciones de marcar, observar y completar`
@@ -525,14 +639,16 @@ Objetivo: el estudiante ejecuta sus tareas con datos reales.
 4. app/(estudiante)/mis-tareas/page.tsx con MisTareasVista; app/(estudiante)/tarea/[id]/page.tsx con DetalleTareaVista dentro de MarcoApp; el componente de cliente usa useEnLinea() para bloquear y mostrar la banda; actualiza la vista de forma optimista y revierte con aviso de error si falla.
 5. app/(estudiante)/completadas/page.tsx mínima con las completadas del estudiante (R34).
 Haz estos commits, en este orden: docs(specs): ejecución de tareas por el estudiante; feat(bd): funciones para marcar pasos y completar tareas; feat(ejecucion): acciones de marcar, observar y completar; feat(ejecucion): lista de mis tareas con tarjeta señal; feat(ejecucion): detalle de tarea con checklist y deslizar para completar. Verifica con un estudiante: marcar y desmarcar en cualquier orden, intentar completar sin observación, completar, y probar sin conexión con las herramientas del navegador.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para funciones RPC SECURITY DEFINER y bloqueos cortos; docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P9» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ejecucion` → `gh pr create --base main --title "P9 · Ejecución: lista del estudiante, marcar pasos y completar"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P10 · Componentes del tablero de cumplimiento
 
 - **Rama:** `feat/ui-tablero`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P8 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/TotalesPorEstado.tsx`, `IndicadorCumplimiento.tsx`, `GrupoTareas.tsx`, `PanelFiltros.tsx`, `components/pantallas/TableroVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/12-ui-tablero.md`.
@@ -543,7 +659,9 @@ Haz estos commits, en este orden: docs(specs): ejecución de tareas por el estud
   - [ ] Grupos en el orden de R31 con su título y su total, en cuadrícula de tarjetas en escritorio y una columna en el celular (R31, D-17).
   - [ ] Panel de filtros con «Por vencer» y los órdenes de R32 como botones con aria-pressed; el activo con borde morado y «✓».
   - [ ] Estados vacío, cargando (sin brillo animado) y filtro sin resultados (DESIGN.md §5.9).
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (cuadrícula del tablero en 360, 768 y 1280 px); `accessibility` (filtros y totales con teclado); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P10` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes del tablero de cumplimiento`
   2. `feat(ui): totales por estado e indicador de cumplimiento`
   3. `feat(ui): grupos de tareas y panel de filtros`
@@ -560,14 +678,16 @@ Objetivo: los componentes del tablero de cumplimiento, presentacionales, con las
 4. TableroVista({ totales, grupos: { clave, titulo, tareas: TareaTarjeta[] }[], porVencer, orden, onCambiar }): cuadrícula de TarjetaTarea (mínimo 320 px) en escritorio, una columna en el celular; estados vacío («Todavía no hay tareas. Crear la primera»), cargando y sin resultados («No hay tareas por vencer.»).
 5. Agrega al catálogo el tablero con los datos de los bocetos (4, 2, 3, 4, 1, 18; 62 %).
 Haz estos commits, en este orden: docs(specs): componentes del tablero de cumplimiento; feat(ui): totales por estado e indicador de cumplimiento; feat(ui): grupos de tareas y panel de filtros; feat(pantallas): vista del tablero; feat(catalogo): tablero con datos de ejemplo. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para cuadrícula del tablero en 360, 768 y 1280 px; /accessibility para filtros y totales con teclado; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P10» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ui-tablero` → `gh pr create --base main --title "P10 · Componentes del tablero de cumplimiento"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P11 · Tablero con datos reales
 
 - **Rama:** `feat/tablero`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P9 y P10 mergeados.
 - **Archivos y carpetas del paso:** `app/(admin)/tablero/**`, `lib/tablero/**`, `lib/__tests__/tablero.test.ts`, `docs/specs/13-tablero.md`.
@@ -578,7 +698,9 @@ Haz estos commits, en este orden: docs(specs): componentes del tablero de cumpli
   - [ ] Totales por estado y cumplimiento completadas/total (R33).
   - [ ] Filtro «Por vencer» y orden por cercanía al vencimiento funcionando (R32, N-07, N-08); los demás órdenes pueden quedar para P20.
   - [ ] El temporizador se actualiza cada minuto en la página sin recargar (R15).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (consultas del tablero con columnas explícitas e índices)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P11` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): tablero de cumplimiento con datos reales`
   2. `test(tablero): agrupación y totales según R31 y R33`
   3. `feat(tablero): agrupar, ordenar y contar tareas`
@@ -592,14 +714,16 @@ Objetivo: el tablero de cumplimiento del administrador con datos reales.
 2. Pruebas primero: lib/tablero/agrupar.ts agrupa en el orden de R31 (una tarea en un solo grupo; por vencer va en «Por vencer»; urgentes primero dentro de su grupo, R27), ordena por cercanía o por reciente, y cuenta totales (R33).
 3. app/(admin)/tablero/page.tsx (Server Component) lee tareas_vista y responsables, mapea a TareaTarjeta y pasa todo a TableroVista; un componente de cliente recalcula estado y temporizador cada minuto con lib/estados.ts y maneja el filtro y el orden en la URL (?porVencer=1&orden=vencimiento).
 Haz estos commits, en este orden: docs(specs): tablero de cumplimiento con datos reales; test(tablero): agrupación y totales según R31 y R33; feat(tablero): agrupar, ordenar y contar tareas; feat(tablero): página del tablero del administrador. Verifica con datos que tengan los cinco estados y una tarea a menos de 60 min.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para consultas del tablero con columnas explícitas e índices. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P11» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/tablero` → `gh pr create --base main --title "P11 · Tablero con datos reales"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P12 · Revisión de diseño del MVP
 
 - **Rama:** `docs/revision-diseno-mvp`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 45 min
 - **Depende de:** P11 mergeado y desplegado en la vista previa.
 - **Archivos y carpetas del paso:** `docs/qa/revision-diseno-mvp.md` (y correcciones solo en `components/ui-i2h/`, `components/layout/` y `components/pantallas/`).
@@ -607,7 +731,9 @@ Haz estos commits, en este orden: docs(specs): tablero de cumplimiento con datos
 - **Criterios de aceptación:**
   - [ ] Cada criterio D-01 a D-20 revisado en las pantallas reales (login, mis tareas, detalle, tablero, tareas) en 360, 390 y 1280 px, con «pasa», «no pasa» o «no aplica» y una captura o nota.
   - [ ] Lo que no pasa y es de las carpetas de componentes queda corregido en la misma rama con `fix(ui): …`; lo que es de otras carpetas queda anotado para su dueño.
+- **Skills de Cursor** ([skills.md](skills.md)): `impeccable` (/impeccable critique y /impeccable audit de las pantallas del MVP); `ui-design-critique` (informe en español contra D-01 a D-20); `web-design-guidelines` (hallazgos con archivo y línea)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P12` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): revisión de diseño del MVP contra D-01 a D-20`
   2. `fix(ui): correcciones de la revisión de diseño del MVP`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
@@ -616,12 +742,14 @@ Haz estos commits, en este orden: docs(specs): tablero de cumplimiento con datos
 Lee AGENTS.md, DESIGN.md secciones 6, 8 y 9 y docs/plan/PLAN.md (paso P12). Estás en la rama docs/revision-diseno-mvp. Solo puedes crear docs/qa/revision-diseno-mvp.md y corregir archivos de components/ui-i2h/, components/layout/ y components/pantallas/.
 Objetivo: revisar las pantallas reales del MVP contra los criterios D-01 a D-20.
 1. Abre la vista previa de Vercel (o npm run dev) con un usuario administrador y otro estudiante de prueba.
-2. Para cada criterio D-01 a D-20, haz la comprobación que indica DESIGN.md sección 9 en login, mis tareas, detalle de tarea, tablero y tareas, en 360, 390 y 1280 px. Anota en docs/qa/revision-diseno-mvp.md una tabla: criterio, pantalla, resultado (pasa / no pasa / no aplica) y nota. Commit: docs(qa): revisión de diseño del MVP contra D-01 a D-20.
+2. Corre /impeccable critique y /impeccable audit sobre login, mis tareas, detalle de tarea, tablero y tareas (nunca /impeccable init ni /impeccable document; si Impeccable pide crear PRODUCT.md o DESIGN.md, responde que no: el contexto es docs/prd/PRD.md y DESIGN.md). Impeccable recomienda; DESIGN.md decide. Luego, para cada criterio D-01 a D-20, haz la comprobación que indica DESIGN.md sección 9 en esas pantallas, en 360, 390 y 1280 px. Anota en docs/qa/revision-diseno-mvp.md una tabla: criterio, pantalla, resultado (pasa / no pasa / no aplica) y nota. Commit: docs(qa): revisión de diseño del MVP contra D-01 a D-20.
 3. Corrige lo que no pasa dentro de tus carpetas, sin cambiar las props de docs/specs/01-contratos-ui.md. Commit: fix(ui): correcciones de la revisión de diseño del MVP.
 4. Lo que dependa de otras carpetas, déjalo en una sección «Pendiente para otras carpetas» del mismo documento y en el PR.
+Skills de Cursor para este paso (docs/plan/skills.md): /impeccable critique y /impeccable audit de las pantallas del MVP; /ui-design-critique para informe en español contra D-01 a D-20; /web-design-guidelines para hallazgos con archivo y línea. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P12» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin docs/revision-diseno-mvp` → `gh pr create --base main --title "P12 · Revisión de diseño del MVP"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 ### 5.3 Fase 2 · Resto de los Must
 
@@ -631,7 +759,7 @@ Objetivo: completar los 15 Must del PRD. No se abre ningún paso de la Fase 3 mi
 #### P13 · Pantallas de usuarios, estudiantes, perfil y completadas
 
 - **Rama:** `feat/ui-pantallas`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 2 h
 - **Depende de:** P2 mergeado (puede empezar en cuanto termine P12).
 - **Archivos y carpetas del paso:** `components/ui-i2h/FilaUsuario.tsx`, `FilaEstudiante.tsx`, `EditorDisponibilidad.tsx`, `DialogoConfirmar.tsx`, `EstadoVacio.tsx`, `EstadoCargando.tsx`, `components/pantallas/UsuariosVista.tsx`, `FormularioUsuarioVista.tsx`, `EstudiantesVista.tsx`, `PerfilVista.tsx`, `CompletadasVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/14-ui-pantallas.md`.
@@ -643,7 +771,9 @@ Objetivo: completar los 15 Must del PRD. No se abre ningún paso de la Fase 3 mi
   - [ ] `PerfilVista` con nombre, correo, teléfono y el formulario para cambiar la contraseña (R5, M2).
   - [ ] `CompletadasVista` con las tarjetas completadas en solo lectura (R34).
   - [ ] `DialogoConfirmar` para eliminar y reabrir (DESIGN.md §5.6); `EstadoVacio` y `EstadoCargando` sin animación de brillo.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (listas y formularios en celular y escritorio); `accessibility` (formularios, diálogo de confirmación y estados vacíos); `ux-writing` (textos de vacío, error y confirmación); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P13` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): pantallas de usuarios, estudiantes, perfil y completadas`
   2. `feat(ui): filas de usuario y de estudiante`
   3. `feat(ui): editor de disponibilidad`
@@ -662,14 +792,16 @@ Objetivo: las pantallas de gestión de usuarios, panel de estudiantes, perfil y 
 5. UsuariosVista, FormularioUsuarioVista({ modo, valores, errores, accion, cargando }), EstudiantesVista, PerfilVista({ perfil, accionCambiarContrasena, error? }) y CompletadasVista({ tareas }).
 6. Agrega todo al catálogo con los datos de los bocetos.
 Haz estos commits, en este orden: docs(specs): pantallas de usuarios, estudiantes, perfil y completadas; feat(ui): filas de usuario y de estudiante; feat(ui): editor de disponibilidad; feat(ui): diálogo de confirmación y estados vacío y cargando; feat(pantallas): vistas de usuarios, estudiantes, perfil y completadas; feat(catalogo): pantallas de usuarios, estudiantes, perfil y completadas. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para listas y formularios en celular y escritorio; /accessibility para formularios, diálogo de confirmación y estados vacíos; /ux-writing para textos de vacío, error y confirmación; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P13» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/ui-pantallas` → `gh pr create --base main --title "P13 · Pantallas de usuarios, estudiantes, perfil y completadas"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P14 · Usuarios, disponibilidad y contraseñas
 
 - **Rama:** `feat/usuarios`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 2 h
 - **Depende de:** P5 y P13 mergeados.
 - **Archivos y carpetas del paso:** `app/(admin)/usuarios/**`, `app/(admin)/estudiantes/**`, `app/perfil/**` (una sola ruta para ambos perfiles), `lib/usuarios/**`, `docs/specs/15-usuarios.md`.
@@ -680,7 +812,9 @@ Haz estos commits, en este orden: docs(specs): pantallas de usuarios, estudiante
   - [ ] Cada usuario cambia su contraseña desde su perfil; un administrador cambia la de cualquiera salvo la del super administrador (R5, M2).
   - [ ] Al eliminar a un estudiante, deja de ser responsable; si una tarea se queda sin responsables, pasa a «Sin asignar»; lo que completó o marcó conserva su nombre (R6).
   - [ ] Panel de estudiantes con cuántas tareas tiene cada uno, quién no tiene ninguna y su disponibilidad (R36, M13).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (perfiles, disponibilidades y políticas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P14` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): gestión de usuarios, disponibilidad y contraseñas`
   2. `feat(usuarios): crear, editar y eliminar usuarios con disponibilidad`
   3. `feat(usuarios): cambiar contraseñas con la regla del super administrador`
@@ -696,14 +830,16 @@ Objetivo: gestión de usuarios con datos reales.
 3. Páginas: /usuarios con UsuariosVista y FormularioUsuarioVista; /estudiantes con EstudiantesVista (número de tareas y disponibilidad del día); /perfil con PerfilVista para ambos perfiles.
 4. Confirmación con DialogoConfirmar antes de eliminar; avisos en cada acción (R37).
 Haz estos commits, en este orden: docs(specs): gestión de usuarios, disponibilidad y contraseñas; feat(usuarios): crear, editar y eliminar usuarios con disponibilidad; feat(usuarios): cambiar contraseñas con la regla del super administrador; feat(usuarios): panel de estudiantes; feat(usuarios): perfil del usuario. Verifica: intentar borrar o cambiar la contraseña del super administrador desde otro administrador (rechazado en el servidor), eliminar un estudiante con tareas y ver R6.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para perfiles, disponibilidades y políticas; docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P14» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/usuarios` → `gh pr create --base main --title "P14 · Usuarios, disponibilidad y contraseñas"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P15 · Editar, eliminar y bloqueo «en edición»
 
 - **Rama:** `feat/edicion-bloqueo`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 30 min
 - **Depende de:** P7 mergeado (P13 para el diálogo de confirmación).
 - **Archivos y carpetas del paso:** `app/(admin)/tareas/[id]/editar/**`, `lib/tareas/edicion.ts`, `supabase/migrations/*_bloqueo.sql`, `docs/specs/16-edicion-bloqueo.md`.
@@ -713,7 +849,9 @@ Haz estos commits, en este orden: docs(specs): gestión de usuarios, disponibili
   - [ ] Se eliminan solo Pendientes, Sin asignar sin pasos marcados y Vencidas, con confirmación; En ejecución y Completadas no (R22).
   - [ ] Al abrir la edición se toma el bloqueo; la tarjeta muestra «En edición · Nombre» y nadie más puede entrar hasta que se guarde, se cancele, se cierre sesión o pasen 15 minutos sin actividad (R13, S-48, D-14).
   - [ ] Los intentos no permitidos muestran el aviso de bloqueo de DESIGN.md §5.8 (R37).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (bloqueo «en edición» sin carreras (bloqueos cortos))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P15` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): edición, eliminación y bloqueo en edición`
   2. `feat(bd): funciones para tomar y liberar el bloqueo de edición`
   3. `feat(tareas): editar tareas según su estado`
@@ -728,14 +866,16 @@ Objetivo: editar y eliminar tareas solo cuando el PRD lo permite, con bloqueo de
 3. lib/tareas/edicion.ts: editarTarea y eliminarTarea con las reglas R21 y R22 comprobadas en el servidor con el estado de tareas_vista.
 4. app/(admin)/tareas/[id]/editar/page.tsx: toma el bloqueo al entrar, renueva cada 2 minutos con actividad, libera al guardar o cancelar; usa FormularioTareaVista en modo editar.
 Haz estos commits, en este orden: docs(specs): edición, eliminación y bloqueo en edición; feat(bd): funciones para tomar y liberar el bloqueo de edición; feat(tareas): editar tareas según su estado; feat(tareas): eliminar tareas según su estado. Verifica D-14 con dos sesiones de administrador.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para bloqueo «en edición» sin carreras (bloqueos cortos). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P15» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/edicion-bloqueo` → `gh pr create --base main --title "P15 · Editar, eliminar y bloqueo «en edición»"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P16 · PWA: manifest e íconos
 
 - **Rama:** `feat/pwa`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 45 min
 - **Depende de:** P0 mergeado.
 - **Archivos y carpetas del paso:** `public/manifest.webmanifest`, `public/iconos/**`, `docs/specs/17-pwa.md`.
@@ -744,7 +884,9 @@ Haz estos commits, en este orden: docs(specs): edición, eliminación y bloqueo 
   - [ ] La app se puede instalar en Android y en iOS con nombre, color de fondo y de tema #050307 e íconos de 192, 512 y maskable (DESIGN.md §4, brandboard: ícono de app).
   - [ ] Lighthouse no marca errores de instalabilidad.
   - [ ] No hay trabajo sin conexión: sin internet se ve la banda, no una copia vieja (W3).
+- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (metadata y manifest en node_modules/next/dist/docs/); `web-design-guidelines` (revisión del manifest y de los íconos)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P16` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): app instalable`
   2. `feat(pwa): manifest con nombre, colores y pantalla de inicio`
   3. `feat(pwa): íconos de la app`
@@ -757,14 +899,16 @@ Objetivo: que la herramienta se pueda instalar en el celular.
 2. public/manifest.webmanifest: name «Señal de Turno · Staff Interact2Hack», short_name «Señal de Turno», start_url «/», display «standalone», background_color y theme_color #050307, lang «es». Commit: feat(pwa): manifest con nombre, colores y pantalla de inicio.
 3. Íconos PNG de 192 y 512 px y uno maskable, en public/iconos/, con fondo negro #050307 y la marca de Señal Neón (usa el ícono de app del brandboard de docs/diseno/ como referencia; sin esquinas redondeadas propias). Commit: feat(pwa): íconos de la app.
 4. En el PR, indica a Joshua las dos líneas que hay que agregar en app/layout.tsx (link al manifest y theme-color); no edites ese archivo.
+Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para metadata y manifest en node_modules/next/dist/docs/; /web-design-guidelines para revisión del manifest y de los íconos. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P16» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/pwa` → `gh pr create --base main --title "P16 · PWA: manifest e íconos"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P17 · Disponibilidad, urgentes y reasignación
 
 - **Rama:** `feat/asignacion-urgentes`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 30 min
 - **Depende de:** P14 y P15 mergeados.
 - **Archivos y carpetas del paso:** `lib/asignacion/**`, `lib/tareas/**` (para usar la validación al crear y editar), `app/(admin)/tareas/[id]/reasignar/**`, `supabase/migrations/*_asignacion.sql`, `lib/__tests__/asignacion.test.ts`, `docs/specs/18-asignacion-urgentes.md`.
@@ -774,7 +918,9 @@ Objetivo: que la herramienta se pueda instalar en el celular.
   - [ ] Una tarea urgente se asigna a todos los estudiantes, que se suman a los responsables que ya tenía, aunque no estén disponibles; aparece en la lista de todos y primero en su grupo (R27, M12).
   - [ ] Reasignar una vencida exige una nueva hora y permite cambiar responsables; los pasos marcados se conservan y el estado se recalcula (R25, M10).
   - [ ] Avisos de confirmación o error en asignar, marcar urgente y reasignar (R37).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (validación de disponibilidad y asignación masiva de urgentes)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P17` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): disponibilidad, urgentes y reasignación`
   2. `test(asignacion): disponibilidad según R28`
   3. `feat(asignacion): validar disponibilidad al asignar`
@@ -790,14 +936,16 @@ Objetivo: aplicar disponibilidad, urgencias y reasignación en el servidor.
 3. Urgente: al marcarla, inserta como responsables a todos los estudiantes (sin duplicar); la vista del estudiante la muestra; en el tablero va primero dentro de su grupo.
 4. Reasignar: página y acción que exige nueva vence_en futura y permite cambiar responsables, con la misma validación de disponibilidad.
 Haz estos commits, en este orden: docs(specs): disponibilidad, urgentes y reasignación; test(asignacion): disponibilidad según R28; feat(asignacion): validar disponibilidad al asignar; feat(asignacion): tareas urgentes para todos los estudiantes; feat(asignacion): reasignar tareas vencidas con nueva hora.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para validación de disponibilidad y asignación masiva de urgentes. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P17» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/asignacion-urgentes` → `gh pr create --base main --title "P17 · Disponibilidad, urgentes y reasignación"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P18 · Reglas de ejecución: una tarea abierta y terminar una vencida
 
 - **Rama:** `feat/reglas-ejecucion`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P9 mergeado.
 - **Archivos y carpetas del paso:** `supabase/migrations/*_reglas_ejecucion.sql`, `lib/ejecucion/**`, `app/(estudiante)/tarea/[id]/**`, `docs/specs/19-reglas-ejecucion.md`.
@@ -807,7 +955,9 @@ Haz estos commits, en este orden: docs(specs): disponibilidad, urgentes y reasig
   - [ ] La restricción termina al completar, reasignar, eliminar, dejar de ser responsable o al pasar la tarea a Vencida (R17).
   - [ ] Si el responsable tiene la tarea abierta en pantalla cuando vence, puede terminarla y queda Completada con «Fuera de hora»; si sale, ya no puede (R24, S-38, S-43).
   - [ ] Desmarcar el último paso devuelve la tarea a Pendiente, o la deja Vencida (R18).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (regla de una tarea abierta a la vez dentro de la función RPC)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P18` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): una tarea abierta a la vez y terminar una vencida`
   2. `feat(bd): impedir empezar otra tarea con una abierta`
   3. `feat(bd): presencia en la tarea para terminar una vencida`
@@ -822,14 +972,16 @@ Objetivo: las reglas de ejecución que faltan, aplicadas en Postgres.
 3. Tabla presencias (tarea, perfil, desde, ultimo_latido) y RPC registrar_presencia(p_tarea) llamada al abrir el detalle y cada minuto; completar_tarea acepta una vencida solo si hay presencia continua desde antes de vence_en (latido de hace ≤ 2 min) y marca fuera_de_hora.
 4. En el detalle, muestra el aviso de tarea abierta y el estado de fuera de hora con los componentes existentes.
 Haz estos commits, en este orden: docs(specs): una tarea abierta a la vez y terminar una vencida; feat(bd): impedir empezar otra tarea con una abierta; feat(bd): presencia en la tarea para terminar una vencida; feat(ejecucion): avisos de tarea abierta y de fuera de hora. Verifica con dos tareas del mismo estudiante y con una tarea que vence mientras está abierta.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para regla de una tarea abierta a la vez dentro de la función RPC. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P18» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/reglas-ejecucion` → `gh pr create --base main --title "P18 · Reglas de ejecución: una tarea abierta y terminar una vencida"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P19 · Tiempo real y aviso «por vencer» dentro de la herramienta
 
 - **Rama:** `feat/tiempo-real`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P11 mergeado.
 - **Archivos y carpetas del paso:** `lib/tiempo-real/**`, `app/(admin)/tablero/` (solo el componente de cliente de actualización), `app/(estudiante)/mis-tareas/` (ídem), `supabase/migrations/*_realtime.sql`, `docs/specs/20-tiempo-real.md`.
@@ -838,7 +990,9 @@ Haz estos commits, en este orden: docs(specs): una tarea abierta a la vez y term
   - [ ] Lo que marca un responsable lo ven al momento sus compañeros y el tablero, sin recargar (R23).
   - [ ] Cuando una tarea entra en «por vencer», sus responsables y los administradores ven el aviso «⧗ "Nombre" vence en 60 min» con «Ver tarea» dentro de la herramienta; las que no tienen responsables solo avisan a administradores (R14, M6, S-39).
   - [ ] El aviso aparece una sola vez por tarea y sesión.
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (Realtime y políticas de las tablas publicadas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P19` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): tiempo real y aviso por vencer`
   2. `feat(bd): publicar cambios de tareas y pasos en tiempo real`
   3. `feat(tiempo-real): actualizar tablero y listas al momento`
@@ -853,14 +1007,16 @@ Objetivo: cambios al momento y aviso por vencer dentro de la herramienta.
 3. lib/tiempo-real/use-cambios.ts: suscripción con el cliente de navegador que vuelve a pedir los datos (router.refresh o refetch) con un pequeño retraso para agrupar cambios.
 4. lib/tiempo-real/use-aviso-por-vencer.ts: cada minuto y en cada cambio, si una tarea visible cruza los 60 min, muestra avisar({ variante: 'por_vencer', … }) una sola vez por tarea (guardado en sessionStorage).
 Haz estos commits, en este orden: docs(specs): tiempo real y aviso por vencer; feat(bd): publicar cambios de tareas y pasos en tiempo real; feat(tiempo-real): actualizar tablero y listas al momento; feat(tiempo-real): aviso por vencer dentro de la herramienta. Verifica con dos navegadores: un estudiante marca y el tablero cambia; una tarea creada a 61 min avisa al minuto.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para Realtime y políticas de las tablas publicadas; docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P19» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/tiempo-real` → `gh pr create --base main --title "P19 · Tiempo real y aviso «por vencer» dentro de la herramienta"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P20 · Tablero completo y panel de estudiantes conectado
 
 - **Rama:** `feat/tablero-filtros-panel`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P11, P13 y P14 mergeados.
 - **Archivos y carpetas del paso:** `lib/tablero/**`, `app/(admin)/tablero/**`, `app/(admin)/estudiantes/**`, `docs/specs/21-tablero-panel.md`.
@@ -870,7 +1026,9 @@ Haz estos commits, en este orden: docs(specs): tiempo real y aviso por vencer; f
   - [ ] Desde el tablero se ve quién inició cada tarea en ejecución, y en el detalle quién marcó cada paso y quién la completó (R23, M9).
   - [ ] Panel de estudiantes con número de tareas, «Sin tareas» y disponibilidad del día, ordenado con los que no tienen tareas primero [SUPUESTO, R36] (M13).
   - [ ] Un administrador que es responsable de una tarea puede ejecutarla desde su detalle con los mismos controles y reglas que un estudiante (R8, D-S-07).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (consultas con filtros y orden)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P20` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): tablero completo y panel de estudiantes`
   2. `feat(tablero): todos los órdenes y el filtro por vencer`
   3. `feat(tablero): detalle de la tarea para el administrador`
@@ -885,14 +1043,16 @@ Objetivo: completar el tablero y el panel de estudiantes.
 3. app/(admin)/tablero/[id]/page.tsx: detalle para el administrador con DetalleTareaVista, en solo lectura salvo que sea responsable (entonces usa las acciones de lib/ejecucion, R8), mostrando quién inició, quién marcó cada paso y quién completó.
 4. /estudiantes: datos reales en EstudiantesVista.
 Haz estos commits, en este orden: docs(specs): tablero completo y panel de estudiantes; feat(tablero): todos los órdenes y el filtro por vencer; feat(tablero): detalle de la tarea para el administrador; feat(estudiantes): panel con tareas y disponibilidad.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para consultas con filtros y orden. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P20» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/tablero-filtros-panel` → `gh pr create --base main --title "P20 · Tablero completo y panel de estudiantes conectado"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P21 · Datos de demo y README
 
 - **Rama:** `feat/datos-demo`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P1 mergeado (formato en `docs/specs/09-datos-demo.md`).
 - **Archivos y carpetas del paso:** `datos-demo/demo.json`, `README.md`.
@@ -901,7 +1061,9 @@ Haz estos commits, en este orden: docs(specs): tablero completo y panel de estud
   - [ ] `datos-demo/demo.json` valida contra el formato de la spec 09 y cubre: 1 administrador además del super administrador, 4 estudiantes con disponibilidad, y tareas en los 5 estados, una por vencer, una urgente, una vencida con pasos y una completada fuera de hora (R11, R12, R27).
   - [ ] Todos los datos están marcados como de ejemplo, con correos `@example.com` y teléfonos de relleno; los nombres, lugares y tareas son los de `docs/diseno/bocetos.html`.
   - [ ] `README.md` explica qué es, cómo instalar, las variables de `.env.example`, cómo correr, probar y cargar la demo, cómo se trabaja por ramas (enlace a PLAN.md) y los créditos.
+- **Skills de Cursor** ([skills.md](skills.md)): `ux-writing` (textos de los datos de demo y del README)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P21` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `feat(demo): datos de demo con los cinco estados y las marcas`
   2. `docs(readme): instalación, uso, datos de demo y flujo de trabajo`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
@@ -911,14 +1073,16 @@ Lee AGENTS.md, docs/plan/PLAN.md (paso P21), docs/specs/09-datos-demo.md, PRD R1
 Objetivo: un juego de datos de demo que muestre todo el MVP, y el README del proyecto.
 1. datos-demo/demo.json exactamente con el formato de la spec 09: el administrador Mateo Cruz; los estudiantes Ana Torres, Luis Mena y Sofía Paredes, y uno más; disponibilidades del día 0; tareas de los bocetos (Preparar Sala 3 para mentorías en ejecución con 3 de 5 pasos y venceEnMinutos 42; Armar mesas de check-in pendiente; Llevar extensiones eléctricas a la Sala 3 urgente; Reponer agua en la mesa de mentores vencida; Ordenar la mesa de premiación sin asignar; Revisar el proyector del teatro completada; Pegar la señalética de baños completada fuera de hora). Correos @example.com, teléfonos 099 000 0000, contraseñas de demo. Ningún dato real del cliente. Commit: feat(demo): datos de demo con los cinco estados y las marcas.
 2. README.md: qué es Señal de Turno, requisitos, instalación (npm install), variables (.env.example), npm run dev / lint / typecheck / test / build, cómo cargar la demo (el script lo indica docs/specs/09-datos-demo.md), cómo se trabaja (enlace a AGENTS.md y docs/plan/PLAN.md), equipo y créditos de las fuentes (SIL OFL). Commit: docs(readme): instalación, uso, datos de demo y flujo de trabajo.
+Skills de Cursor para este paso (docs/plan/skills.md): /ux-writing para textos de los datos de demo y del README. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P21» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/datos-demo` → `gh pr create --base main --title "P21 · Datos de demo y README"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P22 · Revisión de diseño y textos de todas las pantallas
 
 - **Rama:** `docs/revision-diseno-final`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P14 a P20 mergeados.
 - **Archivos y carpetas del paso:** `docs/qa/revision-diseno-final.md` (y correcciones en `components/ui-i2h/`, `components/layout/`, `components/pantallas/`).
@@ -927,7 +1091,9 @@ Objetivo: un juego de datos de demo que muestre todo el MVP, y el README del pro
   - [ ] D-01 a D-20 revisados en todas las pantallas, en 360, 390, 768 y 1280 px, con teclado y con «reducir movimiento».
   - [ ] Todos los textos de la interfaz en español, en «tú», sin signos de exclamación, con los nombres exactos de estados y marcas (DESIGN.md §8).
   - [ ] Correcciones de las carpetas de componentes hechas; lo demás anotado para su dueño.
+- **Skills de Cursor** ([skills.md](skills.md)): `impeccable` (/impeccable critique y /impeccable audit de todas las pantallas); `ui-design-critique` (informe en español contra D-01 a D-20); `ux-writing` (revisión de todos los textos); `accessibility` (repaso a fondo de lo que marque la auditoría)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P22` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): revisión de diseño y textos de todas las pantallas`
   2. `fix(ui): correcciones de la revisión final de diseño`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
@@ -935,22 +1101,24 @@ Objetivo: un juego de datos de demo que muestre todo el MVP, y el README del pro
 ```text
 Lee AGENTS.md, DESIGN.md secciones 6, 8 y 9 y docs/plan/PLAN.md (paso P22). Estás en la rama docs/revision-diseno-final. Solo puedes crear docs/qa/revision-diseno-final.md y corregir archivos de components/ui-i2h/, components/layout/ y components/pantallas/.
 Objetivo: revisar todas las pantallas (estudiante, administrador y super administrador) contra D-01 a D-20 y las reglas de textos de DESIGN.md sección 8.
-1. Con los datos de demo cargados, recorre cada pantalla en 360, 390, 768 y 1280 px, con teclado y con reducir movimiento. Anota una tabla criterio × pantalla con pasa / no pasa / no aplica y una nota. Revisa también cada texto visible. Commit: docs(qa): revisión de diseño y textos de todas las pantallas.
+1. Con los datos de demo cargados, corre /impeccable critique y /impeccable audit en cada pantalla (nunca /impeccable init ni /impeccable document; DESIGN.md decide) y recorre cada pantalla en 360, 390, 768 y 1280 px, con teclado y con reducir movimiento. Anota una tabla criterio × pantalla con pasa / no pasa / no aplica y una nota. Revisa también cada texto visible. Commit: docs(qa): revisión de diseño y textos de todas las pantallas.
 2. Corrige lo que es de tus carpetas sin cambiar props. Commit: fix(ui): correcciones de la revisión final de diseño.
 3. Lo demás, en «Pendiente para otras carpetas» y en el PR.
+Skills de Cursor para este paso (docs/plan/skills.md): /impeccable critique y /impeccable audit de todas las pantallas; /ui-design-critique para informe en español contra D-01 a D-20; /ux-writing para revisión de todos los textos; /accessibility para repaso a fondo de lo que marque la auditoría. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P22» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin docs/revision-diseno-final` → `gh pr create --base main --title "P22 · Revisión de diseño y textos de todas las pantallas"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 ### 5.4 Fase 3 · Should y Could (solo si sobra tiempo)
 
-Se hacen en este orden y solo si hay tiempo. Cada uno es independiente: si uno no alcanza, se salta y se anota en la sección 7.
+Se hacen en este orden y solo si hay tiempo. Cada uno es independiente: si uno no alcanza, se salta y se anota en `docs/plan/estado.md`.
 
 
 #### P23 · SH6 y SH5: historial de completadas y horas que le quedan
 
 - **Rama:** `feat/panel-historial`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** Fase 2 completa.
 - **Archivos y carpetas del paso:** `lib/usuarios/**`, `app/(admin)/estudiantes/**`, `docs/specs/22-historial-horas.md`.
@@ -958,7 +1126,9 @@ Se hacen en este orden y solo si hay tiempo. Cada uno es independiente: si uno n
 - **Criterios de aceptación:**
   - [ ] Al tocar un estudiante se ve su historial de completadas (SH6, R36).
   - [ ] El panel muestra «Le quedan 2 h 30 min» de disponibilidad en el día (SH5, R29).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (consultas del historial)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P23` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): historial de completadas y horas que le quedan`
   2. `feat(estudiantes): historial de completadas`
   3. `feat(estudiantes): horas de disponibilidad que le quedan`
@@ -967,21 +1137,25 @@ Se hacen en este orden y solo si hay tiempo. Cada uno es independiente: si uno n
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P23), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, docs/specs/15-usuarios.md y PRD R29, R36, SH5, SH6. Estás en la rama feat/panel-historial. Solo puedes crear o modificar lib/usuarios/, app/(admin)/estudiantes/ y docs/specs/22-historial-horas.md.
 Escribe la spec (commit docs(specs): …), luego el historial de completadas por estudiante (/estudiantes/[id]) con CompletadasVista y las horas que le quedan con la prop horasRestantesTexto de FilaEstudiante, en hora de Ecuador. Haz estos commits, en este orden: docs(specs): historial de completadas y horas que le quedan; feat(estudiantes): historial de completadas; feat(estudiantes): horas de disponibilidad que le quedan.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para consultas del historial. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P23» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/panel-historial` → `gh pr create --base main --title "P23 · SH6 y SH5: historial de completadas y horas que le quedan"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P24 · SH4: reabrir una tarea completada
 
 - **Rama:** `feat/reabrir`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 45 min
 - **Depende de:** P23 mergeado o descartado.
 - **Archivos y carpetas del paso:** `lib/tareas/reabrir.ts`, `supabase/migrations/*_reabrir.sql`, `app/(admin)/tablero/[id]/**`, `docs/specs/23-reabrir.md`.
 - **Spec antes de programar:** `docs/specs/23-reabrir.md`.
 - **Criterios de aceptación:**
   - [ ] Un administrador reabre una completada con confirmación; los pasos siguen marcados y pasa a En ejecución o Vencida; queda quién y cuándo, y se quita «Fuera de hora» (R26, SH4, S-44).
+- **Skills de Cursor** ([skills.md](skills.md)): `supabase-postgres-best-practices` (función para reabrir)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P24` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): reabrir una tarea completada`
   2. `feat(bd): registro de reapertura`
   3. `feat(tareas): reabrir una tarea completada`
@@ -989,14 +1163,16 @@ Escribe la spec (commit docs(specs): …), luego el historial de completadas por
 
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P24), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md y PRD R26 (S-44). Estás en la rama feat/reabrir. Solo puedes crear o modificar lib/tareas/reabrir.ts, una migración nueva, app/(admin)/tablero/[id]/ y docs/specs/23-reabrir.md. Escribe la spec y luego implementa R26 con DialogoConfirmar y aviso. Haz estos commits, en este orden: docs(specs): reabrir una tarea completada; feat(bd): registro de reapertura; feat(tareas): reabrir una tarea completada.
+Skills de Cursor para este paso (docs/plan/skills.md): /supabase-postgres-best-practices para función para reabrir. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P24» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/reabrir` → `gh pr create --base main --title "P24 · SH4: reabrir una tarea completada"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P25 · SH2 y SH1: recuperar contraseña y enviar credenciales por correo
 
 - **Rama:** `feat/correo`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P24 mergeado o descartado.
 - **Archivos y carpetas del paso:** `app/(auth)/recuperar/**`, `lib/usuarios/correo.ts`, `docs/specs/24-correo.md`.
@@ -1004,7 +1180,9 @@ Lee AGENTS.md, docs/plan/PLAN.md (paso P24), docs/specs/00-arquitectura.md, docs
 - **Criterios de aceptación:**
   - [ ] Desde el login se pide un enlace para recuperar la contraseña por correo (SH2, R5).
   - [ ] Al crear un usuario, la herramienta le envía sus credenciales por correo (SH1, R4).
+- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P25` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): recuperación de contraseña y credenciales por correo`
   2. `feat(auth): recuperar la contraseña por correo`
   3. `feat(usuarios): enviar credenciales por correo al crear el usuario`
@@ -1012,21 +1190,25 @@ Lee AGENTS.md, docs/plan/PLAN.md (paso P24), docs/specs/00-arquitectura.md, docs
 
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P25), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md y PRD R4, R5, SH1, SH2. Estás en la rama feat/correo. Solo puedes crear o modificar app/(auth)/recuperar/, lib/usuarios/correo.ts y docs/specs/24-correo.md. Escribe la spec (marca [SUPUESTO] el proveedor de correo y el texto del mensaje) y luego implementa con Supabase Auth (resetPasswordForEmail y la plantilla de correo de Supabase). Haz estos commits, en este orden: docs(specs): recuperación de contraseña y credenciales por correo; feat(auth): recuperar la contraseña por correo; feat(usuarios): enviar credenciales por correo al crear el usuario.
+Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P25» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/correo` → `gh pr create --base main --title "P25 · SH2 y SH1: recuperar contraseña y enviar credenciales por correo"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P26 · SH3: aviso «por vencer» con la herramienta cerrada
 
 - **Rama:** `feat/aviso-cerrada`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h 30 min
 - **Depende de:** P25 mergeado o descartado.
 - **Archivos y carpetas del paso:** `public/sw.js`, `lib/notificaciones/**`, `app/api/notificaciones/**`, `supabase/migrations/*_suscripciones.sql`, `docs/specs/25-aviso-cerrada.md`.
 - **Spec antes de programar:** `docs/specs/25-aviso-cerrada.md`.
 - **Criterios de aceptación:**
   - [ ] Con permiso del usuario, llega una notificación del sistema cuando una tarea suya entra en «por vencer», aunque la herramienta esté cerrada (SH3, R14).
+- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions))
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P26` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): aviso por vencer con la herramienta cerrada`
   2. `feat(notificaciones): suscripción a notificaciones push`
   3. `feat(notificaciones): enviar el aviso por vencer`
@@ -1034,51 +1216,60 @@ Lee AGENTS.md, docs/plan/PLAN.md (paso P25), docs/specs/00-arquitectura.md, docs
 
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P26), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md y PRD R14, SH3. Estás en la rama feat/aviso-cerrada. Solo puedes crear o modificar public/sw.js, lib/notificaciones/, app/api/notificaciones/, una migración nueva y docs/specs/25-aviso-cerrada.md. Escribe la spec (Web Push con VAPID y un cron de Vercel cada minuto; marca [SUPUESTO] lo que no defina el PRD) y luego implementa. Haz estos commits, en este orden: docs(specs): aviso por vencer con la herramienta cerrada; feat(notificaciones): suscripción a notificaciones push; feat(notificaciones): enviar el aviso por vencer.
+Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions). Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P26» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/aviso-cerrada` → `gh pr create --base main --title "P26 · SH3: aviso «por vencer» con la herramienta cerrada"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P27 · CO2: ordenar el tablero por lugar
 
 - **Rama:** `feat/orden-lugar`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 20 min
 - **Depende de:** P26 mergeado o descartado.
 - **Archivos y carpetas del paso:** `lib/tablero/**`, `docs/specs/26-could.md`.
 - **Spec antes de programar:** `docs/specs/26-could.md` (sección CO2).
 - **Criterios de aceptación:**
   - [ ] El panel de filtros ofrece «Por lugar» y agrupa u ordena por lugar (CO2, R32).
+- **Skills de Cursor** ([skills.md](skills.md)): ninguna en especial; basta con AGENTS.md y las reglas de `.cursor/rules/`.
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P27` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): orden por lugar`
   2. `feat(tablero): ordenar por lugar`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P27), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md y PRD R32, CO2. Estás en la rama feat/orden-lugar. Solo puedes crear o modificar lib/tablero/ y docs/specs/26-could.md. Escribe la sección CO2 de la spec y agrega el orden 'lugar' con su prueba. Haz estos commits, en este orden: docs(specs): orden por lugar; feat(tablero): ordenar por lugar.
+El commit «docs(plan): tomar P27» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/orden-lugar` → `gh pr create --base main --title "P27 · CO2: ordenar el tablero por lugar"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P28 · CO1: porcentaje de pasos en la tarjeta
 
 - **Rama:** `feat/porcentaje-pasos`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 20 min
 - **Depende de:** P27 mergeado o descartado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/TarjetaTarea.tsx`, `components/ui-i2h/BarraProgreso.tsx`, `docs/specs/26-could.md` (sección CO1).
 - **Spec antes de programar:** `docs/specs/26-could.md` (sección CO1).
 - **Criterios de aceptación:**
   - [ ] La tarjeta muestra «3 de 5 pasos · 60 %» además de «3 de 5» (CO1, R30).
+- **Skills de Cursor** ([skills.md](skills.md)): `web-design-guidelines` (auditoría del cambio en la tarjeta)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P28` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): porcentaje de pasos`
   2. `feat(ui): porcentaje de pasos en la tarjeta`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
 Lee AGENTS.md, DESIGN.md 5.2 y PRD R30, CO1. Estás en la rama feat/porcentaje-pasos. Solo puedes modificar components/ui-i2h/TarjetaTarea.tsx, components/ui-i2h/BarraProgreso.tsx y docs/specs/26-could.md (sección CO1). Agrega el porcentaje calculado de marcados/total al texto de la barra, sin cambiar las props. Haz estos commits, en este orden: docs(specs): porcentaje de pasos; feat(ui): porcentaje de pasos en la tarjeta.
+Skills de Cursor para este paso (docs/plan/skills.md): /web-design-guidelines para auditoría del cambio en la tarjeta. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P28» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin feat/porcentaje-pasos` → `gh pr create --base main --title "P28 · CO1: porcentaje de pasos en la tarjeta"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 ### 5.5 Fase 4 · Cierre y demo
 
@@ -1088,7 +1279,7 @@ Objetivo: la app en producción con datos de demo y el guion probado.
 #### P29 · Carga de demo, producción y congelación
 
 - **Rama:** `chore/cierre`
-- **Responsable:** Joshua
+- **Carril y responsable en modo en paralelo:** A (datos y reglas) · Joshua (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** Todo lo que entra en la demo mergeado.
 - **Archivos y carpetas del paso:** `scripts/cargar-demo.ts`, `docs/plan/PLAN.md` (estado final), etiqueta `v1.0-avance3`.
@@ -1098,25 +1289,29 @@ Objetivo: la app en producción con datos de demo y el guion probado.
   - [ ] Producción en Vercel desde `main`, con las variables de Production y las URL de redirección de Supabase.
   - [ ] Prueba completa del guion de demo (sección 6) en producción, en un celular y en una computadora.
   - [ ] Código congelado: desde la etiqueta solo entran `fix` del guion.
+- **Skills de Cursor** ([skills.md](skills.md)): `impeccable` (npx impeccable detect sobre la URL de producción como última revisión); `Supabase CLI` (migraciones aplicadas y tipos al día)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P29` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `feat(demo): script para cargar los datos de demo`
   2. `chore(deploy): configuración de producción`
   3. `docs(plan): estado final del Avance 3`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
-Lee AGENTS.md, docs/plan/PLAN.md (paso P29), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, docs/specs/09-datos-demo.md y la sección 6 de docs/plan/PLAN.md. Estás en la rama chore/cierre. Solo puedes crear o modificar scripts/cargar-demo.ts, la configuración de despliegue y docs/plan/PLAN.md.
+Lee AGENTS.md, docs/plan/PLAN.md (paso P29), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, docs/specs/09-datos-demo.md y la sección 6 de docs/plan/PLAN.md. Estás en la rama chore/cierre. Solo puedes crear o modificar scripts/cargar-demo.ts, la configuración de despliegue y docs/plan/estado.md.
 1. scripts/cargar-demo.ts (tsx, service role): elimina los usuarios y tareas de demo anteriores sin tocar al super administrador; crea usuarios, disponibilidades, tareas, pasos, responsables y observaciones de datos-demo/demo.json calculando las horas con venceEnMinutos y minutosAtras desde ahora. Agrega npm run demo. Commit: feat(demo): script para cargar los datos de demo.
 2. Revisa las variables de Production en Vercel y las URL de Supabase Auth. Commit (si cambia algo en el repo): chore(deploy): configuración de producción.
-3. Actualiza la tabla de estado de PLAN.md (qué entró y qué no). Commit: docs(plan): estado final del Avance 3. Luego mergea, despliega, crea la etiqueta v1.0-avance3 y ensaya el guion.
+3. Actualiza docs/plan/estado.md: marca como «descartado» lo que no entró y deja la nota de qué quedó fuera. Commit: docs(plan): estado final del Avance 3. Luego mergea, despliega, crea la etiqueta v1.0-avance3 y ensaya el guion.
+Skills de Cursor para este paso (docs/plan/skills.md): npx impeccable detect sobre la URL de producción como última revisión; Supabase CLI para migraciones aplicadas y tipos al día. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P29» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin chore/cierre` → `gh pr create --base main --title "P29 · Carga de demo, producción y congelación"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 #### P30 · Prueba de aceptación en celular y computadora
 
 - **Rama:** `docs/prueba-demo`
-- **Responsable:** Raymond
+- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P29 desplegado en producción.
 - **Archivos y carpetas del paso:** `docs/qa/prueba-demo.md`.
@@ -1125,16 +1320,20 @@ Lee AGENTS.md, docs/plan/PLAN.md (paso P29), docs/specs/00-arquitectura.md, docs
   - [ ] Cada paso del guion de demo probado en producción en un celular real (Android o iOS) y en una computadora, con resultado y captura.
   - [ ] Probado sin conexión (modo avión) en el celular: banda visible y pasos bloqueados (D-11).
   - [ ] Cualquier falla anotada con pasos para reproducirla y avisada a Joshua antes de las 20:00 del martes.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (lista de revisión en el celular real)
 - **Commits, en este orden:**
+  0. `docs(plan): tomar P30` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): prueba de aceptación del Avance 3 en celular y computadora`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
 Lee AGENTS.md y la sección 6 (guion de demo) de docs/plan/PLAN.md. Estás en la rama docs/prueba-demo. Solo puedes crear docs/qa/prueba-demo.md.
 Recorre el guion completo en producción, con los usuarios de datos-demo/demo.json, en un celular real y en una computadora. Para cada paso anota: dispositivo, resultado esperado, resultado obtenido, pasa / no pasa y captura. Prueba también el modo avión en el celular. Commit: docs(qa): prueba de aceptación del Avance 3 en celular y computadora. Abre el PR y avisa a Joshua de cualquier «no pasa».
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para lista de revisión en el celular real. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El commit «docs(plan): tomar P30» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
 ```
 
-- **PR y merge:** `git push -u origin docs/prueba-demo` → `gh pr create --base main --title "P30 · Prueba de aceptación en celular y computadora"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
 
 
 ## 6. Guion de la demo (miércoles 2 de diciembre, unos 8 minutos)
@@ -1160,11 +1359,7 @@ Plan B si falla la red del lugar: el mismo guion con la vista previa abierta des
 
 ## 7. Estado
 
-Se actualiza al mergear cada paso (columna «PR» con el número).
-
-| Paso | Estado | PR | Nota |
-| --- | --- | --- | --- |
-| P0–P30 | Pendiente | — | — |
+El estado de cada paso está en [`docs/plan/estado.md`](estado.md): qué está libre, qué está mergeado y quién lo hizo. Lo que está en curso se ve en los PR borrador (`gh pr list --state open`). La forma de tomar un paso está en la sección 4.3.
 
 ## 8. Riesgos y qué hacer
 
@@ -1256,6 +1451,8 @@ Un administrador también puede ser responsable y ejecutar tareas (R8, D-S-07): 
 
 ## Anexo B · Dueños de archivos y carpetas
 
+La columna «Dueño» es el responsable en modo en paralelo; las carpetas de Raymond son el carril B y las de Joshua el carril A (sección 4). En modo solo, Joshua trabaja en todas, pero siempre en la rama del paso y solo en los archivos de ese paso.
+
 | Ruta | Dueño | Pasos |
 | --- | --- | --- |
 | `package.json`, `package-lock.json`, configuración, `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `proxy.ts`, `lib/tipos.ts` | Joshua | P0 (y `chore/deps-…`) |
@@ -1273,7 +1470,9 @@ Un administrador también puede ser responsable y ejecutar tareas (R8, D-S-07): 
 | `README.md` | Raymond | P21 |
 | `docs/qa/` | Raymond | P12, P22, P30 |
 | `docs/specs/NN-*.md` | Dueño del paso | Todos |
-| `docs/plan/`, `AGENTS.md`, `.cursor/rules/`, `.github/` | Joshua | — |
+| `docs/plan/estado.md` | Quien toma el paso, **solo la línea de su paso** | Todos (commit `docs(plan): tomar Pn`) y P29 |
+| `docs/plan/` (salvo `estado.md`), `AGENTS.md`, `.cursor/rules/`, `.github/` | Joshua | — |
+| `.agents/skills/`, `.agents/licencias/`, `skills-lock.json`, `.cursor/skills/` | Joshua (se actualizan con `npx skills update` en una rama `chore/skills-…`) | — |
 | `docs/prd/`, `DESIGN.md`, `docs/diseno/` | Equipo (no se tocan en los pasos del Avance 3 sin acordarlo) | — |
 
 ## Anexo C · Supuestos técnicos de este plan

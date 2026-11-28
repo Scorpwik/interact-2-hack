@@ -76,12 +76,14 @@ El reparto exacto por paso está en `docs/plan/PLAN.md`. A grandes rasgos:
 
 ## 6. Cómo trabajar un paso (flujo para el agente)
 
-1. `git checkout main && git pull` y crea la rama del paso: `git checkout -b <rama>`.
+1. `git checkout main && git pull`. Comprueba en `docs/plan/estado.md` y en `gh pr list --state open` que el paso está libre y que sus dependencias están en `main`. La persona (no el agente) **toma el paso**: crea la rama, cambia solo la línea del paso en `docs/plan/estado.md`, hace el commit `docs(plan): tomar Pn` y abre el PR borrador (PLAN.md, sección 4.3). El agente no vuelve a tocar `estado.md`.
 2. Escribe o completa la spec del paso en `docs/specs/` con la plantilla de `docs/specs/README.md`. Commit `docs(specs): …`.
 3. Programa solo dentro de las carpetas del paso, en los commits que dice el plan.
 4. Verifica (sección 7). Si algo falla, arréglalo antes de seguir.
 5. `git fetch origin && git merge origin/main`, vuelve a verificar y `git push -u origin <rama>`.
-6. Abre el PR con `gh pr create --base main` y la plantilla de `.github/pull_request_template.md`.
+6. Completa la plantilla del PR (`.github/pull_request_template.md`) y pásalo de borrador a listo con `gh pr ready`.
+
+**Modo solo y modo en paralelo** (PLAN.md, sección 4): los pasos están en dos carriles que no comparten archivos, A (datos y reglas) y B (interfaz). Un carril lo lleva una sola persona a la vez. En modo solo, Joshua hace todos los pasos en orden; en modo en paralelo, cada uno toma el siguiente paso libre de su carril.
 
 ## 7. Cómo verificar antes de abrir un PR
 

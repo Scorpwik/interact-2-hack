@@ -7,3 +7,5 @@ alwaysApply: true
 - Trabaja solo en la rama del paso y solo en las carpetas que el paso lista. Si necesitas tocar otra, detente y dilo en el PR.
 - Commits convencionales en español, en el orden del plan. No agregues dependencias a `package.json`.
 - Antes de terminar: `npm run lint && npm run typecheck && npm test && npm run build`.
+- Usa las skills que nombra el prompt del paso (lista en `docs/plan/skills.md`). Una skill recomienda; el PRD y DESIGN.md deciden. Nunca `/impeccable init` ni `/impeccable document`.
+- No leas, no imprimas y no edites `.env.local` ni otros `.env*` con valores.

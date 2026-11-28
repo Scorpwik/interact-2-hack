@@ -9,6 +9,7 @@ Este archivo es el harness para los agentes de Cursor (y para cualquier persona)
 3. **`docs/prd/PRD.md`**: las reglas de negocio (R1–R37), el alcance (M1–M15, SH1–SH6, CO1–CO2, W1–W4) y los supuestos (S-xx).
 4. **`DESIGN.md`**: tokens, componentes, accesibilidad, reglas para el agente (sección 8) y criterios D-01 a D-20 (sección 9).
 5. Como referencia visual: `docs/diseno/bocetos.html` y `docs/diseno/brand-board.html`. **Si algo no coincide, manda DESIGN.md.**
+6. **`docs/plan/skills.md`**: qué skills de Cursor usa cada paso. El prompt de cada paso ya las nombra; ábrelas solo cuando hagan falta.
 
 Orden de autoridad ante una contradicción: **PRD** (qué hace) › **DESIGN.md** (cómo se ve) › **spec del paso** (cómo se construye) › bocetos. Si la contradicción es real, no la resuelvas: anótala en la spec como pregunta abierta y avísale al dueño del paso.
 
@@ -96,3 +97,12 @@ Además:
 - **Diseño:** los criterios D-## que el paso cita, en 390 px y 1280 px, con teclado y con «reducir movimiento». Sin scroll horizontal en 360 px (D-15).
 - **Reglas de negocio:** probadas con dos usuarios (un administrador y un estudiante) en la vista previa de Vercel o en local.
 - **Nada de otra carpeta:** `git diff --stat origin/main` solo muestra archivos del paso.
+
+## 8. Skills de Cursor
+
+Las skills del proyecto están en el repo y Cursor las carga solo: `.agents/skills/` (`web-design-guidelines`, `accessibility`, `frontend-design`, `ux-writing`, `supabase-postgres-best-practices`, con versión fijada en `skills-lock.json`) y `.cursor/skills/` (`mobile-first-responsive`, `ui-design-critique`, adaptadas a este proyecto). Impeccable se instala en cada máquina. Lista, fuentes, licencias e instalación: **`docs/plan/skills.md`**.
+
+- Una skill **recomienda**; el PRD y DESIGN.md **deciden**. Si una skill propone otra paleta, otra fuente, esquinas redondeadas o un requisito nuevo, no se aplica.
+- Impeccable: solo `/impeccable critique`, `/impeccable audit` y `npx impeccable detect`. **Nunca** `/impeccable init` ni `/impeccable document`.
+- No se agregan skills, packs de agentes ni servidores MCP sin acordarlo (presupuesto de contexto del Kit Inicial Web). Las skills del repo no se editan a mano: se actualizan con `npx skills update` en una rama `chore/skills-…`.
+- Hábitos del Kit: un objetivo por prompt, diffs mínimos, no leer ni imprimir `.env*`, `getUser()`/`getClaims()` en vez de solo `getSession()`, nunca `select('*')`.

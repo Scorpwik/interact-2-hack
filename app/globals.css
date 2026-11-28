@@ -4,12 +4,211 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* tokens:inicio — bloque copiado tal cual de DESIGN.md §4 */
+:root {
+  /* Paleta Señal Neón v1.0 (sin cambios) */
+  --i2h-negro: #050307;          /* fondo de todo */
+  --i2h-tinta: #0B0612;          /* superficie y texto sobre morado o lima */
+  --i2h-morado: #A46CFB;         /* marca, acción, señal */
+  --i2h-morado-profundo: #5B2BB5;/* solo fondo de la marca Urgente */
+  --i2h-lima: #5CF000;           /* «ahora»: en ejecución, paso marcado, foco */
+  --i2h-blanco: #FFFFFF;
+
+  /* Funcionales del equipo [SUPUESTO DD-06] */
+  --sdt-ambar: #FFB020;          /* por vencer */
+  --sdt-rojo: #FF5C5C;           /* vencida, fuera de hora, error */
+
+  /* Roles semánticos */
+  --color-fondo: var(--i2h-negro);
+  --color-superficie: var(--i2h-tinta);
+  --color-texto: var(--i2h-blanco);
+  --color-texto-suave: rgba(255,255,255,0.64);
+  --color-texto-deshabilitado: rgba(255,255,255,0.45);
+  --color-borde: rgba(255,255,255,0.14);          /* tarjetas y separadores (decorativo) */
+  --color-borde-control: rgba(255,255,255,0.45);  /* campos, casillas, botón neutro */
+  --color-accion: var(--i2h-morado);
+  --color-texto-sobre-accion: var(--i2h-tinta);
+  --color-accion-hover: var(--i2h-lima);
+  --color-foco: var(--i2h-lima);
+  --color-activo: var(--i2h-lima);
+  --color-exito: var(--i2h-lima);
+  --color-error: var(--sdt-rojo);
+  --color-aviso: var(--sdt-ambar);
+
+  /* Estados de una tarea (PRD R11): texto e ícono */
+  --estado-sin-asignar: rgba(255,255,255,0.64);
+  --estado-pendiente: var(--i2h-blanco);
+  --estado-en-ejecucion: var(--i2h-blanco);       /* + punto lima */
+  --estado-en-ejecucion-punto: var(--i2h-lima);
+  --estado-vencida: var(--sdt-rojo);
+  --estado-completada: var(--i2h-morado);
+
+  /* Marcas (PRD R12) */
+  --marca-por-vencer: var(--sdt-ambar);
+  --marca-urgente-fondo: var(--i2h-morado-profundo);
+  --marca-urgente-texto: var(--i2h-blanco);
+  --marca-en-edicion: rgba(255,255,255,0.64);
+  --marca-fuera-de-hora: var(--sdt-rojo);
+
+  /* Progreso (único degradado permitido) */
+  --progreso: linear-gradient(90deg, #A46CFB, #5CF000);
+  --progreso-pista: rgba(255,255,255,0.14);
+
+  /* Tipografía */
+  --fuente-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif; /* 900 y 700 */
+  --fuente-texto: 'Sora', 'Segoe UI', sans-serif;                        /* 400 y 600 */
+  --fs-cifra: 64px;       /* tarjeta señal; 72px en escritorio */
+  --fs-h1: 40px;          /* título de pantalla; 48px en escritorio */
+  --fs-h2: 28px;          /* título de sección y grupo */
+  --fs-temporizador: 28px;
+  --fs-titulo-tarea: 17px;
+  --fs-cuerpo: 16px;
+  --fs-boton: 15px;
+  --fs-insignia: 13px;
+  --fs-meta: 13px;
+  --fs-kicker: 12px;
+
+  /* Espacio (base 4, escala del brandboard) */
+  --esp-1: 4px;  --esp-2: 8px;  --esp-3: 12px; --esp-4: 16px; --esp-5: 24px;
+  --esp-6: 32px; --esp-7: 48px; --esp-8: 64px; --esp-9: 96px; --esp-10: 120px;
+
+  /* Forma */
+  --radio: 0;
+  --radio-circulo: 50%;   /* solo punto de estado e indicador circular */
+  --borde-componente: 2px;
+  --borde-foco: 2px;
+  --separacion-foco: 2px;
+  --tactil-min: 48px;
+  --alto-paso: 56px;
+  --sombra-flotante: 0 18px 60px rgba(0,0,0,0.6); /* solo menús y diálogos */
+
+  /* Movimiento */
+  --mov-ui: 200ms;
+  --mov-barrido: 900ms;   /* solo entrada de la tarjeta señal, una vez */
+  --curva: cubic-bezier(0.16, 1, 0.3, 1);
+  --curva-barrido: cubic-bezier(0.7, 0, 0.2, 1);
+}
+/* tokens:fin */
+
+:root {
+  --background: var(--color-fondo);
+  --foreground: var(--color-texto);
+  --card: var(--color-superficie);
+  --card-foreground: var(--color-texto);
+  --popover: var(--color-superficie);
+  --popover-foreground: var(--color-texto);
+  --primary: var(--color-accion);
+  --primary-foreground: var(--color-texto-sobre-accion);
+  --secondary: var(--color-superficie);
+  --secondary-foreground: var(--color-texto);
+  --muted: var(--color-superficie);
+  --muted-foreground: var(--color-texto-suave);
+  --accent: var(--color-superficie);
+  --accent-foreground: var(--color-texto);
+  --destructive: var(--color-error);
+  --border: var(--color-borde);
+  --input: var(--color-borde-control);
+  --ring: var(--color-foco);
+  --radius: var(--radio);
+  --sidebar: var(--color-superficie);
+  --sidebar-foreground: var(--color-texto);
+  --sidebar-primary: var(--color-accion);
+  --sidebar-primary-foreground: var(--color-texto-sobre-accion);
+  --sidebar-accent: var(--color-superficie);
+  --sidebar-accent-foreground: var(--color-texto);
+  --sidebar-border: var(--color-borde);
+  --sidebar-ring: var(--color-foco);
+}
+
+.dark {
+  --background: var(--color-fondo);
+  --foreground: var(--color-texto);
+  --card: var(--color-superficie);
+  --card-foreground: var(--color-texto);
+  --popover: var(--color-superficie);
+  --popover-foreground: var(--color-texto);
+  --primary: var(--color-accion);
+  --primary-foreground: var(--color-texto-sobre-accion);
+  --secondary: var(--color-superficie);
+  --secondary-foreground: var(--color-texto);
+  --muted: var(--color-superficie);
+  --muted-foreground: var(--color-texto-suave);
+  --accent: var(--color-superficie);
+  --accent-foreground: var(--color-texto);
+  --destructive: var(--color-error);
+  --border: var(--color-borde);
+  --input: var(--color-borde-control);
+  --ring: var(--color-foco);
+  --sidebar: var(--color-superficie);
+  --sidebar-foreground: var(--color-texto);
+  --sidebar-primary: var(--color-accion);
+  --sidebar-primary-foreground: var(--color-texto-sobre-accion);
+  --sidebar-accent: var(--color-superficie);
+  --sidebar-accent-foreground: var(--color-texto);
+  --sidebar-border: var(--color-borde);
+  --sidebar-ring: var(--color-foco);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--fuente-texto-local), var(--fuente-texto);
+  --font-texto: var(--fuente-texto-local), var(--fuente-texto);
+  --font-display: var(--fuente-display-local), var(--fuente-display);
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--fuente-display-local), var(--fuente-display);
+
+  --color-fondo: var(--color-fondo);
+  --color-superficie: var(--color-superficie);
+  --color-texto: var(--color-texto);
+  --color-texto-suave: var(--color-texto-suave);
+  --color-texto-deshabilitado: var(--color-texto-deshabilitado);
+  --color-borde: var(--color-borde);
+  --color-borde-control: var(--color-borde-control);
+  --color-accion: var(--color-accion);
+  --color-texto-sobre-accion: var(--color-texto-sobre-accion);
+  --color-accion-hover: var(--color-accion-hover);
+  --color-foco: var(--color-foco);
+  --color-activo: var(--color-activo);
+  --color-exito: var(--color-exito);
+  --color-error: var(--color-error);
+  --color-aviso: var(--color-aviso);
+
+  --color-estado-sin-asignar: var(--estado-sin-asignar);
+  --color-estado-pendiente: var(--estado-pendiente);
+  --color-estado-en-ejecucion: var(--estado-en-ejecucion);
+  --color-estado-en-ejecucion-punto: var(--estado-en-ejecucion-punto);
+  --color-estado-vencida: var(--estado-vencida);
+  --color-estado-completada: var(--estado-completada);
+
+  --color-marca-por-vencer: var(--marca-por-vencer);
+  --color-marca-urgente-fondo: var(--marca-urgente-fondo);
+  --color-marca-urgente-texto: var(--marca-urgente-texto);
+  --color-marca-en-edicion: var(--marca-en-edicion);
+  --color-marca-fuera-de-hora: var(--marca-fuera-de-hora);
+
+  --spacing-esp-1: var(--esp-1);
+  --spacing-esp-2: var(--esp-2);
+  --spacing-esp-3: var(--esp-3);
+  --spacing-esp-4: var(--esp-4);
+  --spacing-esp-5: var(--esp-5);
+  --spacing-esp-6: var(--esp-6);
+  --spacing-esp-7: var(--esp-7);
+  --spacing-esp-8: var(--esp-8);
+  --spacing-esp-9: var(--esp-9);
+  --spacing-esp-10: var(--esp-10);
+
+  --text-cifra: var(--fs-cifra);
+  --text-h1: var(--fs-h1);
+  --text-h2: var(--fs-h2);
+  --text-temporizador: var(--fs-temporizador);
+  --text-titulo-tarea: var(--fs-titulo-tarea);
+  --text-cuerpo: var(--fs-cuerpo);
+  --text-boton: var(--fs-boton);
+  --text-insignia: var(--fs-insignia);
+  --text-meta: var(--fs-meta);
+  --text-kicker: var(--fs-kicker);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -18,11 +217,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -39,82 +233,13 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
-
-:root {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0;
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --radius-sm: var(--radio);
+  --radius-md: var(--radio);
+  --radius-lg: var(--radio);
+  --radius-xl: var(--radio);
+  --radius-2xl: var(--radio);
+  --radius-3xl: var(--radio);
+  --radius-4xl: var(--radio);
 }
 
 @layer base {
@@ -122,9 +247,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--fuente-texto-local), var(--fuente-texto);
   }
   html {
-    @apply font-sans;
+    @apply font-texto;
   }
 }

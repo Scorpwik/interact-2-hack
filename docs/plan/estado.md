@@ -20,7 +20,7 @@ Cada paso tiene un responsable fijo y una ronda (PLAN.md, sección 4), así que 
 
 ### Fase 1 · MVP de la demo (meta: hoy)
 
-- Ronda 1 · **P1** · Supabase, Vercel y esquema de datos con RLS · Joshua · `feat/esquema-datos` — pendiente
+- Ronda 1 · **P1** · Supabase, Vercel y esquema de datos con RLS · Joshua · `feat/esquema-datos` — hecho
 
 - Ronda 1 · **P2** · Componentes base de DESIGN.md y catálogo · Raymond · `feat/ui-base` — pendiente
 

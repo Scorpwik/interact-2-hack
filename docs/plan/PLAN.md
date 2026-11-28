@@ -17,7 +17,7 @@
 
 - **`main` está protegido de hecho:** nadie hace push directo a `main`. Todo entra por PR. Recomendado: activar la protección en GitHub (Settings → Branches → Add rule → `main` → «Require a pull request before merging»).
 - **Una rama por paso**, con el nombre exacto del plan: `feat/…` para funciones, `chore/…` para configuración, `docs/…` para revisiones y documentación.
-- **Joshua administra el repositorio:** revisa y mergea todos los PR, agrega dependencias (`chore/deps-…`) y es dueño de los archivos compartidos (`package.json`, `package-lock.json`, `app/layout.tsx`, `app/globals.css`, `lib/tipos.ts`, `middleware.ts`, configuración). Así ningún PR choca en esos archivos.
+- **Joshua administra el repositorio:** revisa y mergea todos los PR, agrega dependencias (`chore/deps-…`) y es dueño de los archivos compartidos (`package.json`, `package-lock.json`, `app/layout.tsx`, `app/globals.css`, `lib/tipos.ts`, `proxy.ts`, configuración). Así ningún PR choca en esos archivos.
 - **Cada persona trabaja solo en las carpetas de su paso** (Anexo B). Si necesitas algo de otra carpeta, lo pides en el PR; no lo editas.
 - **Los commits del paso se conservan:** se mergea con *merge commit* (`gh pr merge --merge`), no con *squash*, para que el historial muestre cada commit del plan.
 
@@ -143,13 +143,15 @@ La Fase 1 suma unas 8 h de trabajo por persona. Si no termina hoy, se cierra el 
 
 ### 5.1 Fase 0 · Preparación
 
-Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además del código, incluye estas tareas fuera del repo:
+Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además del código, incluye estas tareas fuera del repo (decisiones confirmadas por Joshua el 27 de noviembre de 2026):
 
-1. **Supabase:** crear el proyecto (región más cercana, por ejemplo `us-east-1`), copiar `Project URL`, `anon key` y `service_role key`; en Authentication → Providers dejar solo Email, sin registro público (*Allow new users to sign up* desactivado, R1, W1) y sin confirmación por correo para los usuarios que crea el administrador.
-2. **Variables:** `.env.local` (no se sube) con las de `.env.example`; las mismas en Vercel para Preview y Production. `SUPABASE_SERVICE_ROLE_KEY`, `SUPER_ADMIN_EMAIL` y `SUPER_ADMIN_PASSWORD` solo como variables de servidor.
-3. **Vercel:** importar `Scorpwik/interact-2-hack` en el team que se elija, framework Next.js, rama de producción `main`; cada PR genera su vista previa. En Supabase → Authentication → URL Configuration, agregar la URL de producción y el patrón de las vistas previas.
-4. **GitHub:** confirmar que Raymond tiene permiso de escritura en el repo y activar la protección de `main` (sección 2.1).
-5. **Avisar a Raymond** cuando P0 esté en `main` para que empiece con P2.
+1. **Supabase (proyecto nuevo):** Joshua crea un proyecto **nuevo** en su otra cuenta de Supabase (región más cercana, por ejemplo `us-east-1`). No se reutiliza ningún proyecto ni conexión de Supabase anterior. En Authentication → Providers deja solo Email, sin registro público (*Allow new users to sign up* desactivado, R1, W1) y sin confirmación por correo para los usuarios que crea el administrador.
+2. **Credenciales:** Joshua copia `Project URL`, `anon key` y `service_role key` y **él mismo las pega** en `.env.local` (no se sube) y en Vercel. El agente de Cursor no lee ni imprime `.env.local`, y las claves no se pegan en prompts ni en el chat. `SUPABASE_SERVICE_ROLE_KEY`, `SUPER_ADMIN_EMAIL` y `SUPER_ADMIN_PASSWORD` van solo como variables de servidor.
+3. **Super administrador (provisional):** `SUPER_ADMIN_EMAIL=superadmin@interact2hack.test` queda en `.env.example`, marcado como **PROVISIONAL**. Para cambiarlo basta con editar esa variable en `.env.local` y en Vercel y volver a correr `npm run crear-super-admin` (P5). La contraseña la elige Joshua y solo vive en `.env.local` y Vercel.
+4. **Vercel:** importar `Scorpwik/interact-2-hack` en el team **`scorpwik`**, framework Next.js, rama de producción `main`; cada PR genera su vista previa. En Supabase → Authentication → URL Configuration, agregar la URL de producción y el patrón de las vistas previas.
+5. **GitHub:** Raymond (`rmandors`) ya tiene permiso de escritura. Solo falta activar la protección de `main` (sección 2.1).
+6. **Skills de Cursor:** cada uno, en su máquina, sigue `docs/plan/skills.md` (sección «Instalación»). Las skills del proyecto ya vienen en el repo; en cada máquina solo se instala Impeccable y se comprueba que Cursor las ve.
+7. **Avisar a Raymond** cuando P0 esté en `main` (ver «Modo en paralelo», sección 4.2).
 
 #### P0 · Preparar el proyecto, Supabase y Vercel
 
@@ -157,7 +159,7 @@ Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además de
 - **Responsable:** Joshua
 - **Estimación:** 1 h 15 min
 - **Depende de:** Ninguna. Se hace antes de que empiece cualquier otro paso.
-- **Archivos y carpetas del paso:** Todo el esqueleto: `package.json`, configuración (`next.config.ts`, `tsconfig.json`, `eslint`, `vitest.config.ts`, `components.json`), `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `components/ui/` (shadcn), `lib/tipos.ts`, `lib/supabase/` (cliente de navegador, de servidor y admin), `middleware.ts` vacío, `.env.example`, `.gitignore`, carpetas vacías con `.gitkeep` (`components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `datos-demo/`, `docs/qa/`, `supabase/migrations/`, `scripts/`).
+- **Archivos y carpetas del paso:** Todo el esqueleto: `package.json`, configuración (`next.config.ts`, `tsconfig.json`, `eslint`, `vitest.config.ts`, `components.json`), `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `components/ui/` (shadcn), `lib/tipos.ts`, `lib/supabase/` (cliente de navegador, de servidor y admin), `proxy.ts` vacío, `.env.example`, `.gitignore`, carpetas vacías con `.gitkeep` (`components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `datos-demo/`, `docs/qa/`, `supabase/migrations/`, `scripts/`).
 - **Spec antes de programar:** `docs/specs/00-arquitectura.md` (stack, carpetas, dueños, variables) y `docs/specs/01-contratos-ui.md` (tipos de `lib/tipos.ts` y props de cada componente; parte del Anexo A de este plan).
 - **Criterios de aceptación:**
   - [ ] `npm run dev` abre una página en negro #050307 con un título en Big Shoulders 900 y un texto en Sora, servidas desde el propio proyecto (D-18).
@@ -166,7 +168,9 @@ Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además de
   - [ ] Dependencias instaladas de una vez: `@supabase/supabase-js`, `@supabase/ssr`, `zod`, `lucide-react`, `sonner`, `vitest`, y los componentes shadcn que se usen (button, input, textarea, checkbox, dialog, sonner, dropdown-menu).
   - [ ] `lib/tipos.ts` y `docs/specs/01-contratos-ui.md` publicados en `main`: con eso Raymond puede empezar sin esperar datos reales.
   - [ ] `npm run lint`, `npm run typecheck`, `npm test` (una prueba de humo) y `npm run build` pasan.
-  - [ ] Proyecto de Supabase creado, con las variables en `.env.local` y en Vercel (Preview y Production); el sitio de Vercel muestra la página de prueba.
+  - [ ] Proyecto de Supabase **nuevo** creado por Joshua en su otra cuenta; Joshua pegó `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` en `.env.local` (no se sube) y en Vercel (Preview y Production). Ninguna clave aparece en el repo, en un prompt ni en el chat.
+  - [ ] `.env.example` trae `SUPER_ADMIN_EMAIL=superadmin@interact2hack.test` marcado como **PROVISIONAL**; cambiarlo es editar solo esa variable (y volver a correr el script de P5).
+  - [ ] Proyecto de Vercel en el team `scorpwik`, conectado a `Scorpwik/interact-2-hack`, rama de producción `main`; la URL de producción muestra la página de prueba.
 - **Commits, en este orden:**
   1. `chore: crear proyecto Next.js con TypeScript, Tailwind y App Router`
   2. `chore(ui): configurar shadcn/ui con radio 0 y sin modo claro`
@@ -180,13 +184,13 @@ Joshua hace este paso **solo y antes** de que empiece cualquier otro. Además de
 ```text
 Lee AGENTS.md, DESIGN.md (secciones 4, 8 y 9) y docs/plan/PLAN.md (paso P0 y Anexo A). Estás en la rama chore/setup.
 Objetivo: dejar el esqueleto del proyecto listo para que dos personas trabajen en paralelo sin tocar los mismos archivos.
-1. Crea un proyecto Next.js (App Router, TypeScript estricto, Tailwind, ESLint, carpeta app/ en la raíz, sin src/) en este repo, sin borrar docs/, DESIGN.md ni AGENTS.md.
+1. Crea un proyecto Next.js (App Router, TypeScript estricto, Tailwind, ESLint, carpeta app/ en la raíz, sin src/, alias @/*) con `npx create-next-app@latest` y la opción `--no-agents-md` (create-next-app genera su propio AGENTS.md y CLAUDE.md; aquí ya existe el nuestro). Como el repo no está vacío, créalo en una carpeta temporal fuera del repo y copia los archivos al repo sin sobrescribir AGENTS.md, DESIGN.md, docs/, .cursor/, .agents/, .github/ ni skills-lock.json.
 2. Inicializa shadcn/ui con radio 0 y solo tema oscuro; agrega button, input, textarea, checkbox, dialog, dropdown-menu y sonner.
 3. Instala @supabase/supabase-js, @supabase/ssr, zod, lucide-react y vitest. Agrega scripts: lint, typecheck (tsc --noEmit), test (vitest run), build.
 4. Copia en app/globals.css, tal cual, el bloque CSS entre <!-- tokens:inicio --> y <!-- tokens:fin --> de DESIGN.md. Mapea en Tailwind los colores (--color-*, --estado-*, --marca-*), espacios (--esp-*), tamaños (--fs-*) y radio 0, para que los componentes usen clases y nunca valores a mano.
 5. Copia docs/diseno/fuentes/*.woff2 a app/fuentes/ y cárgalas con next/font/local (Big Shoulders Display 700 y 900, Sora 400 y 600) en app/layout.tsx, con lang="es" y fondo --color-fondo.
 6. Crea lib/tipos.ts con los tipos del Anexo A del plan (EstadoTarea, MarcaTarea, TemporizadorVista, TareaTarjeta, TareaDetalle, PasoVista, PersonaResumen, OpcionResponsable, TotalesTablero, UsuarioFila, EstudianteFila, ResultadoAccion).
-7. Crea lib/supabase/cliente.ts (navegador), lib/supabase/servidor.ts (Server Components y acciones, con cookies) y lib/supabase/admin.ts (service role, con import 'server-only'). Crea .env.example con NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, SUPER_ADMIN_EMAIL, SUPER_ADMIN_PASSWORD (sin valores).
+7. Crea lib/supabase/cliente.ts (navegador), lib/supabase/servidor.ts (Server Components y acciones, con cookies) y lib/supabase/admin.ts (service role, con import 'server-only'). Crea .env.example con NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY y SUPER_ADMIN_PASSWORD sin valores, y SUPER_ADMIN_EMAIL=superadmin@interact2hack.test con el comentario «# PROVISIONAL: cambiar por el correo real del super administrador». No leas, no imprimas y no edites .env.local: lo llena Joshua a mano.
 8. Crea las carpetas vacías con .gitkeep: components/ui-i2h, components/layout, components/pantallas, app/catalogo, datos-demo, docs/qa, supabase/migrations, scripts.
 9. Una página de prueba en app/page.tsx con un título en Big Shoulders y un texto en Sora, y una prueba de humo en lib/__tests__/humo.test.ts.
 10. Escribe docs/specs/00-arquitectura.md y docs/specs/01-contratos-ui.md con la plantilla de docs/specs/README.md, usando el Anexo A.
@@ -350,31 +354,31 @@ Haz estos commits, en este orden: docs(specs): navegación, login visual y aviso
 - **Responsable:** Joshua
 - **Estimación:** 1 h 15 min
 - **Depende de:** P1 mergeado. P4 mergeado para conectar `LoginVista` (si aún no está, empieza por la parte de servidor).
-- **Archivos y carpetas del paso:** `app/(auth)/**`, `app/page.tsx`, `middleware.ts`, `lib/auth/**`, `scripts/crear-super-admin.ts`, `docs/specs/06-auth-perfiles.md`.
+- **Archivos y carpetas del paso:** `app/(auth)/**`, `app/page.tsx`, `proxy.ts`, `lib/auth/**`, `scripts/crear-super-admin.ts`, el script `crear-super-admin` en `package.json`, `docs/specs/06-auth-perfiles.md`.
 - **Spec antes de programar:** `docs/specs/06-auth-perfiles.md`.
 - **Criterios de aceptación:**
   - [ ] Solo se entra con correo y contraseña de una cuenta existente; no hay registro (R1, W1). Error y éxito con aviso (R37).
-  - [ ] El middleware protege todo salvo `/login` y `/catalogo`; un estudiante que abre una ruta de administrador va a «Mis tareas», y un administrador entra al tablero (R2, R30).
-  - [ ] `scripts/crear-super-admin.ts` crea una sola vez el super administrador desde `SUPER_ADMIN_EMAIL` y `SUPER_ADMIN_PASSWORD`; si ya existe, no hace nada (R3, W4).
+  - [ ] El proxy (`proxy.ts`, el antiguo middleware de Next.js) protege todo salvo `/login` y `/catalogo`; un estudiante que abre una ruta de administrador va a «Mis tareas», y un administrador entra al tablero (R2, R30).
+  - [ ] `npm run crear-super-admin` crea una sola vez el super administrador desde `SUPER_ADMIN_EMAIL` (hoy el provisional `superadmin@interact2hack.test`) y `SUPER_ADMIN_PASSWORD`; si ya existe con ese correo no hace nada, y si existe con otro correo le actualiza el correo, así nunca hay dos (R3, W4).
   - [ ] Cerrar sesión funciona desde el marco de la app.
   - [ ] Se puede crear un administrador y un estudiante de prueba con el script de P1/P21 o desde el panel de Supabase para probar.
 - **Commits, en este orden:**
   1. `docs(specs): autenticación, perfiles y super administrador`
   2. `feat(auth): iniciar y cerrar sesión con correo y contraseña`
-  3. `feat(auth): proteger rutas por perfil con middleware`
+  3. `feat(auth): proteger rutas por perfil con proxy.ts`
   4. `feat(auth): script para crear el super administrador único`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
-Lee AGENTS.md, docs/plan/PLAN.md (paso P5), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, docs/specs/02-datos-y-rls.md y PRD R1–R5. Estás en la rama feat/auth-roles. Solo puedes crear o modificar app/(auth)/, app/page.tsx, middleware.ts, lib/auth/, scripts/crear-super-admin.ts y docs/specs/06-auth-perfiles.md.
+Lee AGENTS.md, docs/plan/PLAN.md (paso P5), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, docs/specs/02-datos-y-rls.md y PRD R1–R5. Estás en la rama feat/auth-roles. Solo puedes crear o modificar app/(auth)/, app/page.tsx, proxy.ts, lib/auth/, scripts/crear-super-admin.ts, el script crear-super-admin de package.json y docs/specs/06-auth-perfiles.md.
 Objetivo: iniciar sesión, proteger rutas por perfil y crear el super administrador fijo.
 1. Escribe docs/specs/06-auth-perfiles.md con la plantilla. Commit: docs(specs): autenticación, perfiles y super administrador.
 2. app/(auth)/login/page.tsx usa LoginVista de components/pantallas con una acción de servidor que llama a supabase.auth.signInWithPassword y devuelve ResultadoAccion con un mensaje en español para el aviso. Sin registro propio.
 3. lib/auth/sesion.ts: obtenerPerfilActual() (perfil + rol + es_super_admin) para Server Components y acciones; requiereAdmin() y requiereSesion().
-4. middleware.ts con @supabase/ssr: refresca la sesión; deja pasar /login y /catalogo; sin sesión → /login; estudiante en /tablero, /tareas, /estudiantes o /usuarios → /mis-tareas. app/page.tsx redirige según el perfil.
-5. scripts/crear-super-admin.ts (tsx): con la service role crea el usuario de SUPER_ADMIN_EMAIL con email confirmado y su perfil es_super_admin = true y rol admin; es idempotente.
+4. proxy.ts con @supabase/ssr: refresca la sesión; deja pasar /login y /catalogo; sin sesión → /login; estudiante en /tablero, /tareas, /estudiantes o /usuarios → /mis-tareas. app/page.tsx redirige según el perfil.
+5. scripts/crear-super-admin.ts (tsx) y el script "crear-super-admin" en package.json: con la service role crea el usuario de SUPER_ADMIN_EMAIL con email confirmado y su perfil es_super_admin = true y rol admin. Es idempotente: si ya existe un super administrador con ese correo no hace nada; si existe con otro correo (el provisional cambió), le actualiza el correo. El correo nunca se escribe en el código: solo se lee de la variable.
 6. Cerrar sesión: acción de servidor usada por MarcoApp.
-Haz estos commits, en este orden: docs(specs): autenticación, perfiles y super administrador; feat(auth): iniciar y cerrar sesión con correo y contraseña; feat(auth): proteger rutas por perfil con middleware; feat(auth): script para crear el super administrador único. Verifica: login correcto e incorrecto, redirecciones por perfil, y que el script corrido dos veces no crea un segundo super administrador.
+Haz estos commits, en este orden: docs(specs): autenticación, perfiles y super administrador; feat(auth): iniciar y cerrar sesión con correo y contraseña; feat(auth): proteger rutas por perfil con proxy.ts; feat(auth): script para crear el super administrador único. Verifica: login correcto e incorrecto, redirecciones por perfil, y que el script corrido dos veces no crea un segundo super administrador.
 ```
 
 - **PR y merge:** `git push -u origin feat/auth-roles` → `gh pr create --base main --title "P5 · Autenticación, perfiles y super administrador"` con la plantilla. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
@@ -1254,7 +1258,7 @@ Un administrador también puede ser responsable y ejecutar tareas (R8, D-S-07): 
 
 | Ruta | Dueño | Pasos |
 | --- | --- | --- |
-| `package.json`, `package-lock.json`, configuración, `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `middleware.ts`, `lib/tipos.ts` | Joshua | P0 (y `chore/deps-…`) |
+| `package.json`, `package-lock.json`, configuración, `app/layout.tsx`, `app/globals.css`, `app/fuentes/`, `proxy.ts`, `lib/tipos.ts` | Joshua | P0 (y `chore/deps-…`) |
 | `components/ui/` (generado por shadcn) | Joshua | P0 |
 | `supabase/**`, `lib/supabase/**` | Joshua | P0, P1, P9, P15, P17, P18, P19, P24, P26 |
 | `lib/estados.ts`, `lib/tiempo.ts`, `lib/auth/`, `lib/tareas/`, `lib/ejecucion/`, `lib/tablero/`, `lib/usuarios/`, `lib/asignacion/`, `lib/tiempo-real/`, `lib/notificaciones/`, `lib/__tests__/` | Joshua | P3–P26 |

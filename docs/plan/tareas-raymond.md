@@ -6,8 +6,8 @@ Los dos trabajamos en paralelo con Cursor, cada uno en sus carpetas y en una ram
 
 ## Antes de empezar
 - [ ] Acepta la invitación al repo `Scorpwik/interact-2-hack` y clónalo: `git clone https://github.com/Scorpwik/interact-2-hack.git`.
-- [ ] Instala Node.js 20 o más y GitHub CLI (`gh auth login`).
-- [ ] Espera el aviso de Joshua de que el paso P0 está en `main`; luego `git pull`, `npm install` y copia `.env.local` (Joshua te pasa los valores por un canal privado).
+- [ ] Instala Node.js 22.20 o más (lo pide la herramienta de skills; ver `docs/plan/skills.md`) y GitHub CLI (`gh auth login`).
+- [ ] Espera el aviso de Joshua de que el paso P0 está en `main`; luego `git pull`, `npm install` y crea `.env.local` con los valores que Joshua te pasa por un canal privado (no los pegues en Cursor ni en el chat).
 - [ ] Lee `AGENTS.md`, `DESIGN.md` (sobre todo §4, §5, §6, §8 y §9) y abre en el navegador `docs/diseno/bocetos.html` y `docs/diseno/brand-board.html`.
 - [ ] En Cursor, abre la carpeta del repo: las reglas de `.cursor/rules/` se cargan solas.
 

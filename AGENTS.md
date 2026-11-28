@@ -20,7 +20,7 @@ Orden de autoridad ante una contradicción: **PRD** (qué hace) › **DESIGN.md*
 4. **Toca solo las carpetas de tu paso.** Cada paso del plan lista sus archivos. Si necesitas cambiar un archivo de otro paso o de otra persona, **no lo edites**: escribe en el PR qué necesitas y avísale a su dueño.
 5. **Commits convencionales, en español** y en el orden que dice el plan: `tipo(ámbito): descripción en minúscula, sin punto final`. Tipos: `feat`, `fix`, `docs`, `test`, `refactor`, `style`, `chore`, `ci`. Un commit = un cambio que compila.
 6. **Dependencias nuevas:** solo se agregan en una rama `chore/deps-…` de quien administra el repo (ver PLAN.md, sección 2). Si te hace falta una librería, pídela en el PR.
-7. **Secretos:** nunca en el código ni en commits. Solo en `.env.local` (ignorado por git) y en las variables de Vercel. `SUPABASE_SERVICE_ROLE_KEY` solo se usa en código de servidor (`lib/supabase/admin.ts`), nunca en un componente de cliente.
+7. **Secretos:** nunca en el código ni en commits. Solo en `.env.local` (ignorado por git) y en las variables de Vercel. Las claves de Supabase las pega Joshua a mano; el agente **no lee, no imprime y no edita** `.env.local`, y nadie pega claves en un prompt. `SUPABASE_SERVICE_ROLE_KEY` solo se usa en código de servidor (`lib/supabase/admin.ts`), nunca en un componente de cliente.
 8. **Las reglas de negocio se aplican en el servidor.** Lo que el PRD prohíbe (editar en ejecución, empezar otra tarea, marcar sin ser responsable…) se impide en Postgres (RLS, funciones RPC) o en acciones de servidor; la interfaz solo lo refleja.
 
 ## 3. Stack
@@ -31,10 +31,12 @@ Orden de autoridad ante una contradicción: **PRD** (qué hace) › **DESIGN.md*
 | Estilos | Tailwind CSS con los tokens de DESIGN.md (sección 4) en `app/globals.css`; shadcn/ui como base, configurado con radio 0 |
 | Íconos | `lucide-react` con `strokeWidth={2.4}` y tamaño 24 (16 en insignias), como pide DESIGN.md |
 | Fuentes | Big Shoulders Display (700, 900) y Sora (400, 600) locales con `next/font/local`, desde `docs/diseno/fuentes/` copiadas a `app/fuentes/` (D-18) |
-| Datos y auth | Supabase: Auth (correo + contraseña), Postgres con RLS, funciones RPC y Realtime; `@supabase/ssr` |
+| Datos y auth | Supabase: Auth (correo + contraseña), Postgres con RLS, funciones RPC y Realtime; `@supabase/ssr`. Proyecto **nuevo**, creado por Joshua para este repo; no se usa ningún otro proyecto ni conexión de Supabase |
 | Validación | `zod` en las acciones de servidor |
 | Pruebas | Vitest para la lógica pura (`lib/**`); revisión manual guiada por los criterios D-## y los de cada paso |
-| Despliegue | Vercel (una vista previa por rama y producción desde `main`) |
+| Despliegue | Vercel, team **`scorpwik`** (una vista previa por rama y producción desde `main`) |
+| Super administrador | Un único usuario fijo leído de `SUPER_ADMIN_EMAIL`. Hoy es **provisional**: `superadmin@interact2hack.test`. Nunca se escribe el correo en el código; se cambia solo en la variable (R3) |
+| Rutas protegidas | `proxy.ts` en la raíz (en Next.js 16 reemplaza a `middleware.ts`) |
 | PWA | `public/manifest.webmanifest` + íconos; sin trabajo sin conexión (W3) |
 | Zona horaria | `America/Guayaquil` para mostrar y comparar horas (R10, [SUPUESTO S-21]) |
 

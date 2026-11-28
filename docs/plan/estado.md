@@ -16,7 +16,7 @@ Cada paso tiene un responsable fijo y una ronda (PLAN.md, sección 4), así que 
 
 ### Fase 0 · Preparación
 
-- Ronda 0 · **P0** · Esqueleto mínimo del proyecto · Joshua · `chore/esqueleto` — pendiente
+- Ronda 0 · **P0** · Esqueleto mínimo del proyecto · Joshua · `chore/esqueleto` — hecho
 
 ### Fase 1 · MVP de la demo (meta: hoy)
 

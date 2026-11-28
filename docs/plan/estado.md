@@ -24,7 +24,7 @@ Cada paso tiene un responsable fijo y una ronda (PLAN.md, sección 4), así que 
 
 - Ronda 1 · **P2** · Componentes base de DESIGN.md y catálogo · Raymond · `feat/ui-base` — pendiente
 
-- Ronda 2 · **P3** · Lógica de estados y de tiempo · Joshua · `feat/estados-tarea` — pendiente
+- Ronda 2 · **P3** · Lógica de estados y de tiempo · Joshua · `feat/estados-tarea` — hecho
 
 - Ronda 2 · **P6** · Componentes del formulario de tarea · Raymond · `feat/ui-formulario-tarea` — pendiente
 

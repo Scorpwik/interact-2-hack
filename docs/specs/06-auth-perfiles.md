@@ -65,8 +65,10 @@ El script es idempotente:
 
 ## 7. Cómo se verifica
 
-- Entrar con contraseña incorrecta muestra el error y no crea sesión.
-- Entrar con el super administrador lleva a `/tablero`.
-- Abrir `/tablero` sin sesión lleva a `/login`.
-- Un estudiante que abre `/usuarios` termina en `/mis-tareas`.
-- `npm run crear-super-admin` dos veces deja una sola fila con `es_super_admin`.
+Comprobado el 28 de noviembre de 2026 contra el proyecto enlazado:
+
+- Contraseña incorrecta: Auth la rechaza. El formulario muestra «Correo o contraseña incorrectos.»
+- El super administrador entra y su perfil es `admin` con `es_super_admin`.
+- Un estudiante de prueba entra, lee solo su perfil y se borró al terminar.
+- `npm run crear-super-admin` la segunda vez responde «El super administrador ya existe.» En `perfiles` queda una fila de administrador y ninguna de estudiante.
+- Sin sesión, `/` va a `/login`. Un estudiante en una ruta de administrador va a `/mis-tareas` (proxy).

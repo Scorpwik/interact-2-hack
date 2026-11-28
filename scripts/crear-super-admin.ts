@@ -28,7 +28,8 @@ function cargarEnvLocal() {
 
 function salir(mensaje: string): never {
   console.error(mensaje);
-  process.exit(1);
+  process.exitCode = 1;
+  throw new Error(mensaje);
 }
 
 cargarEnvLocal();
@@ -69,10 +70,7 @@ if ((actuales?.length ?? 0) > 1) {
 const actual = actuales?.[0];
 if (actual?.correo.trim().toLowerCase() === correo) {
   console.log("El super administrador ya existe.");
-  process.exit(0);
-}
-
-if (actual) {
+} else if (actual) {
   const { error: errorAuth } = await admin.auth.admin.updateUserById(actual.id, {
     email: correo,
     email_confirm: true,
@@ -84,9 +82,7 @@ if (actual) {
     .eq("id", actual.id);
   if (errorPerfil) salir("No se pudo actualizar el correo del perfil.");
   console.log("Correo del super administrador actualizado.");
-  process.exit(0);
-}
-
+} else {
 const { data: creado, error: errorCrear } = await admin.auth.admin.createUser({
   email: correo,
   password: contrasena,
@@ -115,3 +111,4 @@ const { error: errorPerfil } = await admin.from("perfiles").insert({
 if (errorPerfil) salir("No se pudo crear el perfil del super administrador.");
 
 console.log("Super administrador creado.");
+}

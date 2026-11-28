@@ -1,88 +1,93 @@
-# Estado de los pasos · Avance 3
+# Tablero de avance · Avance 3
 
-Este archivo dice **qué paso ya está hecho** y es la base para **tomar un paso** sin duplicar trabajo (PLAN.md, sección 4.3).
+Cada paso tiene un responsable fijo y una ronda (PLAN.md, sección 4), así que aquí no se reserva nada: este archivo solo muestra **qué ya entró a `main`**.
 
 **Cómo leerlo**
 
-- En `main`, `— libre` significa que nadie lo ha terminado. Un paso con nombre (`— Raymond`, `— Joshua`) ya está mergeado, porque esta línea solo llega a `main` con el merge del paso.
-- **En curso** = hay un **PR borrador** abierto con el título `Pn · …`. Antes de tomar un paso, revisa los dos: este archivo en `main` y `gh pr list --state open`.
-- `— descartado` = el paso no entra en el Avance 3 (solo Fase 3, lo decide Joshua en P29).
+- `— pendiente`: el paso todavía no está en `main`. `— hecho`: ya se mergeó (esta línea solo llega a `main` con el merge del paso).
+- `— descartado`: el paso no entra en el Avance 3 (solo Fase 3; lo decide Joshua en P29).
+- Lo que está en revisión se ve en `gh pr list --state open`.
 
 **Cómo se edita**
 
-- Cada quien cambia **solo la línea de su paso**, en el primer commit de su rama: `docs(plan): tomar Pn`. Cambia `libre` por tu nombre (`— Joshua` o `— Raymond`).
-- Las líneas van separadas por una línea en blanco a propósito: así dos PR que tocan líneas distintas se mergean sin conflicto.
+- El responsable cambia **solo la línea de su paso**, en el último commit de su rama: `docs(plan): avance de Pn` (`— pendiente` → `— hecho`).
+- Las líneas van separadas por una línea en blanco a propósito: así dos PR de la misma ronda se mergean sin conflicto.
 - No reordenes ni reformatees este archivo.
-
 
 ### Fase 0 · Preparación
 
-- **P0** · Preparar el proyecto, Supabase y Vercel · carril A · `chore/setup` — libre
+- Ronda 0 · **P0** · Esqueleto mínimo del proyecto · Joshua · `chore/esqueleto` — pendiente
 
 ### Fase 1 · MVP de la demo (meta: hoy)
 
-- **P1** · Esquema de datos, RLS y formato de datos de demo · carril A · `feat/esquema-datos` — libre
+- Ronda 1 · **P1** · Supabase, Vercel y esquema de datos con RLS · Joshua · `feat/esquema-datos` — pendiente
 
-- **P2** · Componentes base de DESIGN.md y catálogo · carril B · `feat/ui-base` — libre
+- Ronda 1 · **P2** · Componentes base de DESIGN.md y catálogo · Raymond · `feat/ui-base` — pendiente
 
-- **P3** · Lógica de estados y de tiempo · carril A · `feat/estados-tarea` — libre
+- Ronda 2 · **P3** · Lógica de estados y de tiempo · Joshua · `feat/estados-tarea` — pendiente
 
-- **P4** · Navegación, login visual y aviso sin conexión · carril B · `feat/layout-navegacion` — libre
+- Ronda 2 · **P6** · Componentes del formulario de tarea · Raymond · `feat/ui-formulario-tarea` — pendiente
 
-- **P5** · Autenticación, perfiles y super administrador · carril A · `feat/auth-roles` — libre
+- Ronda 3 · **P5** · Autenticación, perfiles y super administrador · Joshua · `feat/auth-roles` — pendiente
 
-- **P6** · Componentes del formulario de tarea · carril B · `feat/ui-formulario-tarea` — libre
+- Ronda 3 · **P4** · Navegación, login visual y aviso sin conexión · Raymond · `feat/layout-navegacion` — pendiente
 
-- **P7** · Crear tareas y asignar responsables · carril A · `feat/tareas-crear` — libre
+- Ronda 4 · **P7** · Crear tareas y asignar responsables · Joshua · `feat/tareas-crear` — pendiente
 
-- **P8** · Componentes de tarea, checklist y deslizar para completar · carril B · `feat/ui-tarea` — libre
+- Ronda 4 · **P8** · Componentes de tarea, checklist y deslizar para completar · Raymond · `feat/ui-tarea` — pendiente
 
-- **P9** · Ejecución: lista del estudiante, marcar pasos y completar · carril A · `feat/ejecucion` — libre
+- Ronda 5 · **P9** · Ejecución: lista del estudiante, marcar pasos y completar · Joshua · `feat/ejecucion` — pendiente
 
-- **P10** · Componentes del tablero de cumplimiento · carril B · `feat/ui-tablero` — libre
+- Ronda 5 · **P10** · Componentes del tablero de cumplimiento · Raymond · `feat/ui-tablero` — pendiente
 
-- **P11** · Tablero con datos reales · carril A · `feat/tablero` — libre
+- Ronda 6 · **P11** · Tablero con datos reales · Joshua · `feat/tablero` — pendiente
 
-- **P12** · Revisión de diseño del MVP · carril B · `docs/revision-diseno-mvp` — libre
+- Ronda 7 · **P12** · Revisión de diseño del MVP · Raymond · `docs/revision-diseno-mvp` — pendiente
 
 ### Fase 2 · Resto de los Must
 
-- **P13** · Pantallas de usuarios, estudiantes, perfil y completadas · carril B · `feat/ui-pantallas` — libre
+- Ronda 6 · **P16** · PWA: manifest e íconos · Raymond · `feat/pwa` — pendiente
 
-- **P14** · Usuarios, disponibilidad y contraseñas · carril A · `feat/usuarios` — libre
+- Ronda 7 · **P18** · Reglas de ejecución: una tarea abierta y terminar una vencida · Joshua · `feat/reglas-ejecucion` — pendiente
 
-- **P15** · Editar, eliminar y bloqueo «en edición» · carril A · `feat/edicion-bloqueo` — libre
+- Ronda 8 · **P15** · Editar, eliminar y bloqueo «en edición» · Joshua · `feat/edicion-bloqueo` — pendiente
 
-- **P16** · PWA: manifest e íconos · carril B · `feat/pwa` — libre
+- Ronda 8 · **P13** · Pantallas de usuarios, estudiantes, perfil y completadas · Raymond · `feat/ui-pantallas` — pendiente
 
-- **P17** · Disponibilidad, urgentes y reasignación · carril A · `feat/asignacion-urgentes` — libre
+- Ronda 9 · **P14** · Usuarios, disponibilidad y contraseñas · Joshua · `feat/usuarios` — pendiente
 
-- **P18** · Reglas de ejecución: una tarea abierta y terminar una vencida · carril A · `feat/reglas-ejecucion` — libre
+- Ronda 9 · **P31** · Componentes de reasignación e historial de ejecución · Raymond · `feat/ui-reasignacion-historial` — pendiente
 
-- **P19** · Tiempo real y aviso «por vencer» dentro de la herramienta · carril A · `feat/tiempo-real` — libre
+- Ronda 10 · **P17** · Disponibilidad, urgentes y reasignación · Joshua · `feat/asignacion-urgentes` — pendiente
 
-- **P20** · Tablero completo y panel de estudiantes conectado · carril A · `feat/tablero-filtros-panel` — libre
+- Ronda 10 · **P21** · Datos de demo y README · Raymond · `feat/datos-demo` — pendiente
 
-- **P21** · Datos de demo y README · carril B · `feat/datos-demo` — libre
+- Ronda 11 · **P19** · Tiempo real y aviso «por vencer» dentro de la herramienta · Joshua · `feat/tiempo-real` — pendiente
 
-- **P22** · Revisión de diseño y textos de todas las pantallas · carril B · `docs/revision-diseno-final` — libre
+- Ronda 11 · **P33** · Prueba de reglas de negocio en la vista previa · Raymond · `docs/prueba-reglas` — pendiente
+
+- Ronda 12 · **P20** · Tablero completo y panel de estudiantes conectado · Joshua · `feat/tablero-filtros-panel` — pendiente
+
+- Ronda 12 · **P22** · Revisión de diseño y textos de todas las pantallas · Raymond · `docs/revision-diseno-final` — pendiente
 
 ### Fase 3 · Should y Could (solo si sobra tiempo)
 
-- **P23** · SH6 y SH5: historial de completadas y horas que le quedan · carril A · `feat/panel-historial` — libre
+- Ronda 13 · **P23** · SH6 y SH5: historial de completadas y horas que le quedan · Joshua · `feat/panel-historial` — pendiente
 
-- **P24** · SH4: reabrir una tarea completada · carril A · `feat/reabrir` — libre
+- Ronda 13 · **P32** · Pantallas de recuperar contraseña y permiso de avisos · Raymond · `feat/ui-recuperar-avisos` — pendiente
 
-- **P25** · SH2 y SH1: recuperar contraseña y enviar credenciales por correo · carril A · `feat/correo` — libre
+- Ronda 14 · **P24** · SH4: reabrir una tarea completada · Joshua · `feat/reabrir` — pendiente
 
-- **P26** · SH3: aviso «por vencer» con la herramienta cerrada · carril A · `feat/aviso-cerrada` — libre
+- Ronda 14 · **P27** · CO2: ordenar el tablero por lugar · Joshua · `feat/orden-lugar` — pendiente
 
-- **P27** · CO2: ordenar el tablero por lugar · carril A · `feat/orden-lugar` — libre
+- Ronda 14 · **P28** · CO1: porcentaje de pasos en la tarjeta · Raymond · `feat/porcentaje-pasos` — pendiente
 
-- **P28** · CO1: porcentaje de pasos en la tarjeta · carril B · `feat/porcentaje-pasos` — libre
+- Ronda 15 · **P25** · SH2 y SH1: recuperar contraseña y enviar credenciales por correo · Joshua · `feat/correo` — pendiente
+
+- Ronda 16 · **P26** · SH3: aviso «por vencer» con la herramienta cerrada · Joshua · `feat/aviso-cerrada` — pendiente
 
 ### Fase 4 · Cierre y demo
 
-- **P29** · Carga de demo, producción y congelación · carril A · `chore/cierre` — libre
+- Ronda 17 · **P29** · Carga de demo, producción y congelación · Joshua · `chore/cierre` — pendiente
 
-- **P30** · Prueba de aceptación en celular y computadora · carril B · `docs/prueba-demo` — libre
+- Ronda 18 · **P30** · Prueba de aceptación en celular y computadora · Raymond · `docs/prueba-demo` — pendiente

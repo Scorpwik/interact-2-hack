@@ -58,46 +58,49 @@ El commit exacto de cada una está en `skills-lock.json`, y los textos de licenc
 | **shadcn/ui CLI** | Agrega componentes base (`npx shadcn@latest init`, `npx shadcn@latest add button`). Los de `components/ui/` no se editan a mano. | [ui.shadcn.com](https://ui.shadcn.com/) | `npx`, sin instalar | Joshua (P0 y `chore/deps-…`) | Notion (Kit · Stack y Arquitectura) |
 | **Supabase CLI** | Migraciones (`npx supabase migration new`), aplicar (`npx supabase db push`) y tipos (`npx supabase gen types typescript --linked`). | [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started) | `npm install supabase --save-dev` (P0) | Joshua | Notion (Kit · Seguridad y Migraciones) |
 | **Vercel** | Vistas previas por PR y producción desde `main`, team `scorpwik`. | [vercel.com](https://vercel.com) | Importar el repo en el dashboard (P0); `npx vercel` solo si hace falta | Joshua | Notion (Kit · Stack) |
-| **GitHub CLI** | PR, PR borrador para tomar pasos, merge. | [cli.github.com](https://cli.github.com) | `gh auth login` | Los dos | Plan del Avance 3 |
+| **GitHub CLI** | Crear PR, revisar y mergear. | [cli.github.com](https://cli.github.com) | `gh auth login` | Los dos | Plan del Avance 3 |
 | **Vitest** | Pruebas de la lógica pura (`lib/**`). | [vitest.dev](https://vitest.dev) | En P0 (`npm install -D vitest`) | Joshua | Notion (Kit · Testing) |
 
 **MCP:** este proyecto **no usa servidores MCP** en Cursor. El Kit pide no cargar MCP «por si acaso», y las claves de Supabase las maneja Joshua a mano en `.env.local`: no se conecta ningún MCP de Supabase ni se reutilizan conexiones de otros proyectos.
 
 ## 4. Qué skill se usa en cada paso
 
-| Paso | Carril | Skills y herramientas |
-| --- | --- | --- |
-| P0 · Preparar el proyecto, Supabase y Vercel | A | `shadcn CLI` (inicializar shadcn/ui y agregar componentes); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (solo para revisar los clientes de Supabase) |
-| P1 · Esquema de datos, RLS y formato de datos de demo | A | `supabase-postgres-best-practices` (esquema, índices, RLS y su rendimiento); `Supabase CLI` (supabase migration new, db push y gen types) |
-| P2 · Componentes base de DESIGN.md y catálogo | B | `frontend-design` (criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual); `accessibility` (foco, contraste y nombres accesibles); `ux-writing` (textos de botones y avisos); `web-design-guidelines` (auditoría de los componentes antes del PR) |
-| P3 · Lógica de estados y de tiempo | A | Solo AGENTS.md y `.cursor/rules/` |
-| P4 · Navegación, login visual y aviso sin conexión | B | `mobile-first-responsive` (barras, navegación y banda en 360–1280 px); `accessibility` (navegación con teclado y anuncios de la banda); `ux-writing` (textos del login y de la banda); `web-design-guidelines` (auditoría antes del PR) |
-| P5 · Autenticación, perfiles y super administrador | A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (políticas que leen el perfil y el rol) |
-| P6 · Componentes del formulario de tarea | B | `accessibility` (etiquetas, errores ligados con aria-describedby y orden de foco del formulario); `ux-writing` (etiquetas, ayudas y errores); `web-design-guidelines` (auditoría antes del PR) |
-| P7 · Crear tareas y asignar responsables | A | `supabase-postgres-best-practices` (inserciones de tarea, pasos y responsables en una transacción); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P8 · Componentes de tarea, checklist y deslizar para completar | B | `accessibility` (checklist y deslizador con teclado y lector de pantalla); `mobile-first-responsive` (áreas de 56 px y uso con el pulgar); `frontend-design` (movimiento con criterio y reducir movimiento); `web-design-guidelines` (auditoría antes del PR) |
-| P9 · Ejecución: lista del estudiante, marcar pasos y completar | A | `supabase-postgres-best-practices` (funciones RPC SECURITY DEFINER y bloqueos cortos); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P10 · Componentes del tablero de cumplimiento | B | `mobile-first-responsive` (cuadrícula del tablero en 360, 768 y 1280 px); `accessibility` (filtros y totales con teclado); `web-design-guidelines` (auditoría antes del PR) |
-| P11 · Tablero con datos reales | A | `supabase-postgres-best-practices` (consultas del tablero con columnas explícitas e índices) |
-| P12 · Revisión de diseño del MVP | B | `impeccable` (/impeccable critique y /impeccable audit de las pantallas del MVP); `ui-design-critique` (informe en español contra D-01 a D-20); `web-design-guidelines` (hallazgos con archivo y línea) |
-| P13 · Pantallas de usuarios, estudiantes, perfil y completadas | B | `mobile-first-responsive` (listas y formularios en celular y escritorio); `accessibility` (formularios, diálogo de confirmación y estados vacíos); `ux-writing` (textos de vacío, error y confirmación); `web-design-guidelines` (auditoría antes del PR) |
-| P14 · Usuarios, disponibilidad y contraseñas | A | `supabase-postgres-best-practices` (perfiles, disponibilidades y políticas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P15 · Editar, eliminar y bloqueo «en edición» | A | `supabase-postgres-best-practices` (bloqueo «en edición» sin carreras (bloqueos cortos)) |
-| P16 · PWA: manifest e íconos | B | `docs de Next.js` (metadata y manifest en node_modules/next/dist/docs/); `web-design-guidelines` (revisión del manifest y de los íconos) |
-| P17 · Disponibilidad, urgentes y reasignación | A | `supabase-postgres-best-practices` (validación de disponibilidad y asignación masiva de urgentes) |
-| P18 · Reglas de ejecución: una tarea abierta y terminar una vencida | A | `supabase-postgres-best-practices` (regla de una tarea abierta a la vez dentro de la función RPC) |
-| P19 · Tiempo real y aviso «por vencer» dentro de la herramienta | A | `supabase-postgres-best-practices` (Realtime y políticas de las tablas publicadas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P20 · Tablero completo y panel de estudiantes conectado | A | `supabase-postgres-best-practices` (consultas con filtros y orden) |
-| P21 · Datos de demo y README | B | `ux-writing` (textos de los datos de demo y del README) |
-| P22 · Revisión de diseño y textos de todas las pantallas | B | `impeccable` (/impeccable critique y /impeccable audit de todas las pantallas); `ui-design-critique` (informe en español contra D-01 a D-20); `ux-writing` (revisión de todos los textos); `accessibility` (repaso a fondo de lo que marque la auditoría) |
-| P23 · SH6 y SH5: historial de completadas y horas que le quedan | A | `supabase-postgres-best-practices` (consultas del historial) |
-| P24 · SH4: reabrir una tarea completada | A | `supabase-postgres-best-practices` (función para reabrir) |
-| P25 · SH2 y SH1: recuperar contraseña y enviar credenciales por correo | A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P26 · SH3: aviso «por vencer» con la herramienta cerrada | A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
-| P27 · CO2: ordenar el tablero por lugar | A | Solo AGENTS.md y `.cursor/rules/` |
-| P28 · CO1: porcentaje de pasos en la tarjeta | B | `web-design-guidelines` (auditoría del cambio en la tarjeta) |
-| P29 · Carga de demo, producción y congelación | A | `impeccable` (npx impeccable detect sobre la URL de producción como última revisión); `Supabase CLI` (migraciones aplicadas y tipos al día) |
-| P30 · Prueba de aceptación en celular y computadora | B | `mobile-first-responsive` (lista de revisión en el celular real) |
+| Ronda | Paso | Responsable · carril | Skills y herramientas |
+| --- | --- | --- | --- |
+| 0 | P0 · Esqueleto mínimo del proyecto | Joshua · A | `shadcn CLI` (inicializar shadcn/ui y agregar componentes); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (solo para revisar los clientes de Supabase) |
+| 1 | P1 · Supabase, Vercel y esquema de datos con RLS | Joshua · A | `supabase-postgres-best-practices` (esquema, índices, RLS y su rendimiento); `Supabase CLI` (supabase migration new, db push y gen types) |
+| 1 | P2 · Componentes base de DESIGN.md y catálogo | Raymond · B | `frontend-design` (criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual); `accessibility` (foco, contraste y nombres accesibles); `ux-writing` (textos de botones y avisos); `web-design-guidelines` (auditoría de los componentes antes del PR) |
+| 2 | P3 · Lógica de estados y de tiempo | Joshua · A | Solo AGENTS.md y `.cursor/rules/` |
+| 2 | P6 · Componentes del formulario de tarea | Raymond · B | `accessibility` (etiquetas, errores ligados con aria-describedby y orden de foco del formulario); `ux-writing` (etiquetas, ayudas y errores); `web-design-guidelines` (auditoría antes del PR) |
+| 3 | P5 · Autenticación, perfiles y super administrador | Joshua · A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)); `supabase-postgres-best-practices` (políticas que leen el perfil y el rol) |
+| 3 | P4 · Navegación, login visual y aviso sin conexión | Raymond · B | `mobile-first-responsive` (barras, navegación y banda en 360–1280 px); `accessibility` (navegación con teclado y anuncios de la banda); `ux-writing` (textos del login y de la banda); `web-design-guidelines` (auditoría antes del PR) |
+| 4 | P7 · Crear tareas y asignar responsables | Joshua · A | `supabase-postgres-best-practices` (inserciones de tarea, pasos y responsables en una transacción); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 4 | P8 · Componentes de tarea, checklist y deslizar para completar | Raymond · B | `accessibility` (checklist y deslizador con teclado y lector de pantalla); `mobile-first-responsive` (áreas de 56 px y uso con el pulgar); `frontend-design` (movimiento con criterio y reducir movimiento); `web-design-guidelines` (auditoría antes del PR) |
+| 5 | P9 · Ejecución: lista del estudiante, marcar pasos y completar | Joshua · A | `supabase-postgres-best-practices` (funciones RPC SECURITY DEFINER y bloqueos cortos); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 5 | P10 · Componentes del tablero de cumplimiento | Raymond · B | `mobile-first-responsive` (cuadrícula del tablero en 360, 768 y 1280 px); `accessibility` (filtros y totales con teclado); `web-design-guidelines` (auditoría antes del PR) |
+| 6 | P11 · Tablero con datos reales | Joshua · A | `supabase-postgres-best-practices` (consultas del tablero con columnas explícitas e índices) |
+| 6 | P16 · PWA: manifest e íconos | Raymond · B | `docs de Next.js` (metadata y manifest en node_modules/next/dist/docs/); `web-design-guidelines` (revisión del manifest y de los íconos) |
+| 7 | P18 · Reglas de ejecución: una tarea abierta y terminar una vencida | Joshua · A | `supabase-postgres-best-practices` (regla de una tarea abierta a la vez dentro de la función RPC) |
+| 7 | P12 · Revisión de diseño del MVP | Raymond · B | `impeccable` (/impeccable critique y /impeccable audit de las pantallas del MVP); `ui-design-critique` (informe en español contra D-01 a D-20); `web-design-guidelines` (hallazgos con archivo y línea) |
+| 8 | P15 · Editar, eliminar y bloqueo «en edición» | Joshua · A | `supabase-postgres-best-practices` (bloqueo «en edición» sin carreras (bloqueos cortos)) |
+| 8 | P13 · Pantallas de usuarios, estudiantes, perfil y completadas | Raymond · B | `mobile-first-responsive` (listas y formularios en celular y escritorio); `accessibility` (formularios, diálogo de confirmación y estados vacíos); `ux-writing` (textos de vacío, error y confirmación); `web-design-guidelines` (auditoría antes del PR) |
+| 9 | P14 · Usuarios, disponibilidad y contraseñas | Joshua · A | `supabase-postgres-best-practices` (perfiles, disponibilidades y políticas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 9 | P31 · Componentes de reasignación e historial de ejecución | Raymond · B | `mobile-first-responsive` (la vista de reasignar en celular y escritorio); `accessibility` (campo de hora y selector con teclado); `ux-writing` (textos de reasignar); `web-design-guidelines` (auditoría antes del PR) |
+| 10 | P17 · Disponibilidad, urgentes y reasignación | Joshua · A | `supabase-postgres-best-practices` (validación de disponibilidad y asignación masiva de urgentes) |
+| 10 | P21 · Datos de demo y README | Raymond · B | `ux-writing` (textos de los datos de demo y del README) |
+| 11 | P19 · Tiempo real y aviso «por vencer» dentro de la herramienta | Joshua · A | `supabase-postgres-best-practices` (Realtime y políticas de las tablas publicadas); `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 11 | P33 · Prueba de reglas de negocio en la vista previa | Raymond · B | `mobile-first-responsive` (lista de revisión en 390 y 1280 px) |
+| 12 | P20 · Tablero completo y panel de estudiantes conectado | Joshua · A | `supabase-postgres-best-practices` (consultas con filtros y orden) |
+| 12 | P22 · Revisión de diseño y textos de todas las pantallas | Raymond · B | `impeccable` (/impeccable critique y /impeccable audit de todas las pantallas); `ui-design-critique` (informe en español contra D-01 a D-20); `ux-writing` (revisión de todos los textos); `accessibility` (repaso a fondo de lo que marque la auditoría) |
+| 13 | P23 · SH6 y SH5: historial de completadas y horas que le quedan | Joshua · A | `supabase-postgres-best-practices` (consultas del historial) |
+| 13 | P32 · Pantallas de recuperar contraseña y permiso de avisos | Raymond · B | `accessibility` (formulario de recuperar y aviso de permiso); `ux-writing` (textos de recuperar contraseña y avisos); `web-design-guidelines` (auditoría antes del PR) |
+| 14 | P24 · SH4: reabrir una tarea completada | Joshua · A | `supabase-postgres-best-practices` (función para reabrir) |
+| 14 | P27 · CO2: ordenar el tablero por lugar | Joshua · A | Solo AGENTS.md y `.cursor/rules/` |
+| 14 | P28 · CO1: porcentaje de pasos en la tarjeta | Raymond · B | `web-design-guidelines` (auditoría del cambio en la tarjeta) |
+| 15 | P25 · SH2 y SH1: recuperar contraseña y enviar credenciales por correo | Joshua · A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 16 | P26 · SH3: aviso «por vencer» con la herramienta cerrada | Joshua · A | `docs de Next.js` (la documentación de Next.js que viene en node_modules/next/dist/docs/ (rutas, proxy.ts, Server Actions)) |
+| 17 | P29 · Carga de demo, producción y congelación | Joshua · A | `impeccable` (npx impeccable detect sobre la URL de producción como última revisión); `Supabase CLI` (migraciones aplicadas y tipos al día) |
+| 18 | P30 · Prueba de aceptación en celular y computadora | Raymond · B | `mobile-first-responsive` (lista de revisión en el celular real) |
 
 ## 5. Lo que está en el Notion y no se usa aquí
 

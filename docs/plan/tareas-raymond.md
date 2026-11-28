@@ -2,52 +2,55 @@
 
 Tu parte del Avance 3 es la **interfaz de Señal de Turno**: el sistema de componentes de DESIGN.md con su catálogo, la navegación, las pantallas, la app instalable, los datos de demo, el README y las revisiones de diseño y de la demo. Joshua se encarga de la base de datos, la autenticación, las reglas de negocio y de conectar las pantallas con los datos reales.
 
-Trabajamos con Cursor en dos carriles que no comparten archivos: el tuyo es el **carril B (interfaz)** y el de Joshua el **carril A (datos y reglas)**. Cada paso va en su propia rama, así que podemos avanzar al mismo tiempo sin chocar. Joshua puede adelantar pasos de cualquier carril mientras no estés conectado; por eso, antes de empezar un paso, revisa `docs/plan/estado.md` y los PR abiertos: si ya está hecho o en curso, toma el siguiente libre de tu lista (PLAN.md, secciones 4.2 y 4.3). Tus componentes reciben los datos por props con los tipos de `lib/tipos.ts` (contratos en `docs/specs/01-contratos-ui.md`), así que puedes construirlos y probarlos en `/catalogo` con datos de ejemplo sin esperar a la base de datos.
+Trabajamos con Cursor **los dos a la vez desde el primer minuto**, en dos carriles que no comparten archivos: el tuyo es el **carril B (interfaz)** y el de Joshua el **carril A (datos y reglas)**. Los pasos están ordenados en **rondas** (PLAN.md, sección 4): en cada ronda tú haces tu paso y Joshua el suyo, cada uno en su rama. Tus componentes reciben los datos por props con los tipos de `lib/tipos.ts` (contratos en `docs/specs/01-contratos-ui.md`), así que los construyes y pruebas en `/catalogo` con datos de ejemplo sin esperar a la base de datos.
 
-## Antes de empezar
+## Ronda 0 · Preparación (unos 30 min, mientras Joshua hace P0)
 - [ ] Acepta la invitación al repo `Scorpwik/interact-2-hack` y clónalo: `git clone https://github.com/Scorpwik/interact-2-hack.git`.
-- [ ] Instala Node.js 22.20 o más (lo pide la herramienta de skills; ver `docs/plan/skills.md`) y GitHub CLI (`gh auth login`).
-- [ ] Espera el aviso de Joshua de que el paso P0 está en `main`; luego `git pull`, `npm install` y crea `.env.local` con los valores que Joshua te pasa por un canal privado (no los pegues en Cursor ni en el chat).
+- [ ] Instala Node.js 22.20 o más (lo pide la herramienta de skills) y GitHub CLI (`gh auth login`). Sigue la «Instalación» de `docs/plan/skills.md` (Impeccable y comprobación de que Cursor ve las skills de `.agents/skills/` y `.cursor/skills/`).
 - [ ] Lee `AGENTS.md`, `DESIGN.md` (sobre todo §4, §5, §6, §8 y §9) y abre en el navegador `docs/diseno/bocetos.html` y `docs/diseno/brand-board.html`.
-- [ ] En Cursor, abre la carpeta del repo: las reglas de `.cursor/rules/` y las skills de `.agents/skills/` y `.cursor/skills/` se cargan solas. Sigue la «Instalación» de `docs/plan/skills.md` (Impeccable y comprobación de que Cursor ve las skills).
+- [ ] Crea tu rama del primer paso y escribe su spec: `git checkout -b feat/ui-base`, escribe `docs/specs/03-ui-base.md` con la plantilla de `docs/specs/README.md` y haz el commit `docs(specs): componentes base de la interfaz`.
+- [ ] Cuando Joshua avise «Entró P0»: `git fetch origin && git merge origin/main`, `npm install` y sigue con el prompt de P2 (su spec ya está hecha). Crea `.env.local` con los valores que Joshua te pasa por un canal privado cuando P1 esté en `main` (no los pegues en Cursor ni en el chat).
 
 ## Cómo trabajar cada paso
-1. `git checkout main && git pull origin main` y comprueba que el paso está libre en `docs/plan/estado.md` y en `gh pr list --state open`, y que sus dependencias están en `main`.
-2. **Toma el paso:** `git checkout -b <rama del paso>`, cambia solo su línea en `docs/plan/estado.md` (`— libre` → `— Raymond`), commit `docs(plan): tomar Pn`, `git push -u origin <rama>` y `gh pr create --draft --base main --title "Pn · <título>" --body "Paso tomado."`. Escribe «Tomo Pn» en el chat del equipo.
-3. Pega el prompt del paso en Cursor. El agente escribe primero la spec y luego el código, en los commits del paso.
+1. Mira tu paso de la ronda en la tabla de abajo y que sus dependencias estén en `main`.
+2. `git checkout main && git pull origin main && git checkout -b <rama del paso>`.
+3. Pega el prompt del paso en Cursor. El agente escribe primero la spec y luego el código, en los commits del paso. El último commit, `docs(plan): avance de Pn`, cambia solo la línea de tu paso en `docs/plan/estado.md`.
 4. Revisa lo que hizo: que solo toque tus carpetas (`git diff --stat origin/main`), que se vea como en los bocetos y que pase `npm run lint && npm run typecheck && npm run build`.
-5. `git fetch origin && git merge origin/main`, `git push`, completa la plantilla del PR y `gh pr ready`.
-6. Avisa a Joshua para que revise y mergee. Mientras tanto, puedes tomar el siguiente paso libre de tu lista (punto 2) y empezar su spec.
+5. `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`.
+6. Avisa «PR de Pn listo» en el chat. Mientras Joshua lo revisa, empieza la spec de tu siguiente paso en su propia rama. Cada vez que Joshua avise «Entró …», trae `main` a tu rama con `git fetch origin && git merge origin/main`.
 
 ## Tus carpetas
-`components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `public/manifest.webmanifest`, `public/iconos/`, `datos-demo/`, `README.md`, `docs/qa/` y tus specs en `docs/specs/`. Si te hace falta algo fuera de ellas (una dependencia, un tipo nuevo en `lib/tipos.ts`, un cambio en `app/globals.css`), escríbelo en el PR y Joshua lo agrega.
+`components/ui-i2h/`, `components/layout/`, `components/pantallas/`, `app/catalogo/`, `public/manifest.webmanifest`, `public/iconos/`, `datos-demo/`, `README.md`, `docs/qa/` y tus specs en `docs/specs/`. Si te hace falta algo fuera de ellas (una dependencia, un tipo nuevo en `lib/tipos.ts`, un cambio en `app/globals.css`), escríbelo en el PR o en el chat y Joshua lo agrega en una rama corta.
 
+## Mis pasos, en orden de ronda
 
-## Mis pasos, en orden
-
-| # | Paso | Rama | Fase | Estimación | Depende de |
-| --- | --- | --- | --- | --- | --- |
-| 1 | P2 · Componentes base de DESIGN.md y catálogo | `feat/ui-base` | 1 | 1 h 30 min | P0 mergeado. |
-| 2 | P4 · Navegación, login visual y aviso sin conexión | `feat/layout-navegacion` | 1 | 1 h 15 min | P2 mergeado. |
-| 3 | P6 · Componentes del formulario de tarea | `feat/ui-formulario-tarea` | 1 | 1 h | P2 mergeado. |
-| 4 | P8 · Componentes de tarea, checklist y deslizar para completar | `feat/ui-tarea` | 1 | 2 h | P2 mergeado. |
-| 5 | P10 · Componentes del tablero de cumplimiento | `feat/ui-tablero` | 1 | 1 h | P8 mergeado. |
-| 6 | P12 · Revisión de diseño del MVP | `docs/revision-diseno-mvp` | 1 | 45 min | P11 mergeado y desplegado en la vista previa. |
-| 7 | P13 · Pantallas de usuarios, estudiantes, perfil y completadas | `feat/ui-pantallas` | 2 | 2 h | P2 mergeado (puede empezar en cuanto termine P12). |
-| 8 | P16 · PWA: manifest e íconos | `feat/pwa` | 2 | 45 min | P0 mergeado. |
-| 9 | P21 · Datos de demo y README | `feat/datos-demo` | 2 | 1 h 15 min | P1 mergeado (formato en `docs/specs/09-datos-demo.md`). |
-| 10 | P22 · Revisión de diseño y textos de todas las pantallas | `docs/revision-diseno-final` | 2 | 1 h | P14 a P20 mergeados. |
-| 11 | P28 · CO1: porcentaje de pasos en la tarjeta | `feat/porcentaje-pasos` | 3 | 20 min | P27 mergeado o descartado. |
-| 12 | P30 · Prueba de aceptación en celular y computadora | `docs/prueba-demo` | 4 | 1 h | P29 desplegado en producción. |
+| # | Ronda | Paso | Rama | Fase | Estimación | En paralelo | Depende de |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 1 | P2 · Componentes base de DESIGN.md y catálogo | `feat/ui-base` | 1 | 1 h 30 min | P1 de Joshua | P0 mergeado para programar. La spec (primer commit) se escribe en la ronda 0, mientras P0 está en curso. |
+| 2 | 2 | P6 · Componentes del formulario de tarea | `feat/ui-formulario-tarea` | 1 | 1 h | P3 de Joshua | P2 mergeado. |
+| 3 | 3 | P4 · Navegación, login visual y aviso sin conexión | `feat/layout-navegacion` | 1 | 1 h 15 min | P5 de Joshua | P2 mergeado. |
+| 4 | 4 | P8 · Componentes de tarea, checklist y deslizar para completar | `feat/ui-tarea` | 1 | 2 h | P7 de Joshua | P2 mergeado. |
+| 5 | 5 | P10 · Componentes del tablero de cumplimiento | `feat/ui-tablero` | 1 | 1 h | P9 de Joshua | P8 mergeado. |
+| 6 | 6 | P16 · PWA: manifest e íconos | `feat/pwa` | 2 | 45 min | P11 de Joshua | P0 mergeado. |
+| 7 | 7 | P12 · Revisión de diseño del MVP | `docs/revision-diseno-mvp` | 1 | 45 min | P18 de Joshua | P11 mergeado y desplegado en la vista previa. |
+| 8 | 8 | P13 · Pantallas de usuarios, estudiantes, perfil y completadas | `feat/ui-pantallas` | 2 | 2 h | P15 de Joshua | P2 mergeado. |
+| 9 | 9 | P31 · Componentes de reasignación e historial de ejecución | `feat/ui-reasignacion-historial` | 2 | 1 h 30 min | P14 de Joshua | P8 y P13 mergeados. |
+| 10 | 10 | P21 · Datos de demo y README | `feat/datos-demo` | 2 | 1 h 15 min | P17 de Joshua | P1 mergeado (formato en `docs/specs/09-datos-demo.md`). |
+| 11 | 11 | P33 · Prueba de reglas de negocio en la vista previa | `docs/prueba-reglas` | 2 | 1 h | P19 de Joshua | P14, P15, P17 y P18 mergeados y desplegados en la vista previa. |
+| 12 | 12 | P22 · Revisión de diseño y textos de todas las pantallas | `docs/revision-diseno-final` | 2 | 1 h 30 min | P20 de Joshua | P14 a P19 mergeados para la primera parte (ronda 12); P20 mergeado para la segunda (ronda 13). |
+| 13 | 13 | P32 · Pantallas de recuperar contraseña y permiso de avisos | `feat/ui-recuperar-avisos` | 3 | 45 min | P23 de Joshua | P2 mergeado. |
+| 14 | 14 | P28 · CO1: porcentaje de pasos en la tarjeta | `feat/porcentaje-pasos` | 3 | 20 min | P24 de Joshua, P27 de Joshua | P8 mergeado (no depende de los demás pasos de la Fase 3). |
+| 15 | 18 | P30 · Prueba de aceptación en celular y computadora | `docs/prueba-demo` | 4 | 1 h | Joshua corrige los «no pasa» de P30 | P29 desplegado en producción. |
 
 ---
 
 ## 1. P2 · Componentes base de DESIGN.md y catálogo
 
 - **Rama:** `feat/ui-base`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 1 (en paralelo: P1 de Joshua)
 - **Estimación:** 1 h 30 min
-- **Depende de:** P0 mergeado.
+- **Depende de:** P0 mergeado para programar. La spec (primer commit) se escribe en la ronda 0, mientras P0 está en curso.
 - **Archivos y carpetas del paso:** `components/ui-i2h/Insignia.tsx`, `Boton.tsx`, `Avisos.tsx`, `Campo.tsx`, `Casilla.tsx`, `Icono.tsx`, `components/ui-i2h/index.ts`, `app/catalogo/page.tsx`, `docs/specs/03-ui-base.md`.
 - **Spec antes de programar:** `docs/specs/03-ui-base.md`.
 - **Criterios de aceptación:**
@@ -59,80 +62,40 @@ Trabajamos con Cursor en dos carriles que no comparten archivos: el tuyo es el *
   - [ ] Sin valores escritos a mano (D-09), radio 0 (D-07), foco lima (D-05), sin scroll horizontal en 360 px (D-15).
 - **Skills de Cursor** ([skills.md](skills.md)): `frontend-design` (criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual); `accessibility` (foco, contraste y nombres accesibles); `ux-writing` (textos de botones y avisos); `web-design-guidelines` (auditoría de los componentes antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P2` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes base de la interfaz`
   2. `feat(ui): insignias de estado y marcas`
   3. `feat(ui): botones primario, secundario y peligro`
   4. `feat(ui): avisos de confirmación, error y bloqueo`
   5. `feat(ui): campo de formulario y casilla`
   6. `feat(catalogo): catálogo de componentes base con datos de ejemplo`
+  7. `docs(plan): avance de P2`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
 Lee AGENTS.md, docs/plan/PLAN.md (paso P2), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md y DESIGN.md completo (sobre todo secciones 4, 5.1, 5.5, 5.6, 5.8, 6, 8 y 9). Mira docs/diseno/bocetos.html y docs/diseno/brand-board.html como referencia visual. Estás en la rama feat/ui-base.
 Solo puedes crear o modificar archivos en components/ui-i2h/, app/catalogo/ y docs/specs/03-ui-base.md. No modifiques package.json, app/globals.css ni lib/: si te falta algo de ahí, anótalo en el PR.
 Objetivo: los componentes base de Señal de Turno, presentacionales, con las props exactas de docs/specs/01-contratos-ui.md.
-1. Escribe primero docs/specs/03-ui-base.md con la plantilla (componentes, props, estados visuales, criterios D-##). Commit: docs(specs): componentes base de la interfaz.
+1. Escribe primero docs/specs/03-ui-base.md con la plantilla (si ya la escribiste en la ronda 0, solo revísala) (componentes, props, estados visuales, criterios D-##). Commit: docs(specs): componentes base de la interfaz.
 2. Insignia({ tipo, detalle? }): los 5 estados y las 4 marcas con su ícono lucide (strokeWidth 2.4, 16 px) y su texto exacto; «Sin asignar» con borde punteado, «Urgente» con fondo --marca-urgente-fondo, «En ejecución» con el punto lima.
 3. Boton: variantes primario, secundario y peligro; estados de DESIGN.md §5.6; prop cargando muestra «Guardando…» sin girar; prop motivoDeshabilitado muestra el motivo.
 4. Avisos: un <ContenedorAvisos/> basado en sonner (ya instalado en components/ui) con el estilo de DESIGN.md §5.8, y avisar({ variante, mensaje, accion? }). Variantes: confirmacion, error, por_vencer, tarea_abierta, bloqueo. Error y sin conexión con aria-live assertive.
 5. Campo (etiqueta, ayuda, error, obligatorio), CampoTexto, AreaTexto y Casilla.
 6. app/catalogo/page.tsx: una sección por componente con todos sus estados y datos de ejemplo de docs/diseno/bocetos.html (marcados «Datos de ejemplo»).
 Reglas: solo tokens (clases de Tailwind mapeadas o var(--…)), radio 0, foco lima, 48 px de alto en controles, textos en español en «tú» sin signos de exclamación. Los componentes no importan lib/supabase ni hacen fetch.
-Haz estos commits, en este orden: docs(specs): componentes base de la interfaz; feat(ui): insignias de estado y marcas; feat(ui): botones primario, secundario y peligro; feat(ui): avisos de confirmación, error y bloqueo; feat(ui): campo de formulario y casilla; feat(catalogo): catálogo de componentes base con datos de ejemplo. Antes de abrir el PR: npm run lint && npm run typecheck && npm run build, y revisa /catalogo en 390 y 1280 px con teclado.
+Haz estos commits, en este orden: docs(specs): componentes base de la interfaz; feat(ui): insignias de estado y marcas; feat(ui): botones primario, secundario y peligro; feat(ui): avisos de confirmación, error y bloqueo; feat(ui): campo de formulario y casilla; feat(catalogo): catálogo de componentes base con datos de ejemplo; docs(plan): avance de P2. Antes de abrir el PR: npm run lint && npm run typecheck && npm run build, y revisa /catalogo en 390 y 1280 px con teclado.
 Skills de Cursor para este paso (docs/plan/skills.md): /frontend-design para criterio de tipografía y composición dentro de DESIGN.md, sin cambiar la dirección visual; /accessibility para foco, contraste y nombres accesibles; /ux-writing para textos de botones y avisos; /web-design-guidelines para auditoría de los componentes antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P2» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P2», cambia en docs/plan/estado.md solo la línea de P2 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 2. P4 · Navegación, login visual y aviso sin conexión
-
-- **Rama:** `feat/layout-navegacion`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
-- **Estimación:** 1 h 15 min
-- **Depende de:** P2 mergeado.
-- **Archivos y carpetas del paso:** `components/layout/MarcoApp.tsx`, `BarraInferior.tsx`, `BarraSuperior.tsx`, `BandaSinConexion.tsx`, `use-en-linea.ts`, `components/pantallas/LoginVista.tsx`, sección nueva en `app/catalogo/page.tsx`, `docs/specs/05-layout-navegacion.md`.
-- **Spec antes de programar:** `docs/specs/05-layout-navegacion.md`.
-- **Criterios de aceptación:**
-  - [ ] Barra inferior en el celular y barra superior en escritorio con los destinos de DESIGN.md §5.11: estudiante «Mis tareas», «Completadas», «Perfil»; administrador «Tablero», «Tareas», «Estudiantes», «Usuarios»; activo en blanco con punto lima.
-  - [ ] La barra superior salta de línea si no alcanza el ancho, sin scroll horizontal en 360 px (D-15).
-  - [ ] `useEnLinea()` devuelve si hay conexión (eventos online/offline) y `BandaSinConexion` muestra el texto exacto de DESIGN.md §5.8, fija arriba, mientras no haya internet (R19, M14, D-11).
-  - [ ] `LoginVista` recibe una acción de formulario y un error, con campos de correo y contraseña, botón primario «Entrar» y el error con ícono (R1, R37).
-  - [ ] Todo aparece en `/catalogo`, incluida la banda al simular sin conexión.
-- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (barras, navegación y banda en 360–1280 px); `accessibility` (navegación con teclado y anuncios de la banda); `ux-writing` (textos del login y de la banda); `web-design-guidelines` (auditoría antes del PR)
-- **Commits, en este orden:**
-  0. `docs(plan): tomar P4` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
-  1. `docs(specs): navegación, login visual y aviso sin conexión`
-  2. `feat(layout): marco de la app con barra inferior y superior`
-  3. `feat(layout): banda sin conexión y detector de conexión`
-  4. `feat(pantallas): vista de inicio de sesión`
-  5. `feat(catalogo): navegación, login y banda sin conexión`
-- **Prompt para Cursor** (pegar tal cual, en la rama del paso):
-
-```text
-Lee AGENTS.md, docs/plan/PLAN.md (paso P4), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, DESIGN.md (5.8, 5.11, 6.3, 7 y 8) y mira las barras de docs/diseno/bocetos.html. Estás en la rama feat/layout-navegacion. Solo puedes crear o modificar components/layout/, components/pantallas/LoginVista.tsx, app/catalogo/ y docs/specs/05-layout-navegacion.md.
-Objetivo: el marco de navegación de la app, la vista de inicio de sesión y el aviso sin conexión, presentacionales y con las props de docs/specs/01-contratos-ui.md.
-1. Escribe primero docs/specs/05-layout-navegacion.md con la plantilla. Commit: docs(specs): navegación, login visual y aviso sin conexión.
-2. MarcoApp({ rol, destinoActivo, nombreUsuario, accionCerrarSesion, children }): muestra BandaSinConexion cuando useEnLinea() es false, y la barra inferior (celular, ≤ 768 px) o superior (escritorio) con los destinos de DESIGN.md 5.11 como enlaces (next/link), ícono lucide 24 px y texto, activo con punto lima, área táctil de 48 px. Las rutas de cada destino están en el Anexo A del plan.
-3. use-en-linea.ts (hook de cliente con navigator.onLine y eventos online/offline) y BandaSinConexion({ visible }) con el texto «Sin conexión. No puedes marcar pasos hasta que vuelva internet.», fija arriba, borde inferior ámbar de 4 px y role="status".
-4. LoginVista({ accion, error?, cargando? }): título «Entrar», campos Correo y Contraseña con el Campo de components/ui-i2h, botón primario «Entrar» de 56 px en el celular, y el error con el Aviso de error. Sin enlace de registro (W1).
-5. Agrega una sección al catálogo para cada pieza, con un interruptor para simular sin conexión.
-Haz estos commits, en este orden: docs(specs): navegación, login visual y aviso sin conexión; feat(layout): marco de la app con barra inferior y superior; feat(layout): banda sin conexión y detector de conexión; feat(pantallas): vista de inicio de sesión; feat(catalogo): navegación, login y banda sin conexión. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px con teclado.
-Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para barras, navegación y banda en 360–1280 px; /accessibility para navegación con teclado y anuncios de la banda; /ux-writing para textos del login y de la banda; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P4» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
-```
-
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
-
----
-
-## 3. P6 · Componentes del formulario de tarea
+## 2. P6 · Componentes del formulario de tarea
 
 - **Rama:** `feat/ui-formulario-tarea`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 2 (en paralelo: P3 de Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/EditorPasos.tsx`, `SelectorResponsables.tsx`, `CasillaUrgente.tsx`, `components/pantallas/FormularioTareaVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/07-ui-formulario-tarea.md`.
@@ -145,12 +108,12 @@ El commit «docs(plan): tomar P4» ya está hecho en esta rama; no vuelvas a edi
   - [ ] Todo en `/catalogo` con datos de ejemplo de los bocetos.
 - **Skills de Cursor** ([skills.md](skills.md)): `accessibility` (etiquetas, errores ligados con aria-describedby y orden de foco del formulario); `ux-writing` (etiquetas, ayudas y errores); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P6` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes del formulario de tarea`
   2. `feat(ui): editor de pasos del checklist`
   3. `feat(ui): selector de responsables con disponibilidad`
   4. `feat(pantallas): vista del formulario de tarea`
   5. `feat(catalogo): formulario de tarea con datos de ejemplo`
+  6. `docs(plan): avance de P6`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -162,19 +125,62 @@ Objetivo: el formulario de tarea, presentacional, con las props de docs/specs/01
 4. CasillaUrgente({ marcada, onChange }) con la nota «Urgente: se asigna a todos los estudiantes, estén o no disponibles».
 5. FormularioTareaVista({ modo: 'crear' | 'editar', valores, opciones, errores, accion, cargando }): usa Campo, EditorPasos, SelectorResponsables, CasillaUrgente y un botón primario «Guardar tarea» y uno secundario «Cancelar». Los campos tienen name para FormData.
 6. Agrega al catálogo el formulario vacío, con errores y en modo editar.
-Haz estos commits, en este orden: docs(specs): componentes del formulario de tarea; feat(ui): editor de pasos del checklist; feat(ui): selector de responsables con disponibilidad; feat(pantallas): vista del formulario de tarea; feat(catalogo): formulario de tarea con datos de ejemplo. Antes del PR: lint, typecheck, build, revisión en 390 y 1280 px con teclado.
+Haz estos commits, en este orden: docs(specs): componentes del formulario de tarea; feat(ui): editor de pasos del checklist; feat(ui): selector de responsables con disponibilidad; feat(pantallas): vista del formulario de tarea; feat(catalogo): formulario de tarea con datos de ejemplo; docs(plan): avance de P6. Antes del PR: lint, typecheck, build, revisión en 390 y 1280 px con teclado.
 Skills de Cursor para este paso (docs/plan/skills.md): /accessibility para etiquetas, errores ligados con aria-describedby y orden de foco del formulario; /ux-writing para etiquetas, ayudas y errores; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P6» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P6», cambia en docs/plan/estado.md solo la línea de P6 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
+
+---
+
+## 3. P4 · Navegación, login visual y aviso sin conexión
+
+- **Rama:** `feat/layout-navegacion`
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 3 (en paralelo: P5 de Joshua)
+- **Estimación:** 1 h 15 min
+- **Depende de:** P2 mergeado.
+- **Archivos y carpetas del paso:** `components/layout/MarcoApp.tsx`, `BarraInferior.tsx`, `BarraSuperior.tsx`, `BandaSinConexion.tsx`, `use-en-linea.ts`, `components/pantallas/LoginVista.tsx`, sección nueva en `app/catalogo/page.tsx`, `docs/specs/05-layout-navegacion.md`.
+- **Spec antes de programar:** `docs/specs/05-layout-navegacion.md`.
+- **Criterios de aceptación:**
+  - [ ] Barra inferior en el celular y barra superior en escritorio con los destinos de DESIGN.md §5.11: estudiante «Mis tareas», «Completadas», «Perfil»; administrador «Tablero», «Tareas», «Estudiantes», «Usuarios»; activo en blanco con punto lima.
+  - [ ] La barra superior salta de línea si no alcanza el ancho, sin scroll horizontal en 360 px (D-15).
+  - [ ] `useEnLinea()` devuelve si hay conexión (eventos online/offline) y `BandaSinConexion` muestra el texto exacto de DESIGN.md §5.8, fija arriba, mientras no haya internet (R19, M14, D-11).
+  - [ ] `LoginVista` recibe una acción de formulario y un error, con campos de correo y contraseña, botón primario «Entrar» y el error con ícono (R1, R37).
+  - [ ] Todo aparece en `/catalogo`, incluida la banda al simular sin conexión.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (barras, navegación y banda en 360–1280 px); `accessibility` (navegación con teclado y anuncios de la banda); `ux-writing` (textos del login y de la banda); `web-design-guidelines` (auditoría antes del PR)
+- **Commits, en este orden:**
+  1. `docs(specs): navegación, login visual y aviso sin conexión`
+  2. `feat(layout): marco de la app con barra inferior y superior`
+  3. `feat(layout): banda sin conexión y detector de conexión`
+  4. `feat(pantallas): vista de inicio de sesión`
+  5. `feat(catalogo): navegación, login y banda sin conexión`
+  6. `docs(plan): avance de P4`
+- **Prompt para Cursor** (pegar tal cual, en la rama del paso):
+
+```text
+Lee AGENTS.md, docs/plan/PLAN.md (paso P4), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, DESIGN.md (5.8, 5.11, 6.3, 7 y 8) y mira las barras de docs/diseno/bocetos.html. Estás en la rama feat/layout-navegacion. Solo puedes crear o modificar components/layout/, components/pantallas/LoginVista.tsx, app/catalogo/ y docs/specs/05-layout-navegacion.md.
+Objetivo: el marco de navegación de la app, la vista de inicio de sesión y el aviso sin conexión, presentacionales y con las props de docs/specs/01-contratos-ui.md.
+1. Escribe primero docs/specs/05-layout-navegacion.md con la plantilla. Commit: docs(specs): navegación, login visual y aviso sin conexión.
+2. MarcoApp({ rol, destinoActivo, nombreUsuario, accionCerrarSesion, children }): muestra BandaSinConexion cuando useEnLinea() es false, y la barra inferior (celular, ≤ 768 px) o superior (escritorio) con los destinos de DESIGN.md 5.11 como enlaces (next/link), ícono lucide 24 px y texto, activo con punto lima, área táctil de 48 px. Las rutas de cada destino están en el Anexo A del plan.
+3. use-en-linea.ts (hook de cliente con navigator.onLine y eventos online/offline) y BandaSinConexion({ visible }) con el texto «Sin conexión. No puedes marcar pasos hasta que vuelva internet.», fija arriba, borde inferior ámbar de 4 px y role="status".
+4. LoginVista({ accion, error?, cargando? }): título «Entrar», campos Correo y Contraseña con el Campo de components/ui-i2h, botón primario «Entrar» de 56 px en el celular, y el error con el Aviso de error. Sin enlace de registro (W1).
+5. Agrega una sección al catálogo para cada pieza, con un interruptor para simular sin conexión.
+Haz estos commits, en este orden: docs(specs): navegación, login visual y aviso sin conexión; feat(layout): marco de la app con barra inferior y superior; feat(layout): banda sin conexión y detector de conexión; feat(pantallas): vista de inicio de sesión; feat(catalogo): navegación, login y banda sin conexión; docs(plan): avance de P4. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para barras, navegación y banda en 360–1280 px; /accessibility para navegación con teclado y anuncios de la banda; /ux-writing para textos del login y de la banda; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El último commit, «docs(plan): avance de P4», cambia en docs/plan/estado.md solo la línea de P4 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
+```
+
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
 ## 4. P8 · Componentes de tarea, checklist y deslizar para completar
 
 - **Rama:** `feat/ui-tarea`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 4 (en paralelo: P7 de Joshua)
 - **Estimación:** 2 h
 - **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/TarjetaTarea.tsx`, `TarjetaSenal.tsx`, `Temporizador.tsx`, `BarraProgreso.tsx`, `ItemChecklist.tsx`, `DeslizarParaCompletar.tsx`, `components/pantallas/DetalleTareaVista.tsx`, `components/pantallas/MisTareasVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/10-ui-tarea.md`.
@@ -188,7 +194,6 @@ El commit «docs(plan): tomar P6» ya está hecho en esta rama; no vuelvas a edi
   - [ ] Todo en `/catalogo` con los datos de ejemplo de los bocetos.
 - **Skills de Cursor** ([skills.md](skills.md)): `accessibility` (checklist y deslizador con teclado y lector de pantalla); `mobile-first-responsive` (áreas de 56 px y uso con el pulgar); `frontend-design` (movimiento con criterio y reducir movimiento); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P8` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes de tarea, checklist y deslizar`
   2. `feat(ui): tarjeta de tarea, temporizador y barra de progreso`
   3. `feat(ui): tarjeta señal`
@@ -196,6 +201,7 @@ El commit «docs(plan): tomar P6» ya está hecho en esta rama; no vuelvas a edi
   5. `feat(ui): deslizar para completar`
   6. `feat(pantallas): vistas de mis tareas y detalle de tarea`
   7. `feat(catalogo): tarjetas, checklist y deslizar con datos de ejemplo`
+  8. `docs(plan): avance de P8`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -208,19 +214,20 @@ Objetivo: los componentes de la tarea para el estudiante y el tablero, presentac
 5. DeslizarParaCompletar({ bloqueado, motivo?, sinConexion?, completada?, onCompletar }): pista de 56 px, pulgar de 48 px, arrastre con pointer events, completa al pasar el 85 %; con Enter o espacio pide confirmación y llama a onCompletar.
 6. MisTareasVista({ senal?, tareas, completadas }) y DetalleTareaVista({ tarea: TareaDetalle, sinConexion, observacion, onAlternarPaso, onCambiarObservacion, onCompletar, motivoBloqueo? }).
 7. Agrega todo al catálogo con los datos de los bocetos (Preparar Sala 3, 3 de 5 pasos, faltan 42 min, etc.).
-Haz estos commits, en este orden: docs(specs): componentes de tarea, checklist y deslizar; feat(ui): tarjeta de tarea, temporizador y barra de progreso; feat(ui): tarjeta señal; feat(ui): ítem de checklist; feat(ui): deslizar para completar; feat(pantallas): vistas de mis tareas y detalle de tarea; feat(catalogo): tarjetas, checklist y deslizar con datos de ejemplo. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px, con teclado y con reducir movimiento (D-05, D-06, D-15, D-16).
+Haz estos commits, en este orden: docs(specs): componentes de tarea, checklist y deslizar; feat(ui): tarjeta de tarea, temporizador y barra de progreso; feat(ui): tarjeta señal; feat(ui): ítem de checklist; feat(ui): deslizar para completar; feat(pantallas): vistas de mis tareas y detalle de tarea; feat(catalogo): tarjetas, checklist y deslizar con datos de ejemplo; docs(plan): avance de P8. Antes del PR: lint, typecheck, build y revisión en 360, 390 y 1280 px, con teclado y con reducir movimiento (D-05, D-06, D-15, D-16).
 Skills de Cursor para este paso (docs/plan/skills.md): /accessibility para checklist y deslizador con teclado y lector de pantalla; /mobile-first-responsive para áreas de 56 px y uso con el pulgar; /frontend-design para movimiento con criterio y reducir movimiento; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P8» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P8», cambia en docs/plan/estado.md solo la línea de P8 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
 ## 5. P10 · Componentes del tablero de cumplimiento
 
 - **Rama:** `feat/ui-tablero`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 5 (en paralelo: P9 de Joshua)
 - **Estimación:** 1 h
 - **Depende de:** P8 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/TotalesPorEstado.tsx`, `IndicadorCumplimiento.tsx`, `GrupoTareas.tsx`, `PanelFiltros.tsx`, `components/pantallas/TableroVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/12-ui-tablero.md`.
@@ -233,12 +240,12 @@ El commit «docs(plan): tomar P8» ya está hecho en esta rama; no vuelvas a edi
   - [ ] Estados vacío, cargando (sin brillo animado) y filtro sin resultados (DESIGN.md §5.9).
 - **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (cuadrícula del tablero en 360, 768 y 1280 px); `accessibility` (filtros y totales con teclado); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P10` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): componentes del tablero de cumplimiento`
   2. `feat(ui): totales por estado e indicador de cumplimiento`
   3. `feat(ui): grupos de tareas y panel de filtros`
   4. `feat(pantallas): vista del tablero`
   5. `feat(catalogo): tablero con datos de ejemplo`
+  6. `docs(plan): avance de P10`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -249,19 +256,56 @@ Objetivo: los componentes del tablero de cumplimiento, presentacionales, con las
 3. GrupoTareas({ titulo, cantidad, tono?, children }) y PanelFiltros({ porVencer, orden, ordenes, onCambiar }): ordenes es una lista { clave, texto } que llega por props (hoy: «Más cerca de vencer», «Más reciente», «Por estado»).
 4. TableroVista({ totales, grupos: { clave, titulo, tareas: TareaTarjeta[] }[], porVencer, orden, onCambiar }): cuadrícula de TarjetaTarea (mínimo 320 px) en escritorio, una columna en el celular; estados vacío («Todavía no hay tareas. Crear la primera»), cargando y sin resultados («No hay tareas por vencer.»).
 5. Agrega al catálogo el tablero con los datos de los bocetos (4, 2, 3, 4, 1, 18; 62 %).
-Haz estos commits, en este orden: docs(specs): componentes del tablero de cumplimiento; feat(ui): totales por estado e indicador de cumplimiento; feat(ui): grupos de tareas y panel de filtros; feat(pantallas): vista del tablero; feat(catalogo): tablero con datos de ejemplo. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px.
+Haz estos commits, en este orden: docs(specs): componentes del tablero de cumplimiento; feat(ui): totales por estado e indicador de cumplimiento; feat(ui): grupos de tareas y panel de filtros; feat(pantallas): vista del tablero; feat(catalogo): tablero con datos de ejemplo; docs(plan): avance de P10. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px.
 Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para cuadrícula del tablero en 360, 768 y 1280 px; /accessibility para filtros y totales con teclado; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P10» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P10», cambia en docs/plan/estado.md solo la línea de P10 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 6. P12 · Revisión de diseño del MVP
+## 6. P16 · PWA: manifest e íconos
+
+- **Rama:** `feat/pwa`
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 6 (en paralelo: P11 de Joshua)
+- **Estimación:** 45 min
+- **Depende de:** P0 mergeado.
+- **Archivos y carpetas del paso:** `public/manifest.webmanifest`, `public/iconos/**`, `docs/specs/17-pwa.md`.
+- **Spec antes de programar:** `docs/specs/17-pwa.md`.
+- **Criterios de aceptación:**
+  - [ ] La app se puede instalar en Android y en iOS con nombre, color de fondo y de tema #050307 e íconos de 192, 512 y maskable (DESIGN.md §4, brandboard: ícono de app).
+  - [ ] Lighthouse no marca errores de instalabilidad.
+  - [ ] No hay trabajo sin conexión: sin internet se ve la banda, no una copia vieja (W3).
+- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (metadata y manifest en node_modules/next/dist/docs/); `web-design-guidelines` (revisión del manifest y de los íconos)
+- **Commits, en este orden:**
+  1. `docs(specs): app instalable`
+  2. `feat(pwa): manifest con nombre, colores y pantalla de inicio`
+  3. `feat(pwa): íconos de la app`
+  4. `docs(plan): avance de P16`
+- **Prompt para Cursor** (pegar tal cual, en la rama del paso):
+
+```text
+Lee AGENTS.md, DESIGN.md sección 4 y docs/plan/PLAN.md (paso P16). Estás en la rama feat/pwa. Solo puedes crear o modificar public/manifest.webmanifest, public/iconos/ y docs/specs/17-pwa.md.
+Objetivo: que la herramienta se pueda instalar en el celular.
+1. Escribe docs/specs/17-pwa.md. Commit: docs(specs): app instalable.
+2. public/manifest.webmanifest: name «Señal de Turno · Staff Interact2Hack», short_name «Señal de Turno», start_url «/», display «standalone», background_color y theme_color #050307, lang «es». Commit: feat(pwa): manifest con nombre, colores y pantalla de inicio.
+3. Íconos PNG de 192 y 512 px y uno maskable, en public/iconos/, con fondo negro #050307 y la marca de Señal Neón (usa el ícono de app del brandboard de docs/diseno/ como referencia; sin esquinas redondeadas propias). Commit: feat(pwa): íconos de la app.
+4. En el PR, indica a Joshua las dos líneas que hay que agregar en app/layout.tsx (link al manifest y theme-color); no edites ese archivo.
+Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para metadata y manifest en node_modules/next/dist/docs/; /web-design-guidelines para revisión del manifest y de los íconos. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El último commit, «docs(plan): avance de P16», cambia en docs/plan/estado.md solo la línea de P16 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
+```
+
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
+
+---
+
+## 7. P12 · Revisión de diseño del MVP
 
 - **Rama:** `docs/revision-diseno-mvp`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 7 (en paralelo: P18 de Joshua)
 - **Estimación:** 45 min
 - **Depende de:** P11 mergeado y desplegado en la vista previa.
 - **Archivos y carpetas del paso:** `docs/qa/revision-diseno-mvp.md` (y correcciones solo en `components/ui-i2h/`, `components/layout/` y `components/pantallas/`).
@@ -271,9 +315,9 @@ El commit «docs(plan): tomar P10» ya está hecho en esta rama; no vuelvas a ed
   - [ ] Lo que no pasa y es de las carpetas de componentes queda corregido en la misma rama con `fix(ui): …`; lo que es de otras carpetas queda anotado para su dueño.
 - **Skills de Cursor** ([skills.md](skills.md)): `impeccable` (/impeccable critique y /impeccable audit de las pantallas del MVP); `ui-design-critique` (informe en español contra D-01 a D-20); `web-design-guidelines` (hallazgos con archivo y línea)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P12` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): revisión de diseño del MVP contra D-01 a D-20`
   2. `fix(ui): correcciones de la revisión de diseño del MVP`
+  3. `docs(plan): avance de P12`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -284,19 +328,20 @@ Objetivo: revisar las pantallas reales del MVP contra los criterios D-01 a D-20.
 3. Corrige lo que no pasa dentro de tus carpetas, sin cambiar las props de docs/specs/01-contratos-ui.md. Commit: fix(ui): correcciones de la revisión de diseño del MVP.
 4. Lo que dependa de otras carpetas, déjalo en una sección «Pendiente para otras carpetas» del mismo documento y en el PR.
 Skills de Cursor para este paso (docs/plan/skills.md): /impeccable critique y /impeccable audit de las pantallas del MVP; /ui-design-critique para informe en español contra D-01 a D-20; /web-design-guidelines para hallazgos con archivo y línea. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P12» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P12», cambia en docs/plan/estado.md solo la línea de P12 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 7. P13 · Pantallas de usuarios, estudiantes, perfil y completadas
+## 8. P13 · Pantallas de usuarios, estudiantes, perfil y completadas
 
 - **Rama:** `feat/ui-pantallas`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 8 (en paralelo: P15 de Joshua)
 - **Estimación:** 2 h
-- **Depende de:** P2 mergeado (puede empezar en cuanto termine P12).
+- **Depende de:** P2 mergeado.
 - **Archivos y carpetas del paso:** `components/ui-i2h/FilaUsuario.tsx`, `FilaEstudiante.tsx`, `EditorDisponibilidad.tsx`, `DialogoConfirmar.tsx`, `EstadoVacio.tsx`, `EstadoCargando.tsx`, `components/pantallas/UsuariosVista.tsx`, `FormularioUsuarioVista.tsx`, `EstudiantesVista.tsx`, `PerfilVista.tsx`, `CompletadasVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/14-ui-pantallas.md`.
 - **Spec antes de programar:** `docs/specs/14-ui-pantallas.md`.
 - **Criterios de aceptación:**
@@ -308,13 +353,13 @@ El commit «docs(plan): tomar P12» ya está hecho en esta rama; no vuelvas a ed
   - [ ] `DialogoConfirmar` para eliminar y reabrir (DESIGN.md §5.6); `EstadoVacio` y `EstadoCargando` sin animación de brillo.
 - **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (listas y formularios en celular y escritorio); `accessibility` (formularios, diálogo de confirmación y estados vacíos); `ux-writing` (textos de vacío, error y confirmación); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P13` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): pantallas de usuarios, estudiantes, perfil y completadas`
   2. `feat(ui): filas de usuario y de estudiante`
   3. `feat(ui): editor de disponibilidad`
   4. `feat(ui): diálogo de confirmación y estados vacío y cargando`
   5. `feat(pantallas): vistas de usuarios, estudiantes, perfil y completadas`
   6. `feat(catalogo): pantallas de usuarios, estudiantes, perfil y completadas`
+  7. `docs(plan): avance de P13`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -326,54 +371,59 @@ Objetivo: las pantallas de gestión de usuarios, panel de estudiantes, perfil y 
 4. DialogoConfirmar({ abierto, titulo, mensaje, textoConfirmar, variante, onConfirmar, onCancelar }) sobre el dialog de shadcn; EstadoVacio({ mensaje, accion? }); EstadoCargando({ filas }).
 5. UsuariosVista, FormularioUsuarioVista({ modo, valores, errores, accion, cargando }), EstudiantesVista, PerfilVista({ perfil, accionCambiarContrasena, error? }) y CompletadasVista({ tareas }).
 6. Agrega todo al catálogo con los datos de los bocetos.
-Haz estos commits, en este orden: docs(specs): pantallas de usuarios, estudiantes, perfil y completadas; feat(ui): filas de usuario y de estudiante; feat(ui): editor de disponibilidad; feat(ui): diálogo de confirmación y estados vacío y cargando; feat(pantallas): vistas de usuarios, estudiantes, perfil y completadas; feat(catalogo): pantallas de usuarios, estudiantes, perfil y completadas. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px con teclado.
+Haz estos commits, en este orden: docs(specs): pantallas de usuarios, estudiantes, perfil y completadas; feat(ui): filas de usuario y de estudiante; feat(ui): editor de disponibilidad; feat(ui): diálogo de confirmación y estados vacío y cargando; feat(pantallas): vistas de usuarios, estudiantes, perfil y completadas; feat(catalogo): pantallas de usuarios, estudiantes, perfil y completadas; docs(plan): avance de P13. Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px con teclado.
 Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para listas y formularios en celular y escritorio; /accessibility para formularios, diálogo de confirmación y estados vacíos; /ux-writing para textos de vacío, error y confirmación; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P13» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P13», cambia en docs/plan/estado.md solo la línea de P13 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 8. P16 · PWA: manifest e íconos
+## 9. P31 · Componentes de reasignación e historial de ejecución
 
-- **Rama:** `feat/pwa`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
-- **Estimación:** 45 min
-- **Depende de:** P0 mergeado.
-- **Archivos y carpetas del paso:** `public/manifest.webmanifest`, `public/iconos/**`, `docs/specs/17-pwa.md`.
-- **Spec antes de programar:** `docs/specs/17-pwa.md`.
+- **Rama:** `feat/ui-reasignacion-historial`
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 9 (en paralelo: P14 de Joshua)
+- **Estimación:** 1 h 30 min
+- **Depende de:** P8 y P13 mergeados.
+- **Archivos y carpetas del paso:** `components/ui-i2h/HistorialEjecucion.tsx`, `components/pantallas/ReasignarVista.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/28-ui-reasignacion-historial.md`.
+- **Spec antes de programar:** `docs/specs/28-ui-edicion-reasignacion.md`.
 - **Criterios de aceptación:**
-  - [ ] La app se puede instalar en Android y en iOS con nombre, color de fondo y de tema #050307 e íconos de 192, 512 y maskable (DESIGN.md §4, brandboard: ícono de app).
-  - [ ] Lighthouse no marca errores de instalabilidad.
-  - [ ] No hay trabajo sin conexión: sin internet se ve la banda, no una copia vieja (W3).
-- **Skills de Cursor** ([skills.md](skills.md)): `docs de Next.js` (metadata y manifest en node_modules/next/dist/docs/); `web-design-guidelines` (revisión del manifest y de los íconos)
+  - [ ] `HistorialEjecucion` lista quién inició la tarea, quién marcó cada paso y quién la completó, con su hora en America/Guayaquil ya formateada por props (R23, M9).
+  - [ ] `ReasignarVista` pide la **nueva hora de vencimiento** (obligatoria) y permite cambiar responsables con `SelectorResponsables`; los pasos marcados se muestran como conservados (R25, M10).
+  - [ ] Todo en `/catalogo` con datos de ejemplo de los bocetos, en 390 y 1280 px, con teclado (D-05, D-06, D-15).
+  - [ ] Props exactamente como en `docs/specs/01-contratos-ui.md`; sin fetch ni imports de `lib/supabase`.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (la vista de reasignar en celular y escritorio); `accessibility` (campo de hora y selector con teclado); `ux-writing` (textos de reasignar); `web-design-guidelines` (auditoría antes del PR)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P16` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
-  1. `docs(specs): app instalable`
-  2. `feat(pwa): manifest con nombre, colores y pantalla de inicio`
-  3. `feat(pwa): íconos de la app`
+  1. `docs(specs): componentes de reasignación e historial`
+  2. `feat(ui): historial de ejecución`
+  3. `feat(pantallas): vista para reasignar una tarea vencida`
+  4. `feat(catalogo): reasignación e historial con datos de ejemplo`
+  5. `docs(plan): avance de P31`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
-Lee AGENTS.md, DESIGN.md sección 4 y docs/plan/PLAN.md (paso P16). Estás en la rama feat/pwa. Solo puedes crear o modificar public/manifest.webmanifest, public/iconos/ y docs/specs/17-pwa.md.
-Objetivo: que la herramienta se pueda instalar en el celular.
-1. Escribe docs/specs/17-pwa.md. Commit: docs(specs): app instalable.
-2. public/manifest.webmanifest: name «Señal de Turno · Staff Interact2Hack», short_name «Señal de Turno», start_url «/», display «standalone», background_color y theme_color #050307, lang «es». Commit: feat(pwa): manifest con nombre, colores y pantalla de inicio.
-3. Íconos PNG de 192 y 512 px y uno maskable, en public/iconos/, con fondo negro #050307 y la marca de Señal Neón (usa el ícono de app del brandboard de docs/diseno/ como referencia; sin esquinas redondeadas propias). Commit: feat(pwa): íconos de la app.
-4. En el PR, indica a Joshua las dos líneas que hay que agregar en app/layout.tsx (link al manifest y theme-color); no edites ese archivo.
-Skills de Cursor para este paso (docs/plan/skills.md): docs de Next.js para metadata y manifest en node_modules/next/dist/docs/; /web-design-guidelines para revisión del manifest y de los íconos. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P16» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+Lee AGENTS.md, docs/plan/PLAN.md (paso P31), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, DESIGN.md 5 y 9, PRD R23, R25 y la sección «Tareas, edición y asignación» de docs/diseno/bocetos.html. Estás en la rama feat/ui-reasignacion-historial. Solo puedes crear o modificar components/ui-i2h/HistorialEjecucion.tsx, components/pantallas/ReasignarVista.tsx, app/catalogo/ y docs/specs/28-ui-reasignacion-historial.md.
+Objetivo: las piezas de interfaz que usarán la reasignación (P17) y el detalle del administrador (P20), presentacionales y con las props de docs/specs/01-contratos-ui.md.
+1. Escribe primero docs/specs/28-ui-reasignacion-historial.md con la plantilla. Commit: docs(specs): componentes de reasignación e historial.
+2. HistorialEjecucion({ eventos }) con EventoEjecucion de lib/tipos.ts: quién inició, quién marcó cada paso y quién completó, con la hora ya formateada. Commit: feat(ui): historial de ejecución.
+3. ReasignarVista({ tarea, opciones, seleccionados, nuevaHora, errores?, enviando, onCambiarHora, onAlternar, onGuardar, onCancelar }): campo de nueva hora obligatorio, SelectorResponsables reutilizado y el resumen de pasos marcados que se conservan (R25). Textos según DESIGN.md §8; lo que no esté definido, márcalo [SUPUESTO] en la spec. Commit: feat(pantallas): vista para reasignar una tarea vencida.
+4. Agrega una sección en /catalogo con datos de ejemplo de los bocetos. Commit: feat(catalogo): reasignación e historial con datos de ejemplo.
+Antes del PR: lint, typecheck, build y revisión en 390 y 1280 px con teclado.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para la vista de reasignar en celular y escritorio; /accessibility para campo de hora y selector con teclado; /ux-writing para textos de reasignar; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El último commit, «docs(plan): avance de P31», cambia en docs/plan/estado.md solo la línea de P31 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 9. P21 · Datos de demo y README
+## 10. P21 · Datos de demo y README
 
 - **Rama:** `feat/datos-demo`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 10 (en paralelo: P17 de Joshua)
 - **Estimación:** 1 h 15 min
 - **Depende de:** P1 mergeado (formato en `docs/specs/09-datos-demo.md`).
 - **Archivos y carpetas del paso:** `datos-demo/demo.json`, `README.md`.
@@ -384,9 +434,9 @@ El commit «docs(plan): tomar P16» ya está hecho en esta rama; no vuelvas a ed
   - [ ] `README.md` explica qué es, cómo instalar, las variables de `.env.example`, cómo correr, probar y cargar la demo, cómo se trabaja por ramas (enlace a PLAN.md) y los créditos.
 - **Skills de Cursor** ([skills.md](skills.md)): `ux-writing` (textos de los datos de demo y del README)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P21` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `feat(demo): datos de demo con los cinco estados y las marcas`
   2. `docs(readme): instalación, uso, datos de demo y flujo de trabajo`
+  3. `docs(plan): avance de P21`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -395,19 +445,53 @@ Objetivo: un juego de datos de demo que muestre todo el MVP, y el README del pro
 1. datos-demo/demo.json exactamente con el formato de la spec 09: el administrador Mateo Cruz; los estudiantes Ana Torres, Luis Mena y Sofía Paredes, y uno más; disponibilidades del día 0; tareas de los bocetos (Preparar Sala 3 para mentorías en ejecución con 3 de 5 pasos y venceEnMinutos 42; Armar mesas de check-in pendiente; Llevar extensiones eléctricas a la Sala 3 urgente; Reponer agua en la mesa de mentores vencida; Ordenar la mesa de premiación sin asignar; Revisar el proyector del teatro completada; Pegar la señalética de baños completada fuera de hora). Correos @example.com, teléfonos 099 000 0000, contraseñas de demo. Ningún dato real del cliente. Commit: feat(demo): datos de demo con los cinco estados y las marcas.
 2. README.md: qué es Señal de Turno, requisitos, instalación (npm install), variables (.env.example), npm run dev / lint / typecheck / test / build, cómo cargar la demo (el script lo indica docs/specs/09-datos-demo.md), cómo se trabaja (enlace a AGENTS.md y docs/plan/PLAN.md), equipo y créditos de las fuentes (SIL OFL). Commit: docs(readme): instalación, uso, datos de demo y flujo de trabajo.
 Skills de Cursor para este paso (docs/plan/skills.md): /ux-writing para textos de los datos de demo y del README. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P21» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P21», cambia en docs/plan/estado.md solo la línea de P21 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 10. P22 · Revisión de diseño y textos de todas las pantallas
+## 11. P33 · Prueba de reglas de negocio en la vista previa
+
+- **Rama:** `docs/prueba-reglas`
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 11 (en paralelo: P19 de Joshua)
+- **Estimación:** 1 h
+- **Depende de:** P14, P15, P17 y P18 mergeados y desplegados en la vista previa.
+- **Archivos y carpetas del paso:** `docs/qa/prueba-reglas.md`.
+- **Spec antes de programar:** No aplica: la lista sale de las R# del PRD que citan P14, P15, P17 y P18.
+- **Criterios de aceptación:**
+  - [ ] Tabla con cada regla probada: R3 y R6 (usuarios y super administrador), R13, R21 y R22 (edición, bloqueo y eliminación), R17 y R18 (una tarea abierta, desmarcar), R25, R27 y R28 (reasignar, urgente, disponibilidad); para cada una: pasos, resultado esperado según el PRD, resultado obtenido, pasa / no pasa y captura.
+  - [ ] Probado con al menos un administrador y dos estudiantes de prueba, en celular (390 px) y escritorio (1280 px).
+  - [ ] Cada «no pasa» queda como comentario en el PR del paso que lo causa, con los pasos para reproducirlo.
+- **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (lista de revisión en 390 y 1280 px)
+- **Commits, en este orden:**
+  1. `docs(qa): prueba de reglas de negocio de la Fase 2`
+  2. `docs(plan): avance de P33`
+- **Prompt para Cursor** (pegar tal cual, en la rama del paso):
+
+```text
+Lee AGENTS.md, docs/plan/PLAN.md (paso P33) y en docs/prd/PRD.md las reglas R3, R6, R13, R17, R18, R21, R22, R25, R27 y R28. Estás en la rama docs/prueba-reglas. Solo puedes crear docs/qa/prueba-reglas.md.
+Objetivo: comprobar en la vista previa que las reglas de negocio de la Fase 2 se cumplen tal como las escribe el PRD.
+1. Arma en docs/qa/prueba-reglas.md una tabla: regla, pasos para probarla, resultado esperado (cita textual del PRD), resultado obtenido, pasa / no pasa, captura.
+2. Con un administrador y dos estudiantes de prueba, recorre cada regla en la vista previa de Vercel, en 390 y 1280 px. No cambies código.
+3. Commit: docs(qa): prueba de reglas de negocio de la Fase 2. En el PR, lista los «no pasa» con el paso que los causa.
+Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para lista de revisión en 390 y 1280 px. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El último commit, «docs(plan): avance de P33», cambia en docs/plan/estado.md solo la línea de P33 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
+```
+
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
+
+---
+
+## 12. P22 · Revisión de diseño y textos de todas las pantallas
 
 - **Rama:** `docs/revision-diseno-final`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
-- **Estimación:** 1 h
-- **Depende de:** P14 a P20 mergeados.
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 12 (en paralelo: P20 de Joshua)
+- **Estimación:** 1 h 30 min
+- **Depende de:** P14 a P19 mergeados para la primera parte (ronda 12); P20 mergeado para la segunda (ronda 13).
 - **Archivos y carpetas del paso:** `docs/qa/revision-diseno-final.md` (y correcciones en `components/ui-i2h/`, `components/layout/`, `components/pantallas/`).
 - **Spec antes de programar:** No aplica: DESIGN.md §9 y §8.
 - **Criterios de aceptación:**
@@ -416,9 +500,9 @@ El commit «docs(plan): tomar P21» ya está hecho en esta rama; no vuelvas a ed
   - [ ] Correcciones de las carpetas de componentes hechas; lo demás anotado para su dueño.
 - **Skills de Cursor** ([skills.md](skills.md)): `impeccable` (/impeccable critique y /impeccable audit de todas las pantallas); `ui-design-critique` (informe en español contra D-01 a D-20); `ux-writing` (revisión de todos los textos); `accessibility` (repaso a fondo de lo que marque la auditoría)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P22` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): revisión de diseño y textos de todas las pantallas`
   2. `fix(ui): correcciones de la revisión final de diseño`
+  3. `docs(plan): avance de P22`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
@@ -428,44 +512,81 @@ Objetivo: revisar todas las pantallas (estudiante, administrador y super adminis
 2. Corrige lo que es de tus carpetas sin cambiar props. Commit: fix(ui): correcciones de la revisión final de diseño.
 3. Lo demás, en «Pendiente para otras carpetas» y en el PR.
 Skills de Cursor para este paso (docs/plan/skills.md): /impeccable critique y /impeccable audit de todas las pantallas; /ui-design-critique para informe en español contra D-01 a D-20; /ux-writing para revisión de todos los textos; /accessibility para repaso a fondo de lo que marque la auditoría. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P22» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P22», cambia en docs/plan/estado.md solo la línea de P22 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 11. P28 · CO1: porcentaje de pasos en la tarjeta
+## 13. P32 · Pantallas de recuperar contraseña y permiso de avisos
+
+- **Rama:** `feat/ui-recuperar-avisos`
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 13 (en paralelo: P23 de Joshua)
+- **Estimación:** 45 min
+- **Depende de:** P2 mergeado.
+- **Archivos y carpetas del paso:** `components/pantallas/RecuperarVista.tsx`, `components/ui-i2h/AvisoActivarAvisos.tsx`, sección en `app/catalogo/page.tsx`, `docs/specs/29-ui-recuperar-avisos.md`.
+- **Spec antes de programar:** `docs/specs/29-ui-recuperar-avisos.md`.
+- **Criterios de aceptación:**
+  - [ ] `RecuperarVista` pide el correo y muestra el estado enviado o el error, con el mismo estilo que `LoginVista` (SH2, R37).
+  - [ ] `AvisoActivarAvisos` invita a activar los avisos del celular y muestra si están activados o bloqueados (SH3).
+  - [ ] Todo en `/catalogo` con datos de ejemplo, en 390 y 1280 px, con teclado; props como en `docs/specs/01-contratos-ui.md`.
+- **Skills de Cursor** ([skills.md](skills.md)): `accessibility` (formulario de recuperar y aviso de permiso); `ux-writing` (textos de recuperar contraseña y avisos); `web-design-guidelines` (auditoría antes del PR)
+- **Commits, en este orden:**
+  1. `docs(specs): pantallas de recuperar contraseña y permiso de avisos`
+  2. `feat(pantallas): recuperar contraseña y permiso de avisos`
+  3. `feat(catalogo): recuperar contraseña y permiso de avisos`
+  4. `docs(plan): avance de P32`
+- **Prompt para Cursor** (pegar tal cual, en la rama del paso):
+
+```text
+Lee AGENTS.md, docs/plan/PLAN.md (paso P32), docs/specs/00-arquitectura.md, docs/specs/01-contratos-ui.md, DESIGN.md 5 y 8, y PRD R4, R14, R37, SH2 y SH3. Estás en la rama feat/ui-recuperar-avisos. Solo puedes crear o modificar components/pantallas/RecuperarVista.tsx, components/ui-i2h/AvisoActivarAvisos.tsx, app/catalogo/ y docs/specs/29-ui-recuperar-avisos.md.
+Objetivo: las dos piezas de interfaz que usarán P25 y P26, presentacionales.
+1. Escribe docs/specs/29-ui-recuperar-avisos.md (marca [SUPUESTO] los textos que DESIGN.md no fije). Commit: docs(specs): pantallas de recuperar contraseña y permiso de avisos.
+2. RecuperarVista({ correo, estado, error?, cargando, onCambiar, onEnviar }) y AvisoActivarAvisos({ estado, onActivar }). Commit: feat(pantallas): recuperar contraseña y permiso de avisos.
+3. Sección en /catalogo. Commit: feat(catalogo): recuperar contraseña y permiso de avisos.
+Skills de Cursor para este paso (docs/plan/skills.md): /accessibility para formulario de recuperar y aviso de permiso; /ux-writing para textos de recuperar contraseña y avisos; /web-design-guidelines para auditoría antes del PR. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
+El último commit, «docs(plan): avance de P32», cambia en docs/plan/estado.md solo la línea de P32 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
+```
+
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
+
+---
+
+## 14. P28 · CO1: porcentaje de pasos en la tarjeta
 
 - **Rama:** `feat/porcentaje-pasos`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 14 (en paralelo: P24 de Joshua, P27 de Joshua)
 - **Estimación:** 20 min
-- **Depende de:** P27 mergeado o descartado.
-- **Archivos y carpetas del paso:** `components/ui-i2h/TarjetaTarea.tsx`, `components/ui-i2h/BarraProgreso.tsx`, `docs/specs/26-could.md` (sección CO1).
-- **Spec antes de programar:** `docs/specs/26-could.md` (sección CO1).
+- **Depende de:** P8 mergeado (no depende de los demás pasos de la Fase 3).
+- **Archivos y carpetas del paso:** `components/ui-i2h/TarjetaTarea.tsx`, `components/ui-i2h/BarraProgreso.tsx`, `docs/specs/27-co1.md`.
+- **Spec antes de programar:** `docs/specs/27-co1.md`.
 - **Criterios de aceptación:**
   - [ ] La tarjeta muestra «3 de 5 pasos · 60 %» además de «3 de 5» (CO1, R30).
 - **Skills de Cursor** ([skills.md](skills.md)): `web-design-guidelines` (auditoría del cambio en la tarjeta)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P28` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(specs): porcentaje de pasos`
   2. `feat(ui): porcentaje de pasos en la tarjeta`
+  3. `docs(plan): avance de P28`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
-Lee AGENTS.md, DESIGN.md 5.2 y PRD R30, CO1. Estás en la rama feat/porcentaje-pasos. Solo puedes modificar components/ui-i2h/TarjetaTarea.tsx, components/ui-i2h/BarraProgreso.tsx y docs/specs/26-could.md (sección CO1). Agrega el porcentaje calculado de marcados/total al texto de la barra, sin cambiar las props. Haz estos commits, en este orden: docs(specs): porcentaje de pasos; feat(ui): porcentaje de pasos en la tarjeta.
+Lee AGENTS.md, DESIGN.md 5.2 y PRD R30, CO1. Estás en la rama feat/porcentaje-pasos. Solo puedes modificar components/ui-i2h/TarjetaTarea.tsx, components/ui-i2h/BarraProgreso.tsx y docs/specs/27-co1.md. Agrega el porcentaje calculado de marcados/total al texto de la barra, sin cambiar las props. Haz estos commits, en este orden: docs(specs): porcentaje de pasos; feat(ui): porcentaje de pasos en la tarjeta; docs(plan): avance de P28.
 Skills de Cursor para este paso (docs/plan/skills.md): /web-design-guidelines para auditoría del cambio en la tarjeta. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P28» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P28», cambia en docs/plan/estado.md solo la línea de P28 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
 
 ---
 
-## 12. P30 · Prueba de aceptación en celular y computadora
+## 15. P30 · Prueba de aceptación en celular y computadora
 
 - **Rama:** `docs/prueba-demo`
-- **Carril y responsable en modo en paralelo:** B (interfaz) · Raymond (en modo solo, lo hace Joshua)
+- **Responsable:** Raymond · carril B (interfaz)
+- **Ronda:** 18 (en paralelo: Joshua corrige los «no pasa» de P30)
 - **Estimación:** 1 h
 - **Depende de:** P29 desplegado en producción.
 - **Archivos y carpetas del paso:** `docs/qa/prueba-demo.md`.
@@ -476,15 +597,15 @@ El commit «docs(plan): tomar P28» ya está hecho en esta rama; no vuelvas a ed
   - [ ] Cualquier falla anotada con pasos para reproducirla y avisada a Joshua antes de las 20:00 del martes.
 - **Skills de Cursor** ([skills.md](skills.md)): `mobile-first-responsive` (lista de revisión en el celular real)
 - **Commits, en este orden:**
-  0. `docs(plan): tomar P30` (lo haces tú al tomar el paso, antes de pegar el prompt; sección 4.3)
   1. `docs(qa): prueba de aceptación del Avance 3 en celular y computadora`
+  2. `docs(plan): avance de P30`
 - **Prompt para Cursor** (pegar tal cual, en la rama del paso):
 
 ```text
 Lee AGENTS.md y la sección 6 (guion de demo) de docs/plan/PLAN.md. Estás en la rama docs/prueba-demo. Solo puedes crear docs/qa/prueba-demo.md.
 Recorre el guion completo en producción, con los usuarios de datos-demo/demo.json, en un celular real y en una computadora. Para cada paso anota: dispositivo, resultado esperado, resultado obtenido, pasa / no pasa y captura. Prueba también el modo avión en el celular. Commit: docs(qa): prueba de aceptación del Avance 3 en celular y computadora. Abre el PR y avisa a Joshua de cualquier «no pasa».
 Skills de Cursor para este paso (docs/plan/skills.md): /mobile-first-responsive para lista de revisión en el celular real. Ábrelas solo cuando hagan falta; si una skill contradice el PRD, DESIGN.md o este prompt, mandan el PRD y DESIGN.md.
-El commit «docs(plan): tomar P30» ya está hecho en esta rama; no vuelvas a editar docs/plan/estado.md.
+El último commit, «docs(plan): avance de P30», cambia en docs/plan/estado.md solo la línea de P30 («— pendiente» → «— hecho»); no toques otras líneas de ese archivo.
 ```
 
-- **PR y merge:** Al tomar el paso ya abriste el PR borrador (sección 4.3). Al terminar: `git push`, completa la plantilla y `gh pr ready`. Joshua revisa la vista previa de Vercel y los criterios, y mergea con `gh pr merge --merge --delete-branch`.
+- **PR y merge:** `git fetch origin && git merge origin/main`, `git push -u origin <rama>` y `gh pr create --base main --title "Pn · <título>" --body-file .github/pull_request_template.md`. Joshua revisa la vista previa de Vercel y los criterios, mergea con `gh pr merge --merge --delete-branch` y avisa «Entró Pn» (punto de sincronización de la ronda).
